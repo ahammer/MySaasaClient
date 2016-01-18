@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.metalrain.simple.whitelabel">
+
+    <uses-feature android:name="android.hardware.camera"/>
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <application
+            android:name="com.metalrain.simple.SimpleApplication">
+        <activity
+                android:name="com.metalrain.simple.ui.ActivityMain"
+                android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+        <activity android:name="com.metalrain.simple.ui.ActivitySignin"
+            android:label="Sign In"/>
+        <activity android:name="com.metalrain.simple.ui.ActivityBlogPost"
+            android:label="Post"/>
+        <activity android:name="com.metalrain.simple.ui.ActivityPostComment"
+            android:label="Post Comment"/>
+        <activity android:name="com.metalrain.simple.ui.ActivityPostToBlog"
+            android:label="Post to Blog"/>
+        <activity android:name="com.metalrain.simple.ui.ActivityMessages"
+            android:label="Read Messages"/>
+        <activity android:name="com.metalrain.simple.ui.ActivityMessage"
+            android:label="Message"/>
+
+        <activity android:name="com.metalrain.simple.ui.ActivityAddress"
+            android:label="Enter Address"
+            android:theme="@android:style/Theme.Dialog"/>
+
+        
+        <!-- GCM Additions -->
+
+    </application>
+
+</manifest>

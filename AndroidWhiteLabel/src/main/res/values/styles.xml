@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SimpleTheme"/>
+
+    <style name="simple_news_list"/>
+    <style name="simple_news_list_item"/>
+    <style name="simple_sidenav">
+        <item name="android:background">#333</item>
+    </style>
+</resources>

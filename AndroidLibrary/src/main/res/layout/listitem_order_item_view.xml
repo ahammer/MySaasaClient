@@ -1,0 +1,45 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/pager"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+
+style="@style/simple_order_item">
+<TextView
+    android:layout_width="0px"
+    android:layout_height="wrap_content"
+    android:layout_weight="3"
+    android:gravity="center"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Product"
+    android:id="@+id/product"/>
+
+<TextView
+    android:layout_width="0px"
+    android:layout_height="wrap_content"
+    android:layout_weight="2"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Price"
+    android:gravity="center"
+    android:id="@+id/price"/>
+
+<EditText
+    android:layout_width="0px"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="quantity"
+    android:inputType="number"
+    android:gravity="center"
+    android:id="@+id/quantity"/>
+
+<TextView
+    android:layout_width="0px"
+    android:layout_height="wrap_content"
+    android:layout_weight="2"
+    android:gravity="center"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Total"
+    android:id="@+id/row_total"/>
+</LinearLayout>

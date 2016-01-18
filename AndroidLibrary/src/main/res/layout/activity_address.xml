@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+<LinearLayout
+
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/simple_activity_address">
+    <EditText
+        android:id="@+id/name"
+        android:hint="Full Name"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:hint="Email Address"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/mobilePhone"
+        android:hint="Mobile Phone"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/homePhone"
+        android:hint="Home Phone"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/address1"
+        android:hint="Address 1"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/address2"
+        android:hint="Address 2"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/city"
+        android:hint="City"
+        style="@style/simple_address_field"/>
+    <EditText
+        android:id="@+id/province"
+        android:hint="Province"
+        style="@style/simple_address_field"/>
+    <EditText
+        android:id="@+id/country"
+        android:hint="Country"
+        style="@style/simple_address_field"/>
+
+    <EditText
+        android:id="@+id/postal"
+        android:hint="Postal Code"
+        style="@style/simple_address_field"/>
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Address"/>
+
+</LinearLayout>
+    </ScrollView>

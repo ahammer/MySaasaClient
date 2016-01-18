@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_gravity="center"
+        style="@style/simple_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Overview"
+        android:id="@+id/textView2"
+         />
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/adamhammer_frame">
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Welcome, this app serves as both my Portfolio and Resume, and represents a example client for my SaaS, Simple Platform."
+        android:id="@+id/intro"
+         />
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="In addition to my Resume and my Blog, there is a interactive news Section for users."
+        android:id="@+id/textView3" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_gravity="center"
+        style="@style/simple_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Key Features"
+         />
+    
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/adamhammer_frame">
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=" - Blogs\n - Threaded Comments\n - Easily Extensible\n - Fully Skinnable\n - User Management\n - Integrated, Extensible API"
+        />
+</LinearLayout>
+    <TextView
+        android:layout_gravity="center"
+        style="@style/simple_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Links"
+         />
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/adamhammer_frame">
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/link_adamhammer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="www.adamhammer.ca"/>
+
+        <Button
+            android:id="@+id/link_platform"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="www.simpleplatform.ca"/>
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/link_hosting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hosting.metalrain.ca"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Simple Android API</string>
+    <string name="configuration_text">View on Phone</string>
+    <string name="extension_name">LightsCameraActionWatchExtension</string>
+    <string name="title_activity_light_options">Light Options</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_news">News</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_products">ProductsActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

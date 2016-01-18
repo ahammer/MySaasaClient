@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Placeholder Styles -->
+    <style name="simple_news_list"/>
+    <style name="simple_news_list_item"/>
+    <style name="simple_sidenav"/>
+    <style name="simple_title_text"/>
+    <style name="simple_blogcomment_fragment"/>
+    <style name="simple_blogpost_container"></style>
+    <style name="simple_subtitle_text"></style>
+    <style name="simple_form"></style>
+    <style name="simple_blogpost_body"></style>
+    <style name="simple_blogcomment"></style>
+    <style name="simple_fragment_frame"></style>
+    <style name="simple_empty_list_item"></style>
+    <style name="simple_messages_list"></style>
+    <style name="simple_product_category_view"></style>
+
+    <style name="simple_fragment_contact_info"></style>
+
+    <style name="simple_cart"></style>
+
+    <style name="simple_field_label">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="simple_order_item"></style>
+
+    <style name="simple_activity_address"></style>
+
+    <style name="simple_address_field">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="simple_order_total_view"></style>
+
+
+    <!-- The body of a message -->
+    <style name="simple_message_body"></style>
+
+    <style name="simple_thread_list"></style>
+
+    <style name="simple_reply_box"></style>
+</resources>

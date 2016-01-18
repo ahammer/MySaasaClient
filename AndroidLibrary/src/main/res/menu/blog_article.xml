@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.metalrain.simple.ui.ActivityMain">
+    <item android:id="@+id/action_switch_layout"
+        android:title="Switch Layout"
+        android:icon="@drawable/menu_switch_layout"
+        android:showAsAction="always"
+        />
+    <item android:id="@+id/action_comment"
+        android:title="Comment"
+        android:icon="@drawable/menu_comment"
+        android:showAsAction="always"
+        />
+    <item android:id="@+id/action_refresh"
+        android:title="Refresh"
+        android:icon="@drawable/menu_refresh"
+        android:showAsAction="always"
+        />
+    <item android:id="@+id/action_delete"
+        android:title="Delete"
+        android:icon="@drawable/icon_x"
+        android:showAsAction="ifRoom"
+        />
+    <item android:id="@+id/action_edit"
+        android:title="Edit"
+        android:icon="@drawable/menu_edit"
+        android:showAsAction="ifRoom"
+        />
+
+</menu>

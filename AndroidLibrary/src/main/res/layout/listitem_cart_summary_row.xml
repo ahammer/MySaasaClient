@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/simple_field_label"
+        android:id="@+id/title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_margin="0dp"
+        android:gravity="right"
+        android:layout_gravity="center"
+        android:text="TAX:"/>
+
+    <TextView
+        android:layout_margin="0dp"
+        android:id="@+id/value"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="wrap_content"
+        android:layout_width="0px"
+        android:layout_weight="2"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:text="$1.00"/>
+</LinearLayout>

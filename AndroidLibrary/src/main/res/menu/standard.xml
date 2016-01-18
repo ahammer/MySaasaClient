@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.metalrain.simple.ui.ActivityMain">
+    <item android:id="@+id/action_post"
+            android:title="Post"
+            android:icon="@drawable/menu_add"
+            android:showAsAction="always"
+        />
+    <item android:id="@+id/action_refresh"
+        android:title="Post"
+        android:icon="@drawable/menu_refresh"
+        android:showAsAction="always"
+        />
+    <item android:id="@+id/cart"
+        android:title="Cart"
+        android:showAsAction="always"
+        />
+
+</menu>

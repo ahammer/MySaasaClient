@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/amount_due"
+        android:text="Amount Due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/card_number"
+        android:layout_below="@id/amount_due"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Card # (Visa/Mastercard)"
+        />
+
+    <EditText
+        android:id="@+id/expiryMonth"
+        android:layout_below="@+id/card_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="2 Digit Expiry Month (01-12)"
+        />
+
+    <EditText
+        android:id="@+id/expiryYear"
+        android:layout_below="@+id/expiryMonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="2 Digit Expiry Year (E.g. 17, 18)"
+        />
+
+    <Button
+        android:id="@+id/submit_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/expiryYear"
+        android:text="Pay Now!" />
+
+</RelativeLayout>

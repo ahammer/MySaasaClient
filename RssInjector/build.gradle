@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName='com.metalrain.simple.rss.Injector'
+
+sourceCompatibility = 1.7
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+
+dependencies {
+    compile project(':SimpleJavaApi')
+    compile 'com.rometools:rome:1.5.0'
+
+}

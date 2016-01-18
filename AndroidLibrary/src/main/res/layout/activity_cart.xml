@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
+    style="@style/simple_cart"
+    android:layout_width="match_parent"
+
+    android:layout_height="0px"
+    android:layout_weight="1">
+<RelativeLayout
+
+              android:layout_width="match_parent"
+                android:id="@+id/root_view"
+              android:layout_height="match_parent">
+
+    <!-- UID -->
+    <TextView
+        android:id="@+id/simple_uid_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/simple_field_label"
+        android:layout_height="wrap_content"
+        android:text="UID:"/>
+
+    <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:text="DFS3M39DMN301XC2"
+            android:layout_toRightOf="@id/simple_uid_label"
+            android:layout_alignBaseline="@id/simple_uid_label"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/order_uid"/>
+
+
+    <!--  Date -->
+    <TextView
+        android:id="@+id/simple_date_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/simple_field_label"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simple_uid_label"
+        android:text="DATE:"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@id/simple_date_label"
+            android:layout_alignTop="@id/simple_date_label"
+            android:text="10/12/25"
+            android:id="@+id/order_date"/>
+
+    <!-- Status -->
+    <TextView
+        android:id="@+id/simple_status_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/simple_field_label"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simple_date_label"
+        android:text="Status:"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_toRightOf="@id/simple_status_label"
+        android:layout_alignTop="@id/simple_status_label"
+        android:text="Active"
+        android:id="@+id/order_status"/>
+
+    <!-- Pay To -->
+    <TextView
+        android:id="@+id/simple_payto_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/simple_field_label"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simple_status_label"
+        android:text="Pay to:"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignTop="@id/simple_payto_label"
+        android:layout_toRightOf="@id/simple_payto_label"
+
+        android:text="Something Something"
+        android:id="@+id/order_payto"/>
+
+
+    <!-- Order Items -->
+    <TextView
+        style="@style/simple_field_label"
+        android:id="@+id/simple_order_items_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_payto"
+        android:layout_alignParentLeft="true"
+        android:text="Items"/>
+
+    <!-- Order Items header Header -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/order_items_table_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/simple_order_items_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+
+        style="@style/simple_order_item">
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Product"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Price"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quantity"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+
+            android:text="Total"
+            />
+    </LinearLayout>
+
+    <!-- Items -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_items_table_header"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="right"
+        android:id="@+id/order_items"
+        android:orientation="vertical">
+        </LinearLayout>
+
+
+    <!-- Order Summary -->
+    <LinearLayout
+        android:id="@+id/simple_summary"
+        android:layout_below="@id/order_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/simple_field_label"
+                android:id="@+id/simple_subtotal_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+
+                android:text="Subtotal:"/>
+
+            <TextView
+                android:id="@+id/simple_subtotal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_margin="0dp"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:text="$1.00"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Billing/Shipping-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/billing_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simple_summary"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+
+        >
+
+
+    </LinearLayout>
+</RelativeLayout>
+</ScrollView>
+    <com.metalrain.simple.ui.views.OrderTotalView
+        style="@style/simple_order_total_view"
+        android:layout_below="@id/billing_shipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_total_view"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"/>
+
+</LinearLayout>

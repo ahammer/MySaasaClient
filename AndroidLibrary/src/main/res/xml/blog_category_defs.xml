@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+    This file will define what shows up on the Home screen, in a whitelist for
+    -->
+<whitelist xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    <item>
+        <title>Your Gallery Feature List</title>
+        <category>YourGalleryFeatures</category>
+        <visible>False</visible>
+        <sortColumn>dateCreated</sortColumn>
+        <sortOrder>DESC</sortOrder>
+        <pagesize>10</pagesize>
+    </item>
+-->
+
+</whitelist>

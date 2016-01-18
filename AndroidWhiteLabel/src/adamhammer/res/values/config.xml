@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Debug Settings -->
+    <string name="scheme">http</string>
+    <string name="domain">mysassa.metalrain.ca</string>
+    <string name="gcm_key">55555</string>
+    <integer name="port">8080</integer>
+</resources>
