@@ -3,7 +3,7 @@
     <!-- Debug Settings -->
     <string name="scheme">http</string>
     <string name="defaultSection">Blog</string>
-    <string name="domain">theme1.simpletest.ca</string>
+    <string name="domain">gettingstarted.simpletest.ca</string>
     <string name="gcm_key"></string>
     <integer name="port">8080</integer>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.metalrain.simple.whitelabel">
+          package="com.mysassa.whitelabel">
 
     <uses-feature android:name="android.hardware.camera"/>
 
@@ -12,9 +12,9 @@
 
 
     <application
-            android:name="com.metalrain.simple.SimpleApplication">
+            android:name="com.mysassa.SimpleApplication">
         <activity
-                android:name="com.metalrain.simple.ui.ActivityMain"
+                android:name="com.mysassa.ui.ActivityMain"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,20 +22,20 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="com.metalrain.simple.ui.ActivitySignin"
+        <activity android:name="com.mysassa.ui.ActivitySignin"
             android:label="Sign In"/>
-        <activity android:name="com.metalrain.simple.ui.ActivityBlogPost"
+        <activity android:name="com.mysassa.ui.ActivityBlogPost"
             android:label="Post"/>
-        <activity android:name="com.metalrain.simple.ui.ActivityPostComment"
+        <activity android:name="com.mysassa.ui.ActivityPostComment"
             android:label="Post Comment"/>
-        <activity android:name="com.metalrain.simple.ui.ActivityPostToBlog"
+        <activity android:name="com.mysassa.ui.ActivityPostToBlog"
             android:label="Post to Blog"/>
-        <activity android:name="com.metalrain.simple.ui.ActivityMessages"
+        <activity android:name="com.mysassa.ui.ActivityMessages"
             android:label="Read Messages"/>
-        <activity android:name="com.metalrain.simple.ui.ActivityMessage"
+        <activity android:name="com.mysassa.ui.ActivityMessage"
             android:label="Message"/>
 
-        <activity android:name="com.metalrain.simple.ui.ActivityAddress"
+        <activity android:name="com.mysassa.ui.ActivityAddress"
             android:label="Enter Address"
             android:theme="@android:style/Theme.Dialog"/>
 

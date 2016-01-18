@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.metalrain.simple.whitelabel">
+          package="com.mysassa.whitelabel">
 
     <uses-feature android:name="android.hardware.camera"/>
 
@@ -12,18 +12,18 @@
     <!-- GCM -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="com.metalrain.simple.whitelabel.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.mysassa.whitelabel.permission.C2D_MESSAGE"/>
 
 
     <application
-            android:name="com.metalrain.simple.SimpleApplication"
+            android:name="com.mysassa.SimpleApplication"
         android:theme="@style/SimpleTheme"
         >
 
-        <receiver android:name="com.metalrain.simple.ReceivePush">
+        <receiver android:name="com.mysassa.ReceivePush">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="com.metalrain.simple.whitelabel"/>
+                <category android:name="com.mysassa.whitelabel"/>
             </intent-filter>
 
         </receiver>

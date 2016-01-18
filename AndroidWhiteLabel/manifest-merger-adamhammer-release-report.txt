@@ -46,7 +46,7 @@ MERGED from AndroidManifest.xml:14:5
 MERGED from QuickWebApi:AndroidLibrary:unspecified:12:5
 	android:name
 		ADDED from AndroidManifest.xml:15:13
-activity#com.metalrain.simple.ui.ActivityMain
+activity#com.mysassa.ui.ActivityMain
 ADDED from AndroidManifest.xml:16:9
 	android:label
 		ADDED from AndroidManifest.xml:18:17
@@ -62,49 +62,49 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:21:17
 	android:name
 		ADDED from AndroidManifest.xml:21:27
-activity#com.metalrain.simple.ui.ActivitySignin
+activity#com.mysassa.ui.ActivitySignin
 ADDED from AndroidManifest.xml:25:9
 	android:label
 		ADDED from AndroidManifest.xml:26:13
 	android:name
 		ADDED from AndroidManifest.xml:25:19
-activity#com.metalrain.simple.ui.ActivityBlogPost
+activity#com.mysassa.ui.ActivityBlogPost
 ADDED from AndroidManifest.xml:27:9
 	android:label
 		ADDED from AndroidManifest.xml:28:13
 	android:name
 		ADDED from AndroidManifest.xml:27:19
-activity#com.metalrain.simple.ui.ActivityPostComment
+activity#com.mysassa.ui.ActivityPostComment
 ADDED from AndroidManifest.xml:29:9
 	android:label
 		ADDED from AndroidManifest.xml:30:13
 	android:name
 		ADDED from AndroidManifest.xml:29:19
-activity#com.metalrain.simple.ui.ActivityPostToBlog
+activity#com.mysassa.ui.ActivityPostToBlog
 ADDED from AndroidManifest.xml:31:9
 	android:label
 		ADDED from AndroidManifest.xml:32:13
 	android:name
 		ADDED from AndroidManifest.xml:31:19
-activity#com.metalrain.simple.ui.ActivityMessages
+activity#com.mysassa.ui.ActivityMessages
 ADDED from AndroidManifest.xml:33:9
 	android:label
 		ADDED from AndroidManifest.xml:34:13
 	android:name
 		ADDED from AndroidManifest.xml:33:19
-activity#com.metalrain.simple.ui.ActivityMessage
+activity#com.mysassa.ui.ActivityMessage
 ADDED from AndroidManifest.xml:35:9
 	android:label
 		ADDED from AndroidManifest.xml:36:13
 	android:name
 		ADDED from AndroidManifest.xml:35:19
-activity#com.metalrain.simple.ui.ActivityProducts
+activity#com.mysassa.ui.ActivityProducts
 ADDED from AndroidManifest.xml:37:9
 	android:label
 		ADDED from AndroidManifest.xml:38:13
 	android:name
 		ADDED from AndroidManifest.xml:37:19
-activity#com.metalrain.simple.ui.ActivityCart
+activity#com.mysassa.ui.ActivityCart
 ADDED from AndroidManifest.xml:40:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:41:13
@@ -112,7 +112,7 @@ ADDED from AndroidManifest.xml:40:9
 		ADDED from AndroidManifest.xml:42:13
 	android:name
 		ADDED from AndroidManifest.xml:40:19
-activity#com.metalrain.simple.ui.ActivityAddress
+activity#com.mysassa.ui.ActivityAddress
 ADDED from AndroidManifest.xml:44:9
 	android:label
 		ADDED from AndroidManifest.xml:45:13
@@ -120,7 +120,7 @@ ADDED from AndroidManifest.xml:44:9
 		ADDED from AndroidManifest.xml:46:13
 	android:name
 		ADDED from AndroidManifest.xml:44:19
-activity#com.metalrain.simple.ui.ActivityPayByCard
+activity#com.mysassa.ui.ActivityPayByCard
 ADDED from AndroidManifest.xml:48:9
 	android:label
 		ADDED from AndroidManifest.xml:49:13

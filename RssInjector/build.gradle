@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName='com.metalrain.simple.rss.Injector'
+mainClassName='com.mysassa.rss.Injector'
 
 sourceCompatibility = 1.7
 repositories {

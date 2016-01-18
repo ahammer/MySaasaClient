@@ -219,7 +219,7 @@
     </LinearLayout>
 </RelativeLayout>
 </ScrollView>
-    <com.metalrain.simple.ui.views.OrderTotalView
+    <com.mysassa.ui.views.OrderTotalView
         style="@style/simple_order_total_view"
         android:layout_below="@id/billing_shipping"
         android:layout_width="match_parent"

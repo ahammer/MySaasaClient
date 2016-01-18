@@ -9,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.metalrain.simple.ui.AbstractActivityProducts">
+        tools:context="com.mysassa.ui.AbstractActivityProducts">
 
         <ListView
             android:id="@+id/product_list"
@@ -19,7 +19,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.metalrain.simple.ui.sidenav.Sidenav
+    <com.mysassa.ui.sidenav.Sidenav
 
         android:id="@+id/left_drawer"
         android:layout_width="@dimen/sidenav_width"

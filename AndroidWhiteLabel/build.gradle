@@ -41,10 +41,8 @@ android {
     }
 
     productFlavors {
-        blank { applicationId "com.metalrain.simple.whitelabel" }
-        adamhammer { applicationId "com.metalrain.simple.adamhammer" }
-        simpleplatform { applicationId "com.metalrain.simple.platform" }
-        kixster { applicationId "com.metalrain.simple.kixster" }
+        blank { applicationId "com.mysassa.whitelabel" }
+        gettingstarted { applicationId "com.mysassa.gettingstarted" }
     }
 }
 

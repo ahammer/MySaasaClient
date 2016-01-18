@@ -28,7 +28,7 @@
 
         <fragment
             android:id="@+id/blog_comments"
-            android:name="com.metalrain.simple.ui.fragments.BlogCommentViewer"
+            android:name="com.mysassa.ui.fragments.BlogCommentViewer"
             android:background="#0F0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,7 +36,8 @@
 
 </LinearLayout>
     <!-- The navigation drawer -->
-    <com.metalrain.simple.ui.sidenav.Sidenav android:id="@+id/left_drawer"
+    <com.mysassa.ui.sidenav.Sidenav
+        android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

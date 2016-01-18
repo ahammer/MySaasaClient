@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Debug Settings -->
-    <string name="domain">theme1.simpletest.ca</string>
-    <string name="gcm_key">536940117955</string>
-    <integer name="port">8080</integer>
 </resources>

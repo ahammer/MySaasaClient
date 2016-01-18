@@ -27,12 +27,12 @@
     <item>
         <title>Contact</title>
         <category>Contact</category>
-        <fragment>com.metalrain.simple.ui.fragments.ContactFragment</fragment>
+        <fragment>com.mysassa.ui.fragments.ContactFragment</fragment>
     </item>
     <item>
         <title>Store</title>
         <category>Store</category>
-        <fragment>com.metalrain.simple.ui.fragments.ProductCategoryFragment</fragment>
+        <fragment>com.mysassa.ui.fragments.ProductCategoryFragment</fragment>
     </item>
 
 </whitelist>

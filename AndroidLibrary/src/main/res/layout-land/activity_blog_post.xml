@@ -63,7 +63,7 @@
             android:layout_width="0px"
             android:layout_weight="2"
             android:id="@+id/blog_comments"
-            android:name="com.metalrain.simple.ui.fragments.BlogCommentViewer"
+            android:name="com.mysassa.ui.fragments.BlogCommentViewer"
             tools:layout="@layout/fragment_blogcommentviewer" />
 
         </LinearLayout>
@@ -72,7 +72,8 @@
 
 
     <!-- The navigation drawer -->
-    <com.metalrain.simple.ui.sidenav.Sidenav android:id="@+id/left_drawer"
+    <com.mysassa.ui.sidenav.Sidenav
+        android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

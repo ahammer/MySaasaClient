@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/simple_sidenav">
-    <com.metalrain.simple.ui.views.AuthenticationView
+    <com.mysassa.ui.views.AuthenticationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <ListView
