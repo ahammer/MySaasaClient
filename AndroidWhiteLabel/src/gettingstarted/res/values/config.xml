@@ -2,7 +2,7 @@
 <resources>
     <!-- Debug Settings -->
     <string name="scheme">http</string>
-    <string name="domain">mysassa.metalrain.ca</string>
-    <string name="gcm_key">55555</string>
+    <string name="domain">gettingstarted.simpletest.ca</string>
+    <string name="gcm_key"></string>
     <integer name="port">8080</integer>
 </resources>

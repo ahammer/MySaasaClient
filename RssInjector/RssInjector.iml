@@ -27,10 +27,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="SimpleJavaApi" exported="" />
+    <orderEntry type="module" module-name="JavaAPI" exported="" />
     <orderEntry type="library" exported="" name="rome-1.5.0" level="project" />
     <orderEntry type="library" exported="" name="rome-utils-1.5.0" level="project" />
     <orderEntry type="library" exported="" name="jdom-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
+    <orderEntry type="library" exported="" name="RssInjector.RssInjector" level="project" />
   </component>
 </module>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Simple Android API</string>
+    <string name="app_name">MySassa Client API</string>
     <string name="configuration_text">View on Phone</string>
     <string name="extension_name">LightsCameraActionWatchExtension</string>
     <string name="title_activity_light_options">Light Options</string>

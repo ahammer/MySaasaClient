@@ -1,1 +1,1 @@
-include ':SimpleJavaApi', ':RssInjector', ':AndroidLibrary', ':AndroidWhiteLabel'
+include ':JavaAPI', ':RssInjector', ':AndroidLibrary', ':AndroidWhiteLabel'

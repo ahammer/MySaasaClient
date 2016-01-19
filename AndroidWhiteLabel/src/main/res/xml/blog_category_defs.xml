@@ -29,10 +29,5 @@
         <category>Contact</category>
         <fragment>com.mysassa.ui.fragments.ContactFragment</fragment>
     </item>
-    <item>
-        <title>Store</title>
-        <category>Store</category>
-        <fragment>com.mysassa.ui.fragments.ProductCategoryFragment</fragment>
-    </item>
 
 </whitelist>
