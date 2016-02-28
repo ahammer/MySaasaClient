@@ -118,6 +118,7 @@ public class Service {
         return categoryObservable;
     }
 
+
     /**
      * Construct the service on a domain/port.
      *
