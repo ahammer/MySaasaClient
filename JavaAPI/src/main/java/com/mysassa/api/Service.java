@@ -42,6 +42,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action1;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -76,6 +77,47 @@ public class Service {
      * Refresh Policy definitions?
      */
     private Map<Gateway.API_FUNCTIONS, RefreshPolicy> refreshPolicies = new HashMap();
+
+    Observable<Category> categoryObservable = Observable.create(new Observable.OnSubscribe<Category>() {
+        @Override
+        public void call(Subscriber<? super Category> subscriber) {
+            if (!subscriber.isUnsubscribed()) {
+                try {
+                    CategoryService_getCategoriesResponse  results = (CategoryService_getCategoriesResponse) gateway.CategoryApiService_getBlogCategories();
+                    for (Category c:results.results) subscriber.onNext(c);
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                } catch (NotAuthorizedException e) {
+                    subscriber.onError(e);
+                }
+                subscriber.onCompleted();
+            }
+        }
+    });
+
+    public Observable<BlogPost> getBlogPostsObservable(final Category c) {
+        return Observable.create(new Observable.OnSubscribe<BlogPost>() {
+            @Override
+            public void call(Subscriber<? super BlogPost> subscriber) {
+                try {
+
+                    for (BlogPost bp:((BlogApiService_getBlogPostsResponse)gateway.BlogApiService_getBlogPosts(c.name, 0,100,"dateCreated","DESC")).results) {
+                        subscriber.onNext(bp);
+                    }
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                } catch (NotAuthorizedException e) {
+                    e.printStackTrace();
+                }
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<Category> getCategoryObservable() {
+        return categoryObservable;
+    }
+
 
     /**
      * Construct the service on a domain/port.
