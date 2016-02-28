@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta6'
     }
 }
 
@@ -43,6 +43,7 @@ android {
     productFlavors {
         blank { applicationId "com.mysassa.whitelabel" }
         gettingstarted { applicationId "com.mysassa.gettingstarted" }
+        adamhammer { applicationId "com.mysassa.adamhammer"}
     }
 }
 
