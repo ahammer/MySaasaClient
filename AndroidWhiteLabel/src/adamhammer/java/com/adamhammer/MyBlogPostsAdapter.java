@@ -1,6 +1,7 @@
 package com.adamhammer;
 
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ import java.util.List;
  */
 class MyBlogPostsAdapter extends BaseAdapter {
     final List<BlogPost> blogPosts;
+    HashMap<BlogPost, Spanned> mCachedText = new HashMap<BlogPost, Spanned>();
 
     MyBlogPostsAdapter(List<BlogPost> blogPosts) {
         this.blogPosts = blogPosts;
@@ -39,8 +42,16 @@ class MyBlogPostsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        TextView tv = new TextView(viewGroup.getContext());
-        tv.setText(Html.fromHtml(blogPosts.get(i).title + "<br/>" + blogPosts.get(i).body));
+        TextView tv = null;
+        if (view != null && view instanceof TextView)
+            tv = (TextView)view;
+        else
+            tv = new TextView(viewGroup.getContext());
+        if (!mCachedText.containsKey(blogPosts.get(i))) {
+            mCachedText.put(blogPosts.get(i), Html.fromHtml(blogPosts.get(i).body));
+        }
+        tv.setText(mCachedText.get(blogPosts.get(i)));
+
         tv.setBackgroundResource(R.drawable.dark_panel);
         tv.setPadding(50, 50, 50, 50);
         return tv;
