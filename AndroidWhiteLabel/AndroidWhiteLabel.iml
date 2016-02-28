@@ -8,62 +8,73 @@
     </facet>
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="gettingstartedDebug" />
+        <option name="SELECTED_BUILD_VARIANT" value="adamhammerDebug" />
         <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleGettingstartedDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileGettingstartedDebugSources" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleGettingstartedDebugTest" />
-        <option name="COMPILE_JAVA_TEST_TASK_NAME" value="compileGettingstartedDebugTestSources" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleAdamhammerDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileAdamhammerDebugSources" />
         <afterSyncTasks>
-          <task>generateGettingstartedDebugSources</task>
-          <task>generateGettingstartedDebugTestSources</task>
+          <task>generateAdamhammerDebugSources</task>
         </afterSyncTasks>
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/gettingstarted/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/adamhammer/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/intermediates/classes/gettingstarted/debug" />
+    <output url="file://$MODULE_DIR$/build/intermediates/classes/adamhammer/debug" />
     <output-test url="file://$MODULE_DIR$/build/intermediates/classes/test/adamhammer/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/gettingstarted/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/gettingstarted/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/gettingstarted/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/gettingstarted/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/gettingstarted/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/generated/gettingstarted/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstartedDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/test/gettingstarted/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/test/gettingstarted/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/test/gettingstarted/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/test/gettingstarted/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/test/gettingstarted/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/generated/test/gettingstarted/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/assets" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/gettingstarted/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestGettingstarted/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/adamhammer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/adamhammer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/adamhammer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/adamhammer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/adamhammer/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/adamhammer/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammerDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammerDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/adamhammer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/adamhammer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/adamhammer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/adamhammer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/adamhammer/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/adamhammer/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/adamhammer/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestAdamhammer/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAdamhammer/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
@@ -71,6 +82,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
@@ -85,36 +103,49 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-runtime-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-verifier" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/ndk" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
-    <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" exported="" name="commons-collections4-4.0" level="project" />
-    <orderEntry type="library" exported="" name="bcprov-jdk16-1.46" level="project" />
-    <orderEntry type="library" exported="" name="httpclient-android-4.3.5" level="project" />
-    <orderEntry type="library" exported="" name="support-v13-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
+    <orderEntry type="library" exported="" name="httpclient-android-4.3.5" level="project" />
+    <orderEntry type="library" exported="" name="bcprov-jdk16-1.46" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections4-4.0" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v13-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.3.6" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-1.1.0" level="project" />
-    <orderEntry type="module" module-name="JavaAPI" exported="" />
     <orderEntry type="module" module-name="AndroidLibrary" exported="" />
+    <orderEntry type="module" module-name="JavaAPI" exported="" />
   </component>
 </module>

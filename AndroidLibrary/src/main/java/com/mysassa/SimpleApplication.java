@@ -3,6 +3,7 @@ package com.mysassa;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Observable;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mysassa.api.Service;
+import com.mysassa.api.model.BlogPost;
 import com.splunk.mint.Mint;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class SimpleApplication extends Application {
         return instance;
     }
 
+
     public static Service getService() {
         return instance.service;
     }
@@ -45,15 +48,8 @@ public class SimpleApplication extends Application {
         String scheme = getString(R.string.scheme);
         int port = getResources().getInteger(R.integer.port);
         service = new Service(domain,port,scheme);
-
-        autoLogin();
-        categoryManager = new AndroidCategoryManager(this);
-        AndroidCategoryManager.CategoryDef def = new AndroidCategoryManager.CategoryDef();
-        def.category="Contact Us";
-        def.title="Contact Us";
-        def.fragment="com.mysassa.ui.fragments.ContactFragment";
-        categoryManager.addDef(def);
         instance = this;
+        autoLogin();
 
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);

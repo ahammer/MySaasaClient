@@ -6,7 +6,7 @@
     <item>
         <title>Welcome</title>
         <category>Welcome</category>
-        <fragment>com.gettingstarted.AdamWelcome</fragment>
+        <fragment>com.adamhammer.AdamsSplash</fragment>
     </item>
     <item>
         <title>Resume</title>

@@ -1,4 +1,4 @@
-package com.gettingstarted;
+package com.adamhammer;
 
 import android.app.Fragment;
 import android.content.Intent;

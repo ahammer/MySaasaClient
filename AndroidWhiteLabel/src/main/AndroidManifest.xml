@@ -13,6 +13,7 @@
 
     <application
             android:name="com.mysassa.SimpleApplication">
+        <!--
         <activity
                 android:name="com.mysassa.ui.ActivityMain"
                 android:label="@string/app_name">
@@ -22,6 +23,7 @@
             </intent-filter>
 
         </activity>
+        -->
         <activity android:name="com.mysassa.ui.ActivitySignin"
             android:label="Sign In"/>
         <activity android:name="com.mysassa.ui.ActivityBlogPost"
