@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SimpleTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+
+    </style>
+
+    <style name="simple_news_list">
+        <item name="android:background">@drawable/low_padding_box</item>
+        </style>
+
+    <style name="simple_news_list_item">
+
+    </style>
+
+    <style name="simple_sidenav">
+        <item name="android:background">@drawable/sidenav</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="simple_field_label">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">7dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+
+    <style name="simple_title_text">
+        <item name="android:background">@drawable/solid_box_accent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="simple_form">
+        <item name="android:background">@drawable/comment_box</item>
+    </style>
+
+    <style name="simple_subtitle_text" parent="simple_title_text">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="simple_blogcomment_fragment">
+        <item name="android:background">@drawable/low_padding_box_accent</item>
+    </style>
+
+    <style name="simple_blogpost_container">
+        <item name="android:background">@drawable/low_padding_box</item>
+
+    </style>
+
+    <style name="simple_blogpost_body">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="simple_blogcomment">
+        <item name="android:background">@drawable/comment</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="adamhammer_frame">
+        <item name="android:background">@drawable/comment_box</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="simple_messages_list">
+        <item name="android:background">@drawable/low_padding_box</item>
+    </style>
+
+    <style name="simple_cart">
+        <item name="android:background">@drawable/low_padding_box</item>
+    </style>
+
+    <style name="simple_fragment_contact_info">
+        <item name="android:background">@drawable/comment_box</item>
+    </style>
+
+    <style name="simple_activity_address">
+        <item name="android:background">@drawable/comment_box</item>
+    </style>
+
+    <style name="simple_order_item">
+    </style>
+    <style name="simple_order_total_view">
+        <item name="android:background">@drawable/comment_box</item>
+    </style>
+
+    <style name="simple_reply_box">
+        <item name="android:background">@drawable/comment_box</item>
+    </style>
+
+</resources>
