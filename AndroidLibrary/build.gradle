@@ -1,4 +1,4 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 buildscript {
     repositories {
@@ -6,7 +6,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta6'
     }
 }
 
@@ -47,5 +46,7 @@ dependencies {
     compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5'
     compile 'com.jakewharton:butterknife:+'
     compile 'com.squareup.picasso:picasso:2.3.4'
+
+
 
 }

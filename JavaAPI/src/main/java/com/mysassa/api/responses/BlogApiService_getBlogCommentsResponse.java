@@ -12,13 +12,4 @@ import java.util.List;
  */
 public class BlogApiService_getBlogCommentsResponse extends SimpleResponse {
     public List<BlogComment> comments = new ArrayList();
-    public BlogApiService_getBlogCommentsResponse(JsonObject object) {
-        super(object);
-        if (isSuccess()) {
-            JsonArray array = object.getAsJsonArray("data");
-            for (int i=0;i<array.size();i++) {
-                comments.add(new BlogComment(array.get(i).getAsJsonObject()));
-            }
-        }
-    }
 }
