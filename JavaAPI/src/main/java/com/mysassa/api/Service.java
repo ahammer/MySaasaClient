@@ -99,17 +99,18 @@ public class Service {
         return Observable.create(new Observable.OnSubscribe<BlogPost>() {
             @Override
             public void call(Subscriber<? super BlogPost> subscriber) {
-                try {
-
-                    for (BlogPost bp:((BlogApiService_getBlogPostsResponse)gateway.BlogApiService_getBlogPosts(c.name, 0,100,"dateCreated","DESC")).results) {
-                        subscriber.onNext(bp);
+                if (!subscriber.isUnsubscribed()) {
+                    try {
+                        for (BlogPost bp : ((BlogApiService_getBlogPostsResponse) gateway.BlogApiService_getBlogPosts(c.name, 0, 100, "priority", "DESC")).results) {
+                            subscriber.onNext(bp);
+                        }
+                    } catch (IOException e) {
+                        subscriber.onError(e);
+                    } catch (NotAuthorizedException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    subscriber.onError(e);
-                } catch (NotAuthorizedException e) {
-                    e.printStackTrace();
+                    subscriber.onCompleted();
                 }
-                subscriber.onCompleted();
             }
         });
     }
