@@ -49,5 +49,4 @@ android {
 
 dependencies {
     compile project(':AndroidLibrary')
-
 }

@@ -1,13 +1,13 @@
 package com.mysassa.api.messages;
 
-import com.mysassa.api.responses.BlogApiService_getBlogPostsResponse;
+import com.mysassa.api.responses.GetBlogPostsResponse;
 
 /**
  * Created by adam on 2014-10-16.
  */
 public class BlogPostsModified extends ApiRootMessage {
 
-    public final BlogApiService_getBlogPostsResponse blogResponse;
+    public final GetBlogPostsResponse blogResponse;
 
     public BlogPostsModified(Exception e) {
         super(e);
@@ -19,7 +19,7 @@ public class BlogPostsModified extends ApiRootMessage {
         blogResponse = null;
     }
 
-    public BlogPostsModified(BlogApiService_getBlogPostsResponse response) {
+    public BlogPostsModified(GetBlogPostsResponse response) {
         this.blogResponse = response;
     }
 }

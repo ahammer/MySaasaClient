@@ -6,7 +6,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
     }
 }
 
@@ -47,5 +46,7 @@ dependencies {
     compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5'
     compile 'com.jakewharton:butterknife:+'
     compile 'com.squareup.picasso:picasso:2.3.4'
+
+
 
 }
