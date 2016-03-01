@@ -49,7 +49,7 @@ public class ZoomingSpaceImageView extends ImageView {
         setScaleType(ScaleType.MATRIX);
         Matrix m = getInitialMatrix();
         currentTransition = (float) Math.exp(currentTransition*3);
-        m.postRotate(currentTransition*2, getWidth()/2, getHeight()/2);
+        //m.postRotate(currentTransition, getWidth()/2, getHeight()/2);
         m.postScale(1+currentTransition*0.12f, 1+currentTransition*0.12f, getWidth()/2,getHeight()/2);
         setImageMatrix(m);
     }

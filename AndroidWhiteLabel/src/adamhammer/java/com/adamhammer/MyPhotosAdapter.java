@@ -32,16 +32,17 @@ public class MyPhotosAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        ImageView iv;
+        ZoomingSpaceImageView iv;
         if (view != null && view instanceof ImageView) {
-            iv = (ImageView) view;
+            iv = (ZoomingSpaceImageView) view;
         } else {
-            iv = new ImageView(viewGroup.getContext());
+            iv = new ZoomingSpaceImageView(viewGroup.getContext());
         }
         iv.setImageResource(image_ids[i]);
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) AdamsSplash.dpToPx(viewGroup.getContext(), 300));
         iv.setLayoutParams(lp);
+        iv.setCurrentTransition(0);
 
         return iv;
     }

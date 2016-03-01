@@ -90,10 +90,9 @@ public class AdamsSplash extends Activity {
     private void updateListImages() {
         for (int i=0;i<myList.getChildCount();i++) {
             View v = myList.getChildAt(i);
-            if (v instanceof ImageView) {
-                ImageView iv = (ImageView) v;
-                iv.setPadding(0, (int) ((v.getY()/v.getHeight()-0.5)*-200), 0,0);
-
+            if (v instanceof ZoomingSpaceImageView) {
+                ZoomingSpaceImageView iv = (ZoomingSpaceImageView) v;
+                iv.setCurrentTransition(v.getY()/myList.getHeight());
             }
         }
     }
