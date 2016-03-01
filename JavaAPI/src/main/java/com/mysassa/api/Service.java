@@ -15,6 +15,7 @@ import com.mysassa.api.responses.GetBlogPostsResponse;
 import com.mysassa.api.responses.GetCategoriesResponse;
 import com.mysassa.api.rx.RxBus;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -22,6 +23,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import retrofit2.Retrofit;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -73,8 +79,15 @@ public class Service {
             @Override
             public void call(Subscriber<? super BlogPost> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
-                    for (BlogPost bp : ((GetBlogPostsResponse) gateway.getBlogPosts(c.name, 0, 100, "priority", "DESC")).results) {
-                        subscriber.onNext(bp);
+
+                    Call<GetBlogPostsResponse> call = gateway.getBlogPosts(c.name, 0, 100, "priority", "DESC");
+                    try {
+                        Response<GetBlogPostsResponse> response = call.execute();
+                        for (BlogPost bp : response.body().getData()) {
+                            subscriber.onNext(bp);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     subscriber.onCompleted();
                 }
@@ -97,10 +110,17 @@ public class Service {
      */
     public Service(String domain, int port, String scheme) {
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         gateway = new Retrofit.Builder()
                 .baseUrl(scheme+"://"+domain+":"+port)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client )
                 .build()
                 .create(IMySaasaGateway.class);
+
     }
 
     public ServiceState getState() {
@@ -108,31 +128,6 @@ public class Service {
     }
 
 
-    public IMySaasaGateway getGateway() {
-        return gateway;
-    }
-
-    private void handleMessage(Object o) {
-        if (o instanceof ServiceSigninMessage) {
-            ServiceSigninMessage msg = (ServiceSigninMessage) o;
-            if (((ServiceSigninMessage) o).isSuccess()) {
-                state.authenticated = true;
-                sendGcmSenderId(state.gcm_sender_id);
-                getMessageCount();
-            }
-            bus.post(new SigninMessage(msg.response));
-
-        } else if (o instanceof MessageCountUpdated) {
-            updateMessages();
-        }
-    }
-
-
-
-    public void updateMessages() {
-        checkNotNull(state.messageCount);
-        getMessages(0, state.messageCount, "timeSent", "DESC");
-    }
 
     private void getMessages(final long Page, final long Page_Size, final String order, final String direction) {
 

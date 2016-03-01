@@ -105,7 +105,7 @@ public class ActivitySignin extends ActivityBase {
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Crouton.makeText(ActivitySignin.this, "Got a result: "+message.response.data, Style.ALERT).show();
+                    Crouton.makeText(ActivitySignin.this, "Got a result: "+message.response.message, Style.ALERT).show();
                 }
             }
         });

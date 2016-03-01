@@ -73,7 +73,7 @@ public class ActivityMessages  extends ActivityBase{
         } else if (o instanceof BlogPostsModified) {
             final BlogPostsModified msg = (BlogPostsModified) o;
             if (msg.blogResponse != null && msg.blogResponse.isSuccess()) {
-                for (BlogPost post:msg.blogResponse.results) {
+                for (BlogPost post:msg.blogResponse.getData()) {
                     if (post.id == state.waitingFor.blogpost_id) {
                         runOnUiThread(new Runnable() {
                             @Override

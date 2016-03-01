@@ -2,6 +2,7 @@ package com.mysassa.api;
 
 import com.mysassa.api.responses.GetBlogPostsResponse;
 
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -126,7 +127,8 @@ public interface IMySaasaGateway {
 
     @FormUrlEncoded
     @POST("BlogApiService/getBlogPosts")
-    GetBlogPostsResponse getBlogPosts(@Field("category")String category, @Field("page")int page, @Field("take")int take, @Field("order")String order, @Field("direction")String direction);
+    Call<GetBlogPostsResponse> getBlogPosts(@Field("category")String category, @Field("page")int page, @Field("take")int take, @Field("order")String order, @Field("direction")String direction);
+
 
 
     @FormUrlEncoded

@@ -18,6 +18,8 @@ dependencies {
     compile 'io.reactivex:rxjava:+'
     compile 'org.apache.commons:commons-collections4:4.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
 //    compile 'io.reactivex:rxjava-async:+'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
 }
