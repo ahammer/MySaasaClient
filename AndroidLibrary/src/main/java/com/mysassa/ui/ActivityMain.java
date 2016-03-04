@@ -21,8 +21,6 @@ import android.widget.TextView;
 import com.mysassa.ApplicationSectionsManager;
 import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.api.messages.BlogPostsModified;
-import com.mysassa.api.messages.SigninMessage;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.ui.adapters.BlogAdapter;
@@ -245,29 +243,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
 
 
-    }
-
-
-
-    public void onLoginResult(final SigninMessage m) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (m.isSuccess()) mDrawerLayout.closeDrawers();
-            }
-        });
-
-    }
-
-
-    public void blogPostsUpdated(BlogPostsModified message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                BaseAdapter adapter = (BaseAdapter) newsList.getAdapter();
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
     public static void startFreshTop(Context ctx, Category c) {

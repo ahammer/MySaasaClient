@@ -9,11 +9,14 @@ import android.widget.EditText;
 
 import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.api.messages.SigninMessage;
+import com.mysassa.api.LoginUserResponse;
 import com.mysassa.api.model.Category;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by administrator on 2014-06-30.
@@ -51,7 +54,24 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getService().getLoginManager().login(username.getText().toString(), password.getText().toString());
+                getService().getLoginManager().login(username.getText().toString(), password.getText().toString())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(new Action1<LoginUserResponse>() {
+                    @Override
+                    public void call(LoginUserResponse loginUserResponse) {
+                        if (loginUserResponse.isSuccess()) {
+                            if (rememberMe.isChecked()) {
+                                MySaasaAndroidApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
+                            }
+                            setResult(RESULT_OK);
+                            finish();
+                        } else {
+                            Crouton.makeText(ActivitySignin.this, "Got a result: "+loginUserResponse.getMessage(), Style.ALERT).show();
+                        }
+
+                    }
+                });
             }
         });
 
@@ -59,7 +79,6 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
             @Override
             public void onClick(View view) {
                 if (crouton != null) Crouton.hide(crouton);
-
                 if (password.getText().toString().equals(password_repeat.getText().toString())) {
                     crouton = Crouton.makeText(ActivitySignin.this, "Creating account", Style.INFO);
                     crouton.show();
@@ -70,7 +89,6 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -84,20 +102,4 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
         return true;
     }
 
-    private void SigninResult(final SigninMessage message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (message.isSuccess()) {
-                    if (rememberMe.isChecked()) {
-                        MySaasaAndroidApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
-                    }
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Crouton.makeText(ActivitySignin.this, "Got a result: "+message.response.getMessage(), Style.ALERT).show();
-                }
-            }
-        });
-    }
 }

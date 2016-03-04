@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.messages.NewMessage;
 import com.mysassa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.ui.ActivityMain;
 import com.mysassa.ui.ActivityMessages;
@@ -86,7 +85,7 @@ public class ReceivePush extends BroadcastReceiver {
             mNotificationManager.notify(5005, mBuilder.build());
 
         } else {
-            s.bus.post(new NewMessage());
+
         }
     }
 

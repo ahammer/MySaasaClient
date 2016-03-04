@@ -10,8 +10,6 @@ import android.widget.ListView;
 
 import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.api.messages.BlogCommentsRetrievedMessage;
-import com.mysassa.api.messages.DeletedBlogComment;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.ui.ActivityPostComment;
@@ -49,7 +47,7 @@ public class BlogCommentViewer extends Fragment {
     public void onResume() {
         super.onResume();
         MySaasaAndroidApplication.getService().bus.register(this);
-        blogCommentsReceived(null);
+        //blogCommentsReceived(null);
     }
 
     @Override
@@ -65,14 +63,12 @@ public class BlogCommentViewer extends Fragment {
     public void setPost(BlogPost post) {
         if (post == null) return;
         this.post = post;
-        blogCommentsReceived(null);
+        //blogCommentsReceived(null);
     }
 
 
-    public void blogPostDeleted(DeletedBlogComment message) {
-        blogCommentsReceived(null);
-    }
 
+    /*
     public void blogCommentsReceived(BlogCommentsRetrievedMessage message) {
         if (post == null) return;
 
@@ -158,5 +154,5 @@ public class BlogCommentViewer extends Fragment {
         }
 
     }
-
+*/
 }

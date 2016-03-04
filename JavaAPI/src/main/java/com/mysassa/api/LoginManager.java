@@ -3,7 +3,6 @@ package com.mysassa.api;
 import java.io.IOException;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -12,7 +11,8 @@ import rx.Subscriber;
  */
 public class LoginManager {
     private final MySaasaClient mySaasa;
-    private Observable<LoginUserResponse> mLoginResponseObservable;
+
+    private Observable<LoginUserResponse> lastLoginResponseObservable;
 
     public LoginManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
@@ -25,27 +25,44 @@ public class LoginManager {
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        if (mLoginResponseObservable != null) return mLoginResponseObservable;
-        mLoginResponseObservable = Observable.create(new Observable.OnSubscribe<LoginUserResponse>() {
-            @Override
-            public void call(Subscriber<? super LoginUserResponse> subscriber) {
-                if (!subscriber.isUnsubscribed()) {
-                    Call<LoginUserResponse> loginUserResponseCall = mySaasa.gateway.loginUser(username, password);
-                    try {
-                        Response<LoginUserResponse> response = loginUserResponseCall.execute();
-                        subscriber.onNext(response.body());
-                        subscriber.onCompleted();
-                    } catch (IOException e) {
-                        subscriber.onError(e);
-                    }
+        lastLoginResponseObservable = Observable.create(new LoginObservable(username, password));
+        return lastLoginResponseObservable;
+    }
+
+    public Observable<LoginUserResponse> getLastLoginResponseObservable() {
+        return lastLoginResponseObservable;
+    }
+
+    private class LoginObservable implements Observable.OnSubscribe<LoginUserResponse> {
+        private LoginUserResponse lastResponse;
+        private final String username;
+        private final String password;
+
+        public LoginObservable(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+
+        @Override
+        public void call(Subscriber<? super LoginUserResponse> subscriber) {
+            if (!subscriber.isUnsubscribed()) {
+                if (lastResponse != null) {
+                    subscriber.onNext(lastResponse);
+                    subscriber.onCompleted();
+                    return;
                 }
-
+                Call<LoginUserResponse> loginUserResponseCall = mySaasa.gateway.loginUser(username, password);
+                try {
+                    lastResponse = loginUserResponseCall.execute().body();
+                    subscriber.onNext(lastResponse);
+                    subscriber.onCompleted();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
             }
-        }).cache();
-        return mLoginResponseObservable;
+
+        }
+
     }
 
-    public Observable<LoginUserResponse> getmLoginResponseObservable() {
-        return mLoginResponseObservable;
-    }
 }

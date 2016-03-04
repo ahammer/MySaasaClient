@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
  */
 public class SimpleResponse {
     protected boolean success;
-    protected String message;
+    protected String message = "";
     public SimpleResponse(){}
     public boolean isSuccess() {
         return this.success;
