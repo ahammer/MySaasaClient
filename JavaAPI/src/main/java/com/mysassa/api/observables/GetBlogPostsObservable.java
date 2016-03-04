@@ -1,6 +1,6 @@
 package com.mysassa.api.observables;
 
-import com.mysassa.api.IMySaasaGateway;
+import com.mysassa.api.MySaasaGateway;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.api.responses.GetBlogPostsResponse;
@@ -8,7 +8,6 @@ import com.mysassa.api.responses.GetBlogPostsResponse;
 import java.io.IOException;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -17,10 +16,10 @@ import rx.Subscriber;
  */
 public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> {
     private final Category category;
-    private final IMySaasaGateway gateway;
+    private final MySaasaGateway gateway;
     private GetBlogPostsResponse response;
 
-    public GetBlogPostsObservable(Category category, IMySaasaGateway gateway) {
+    public GetBlogPostsObservable(Category category, MySaasaGateway gateway) {
         this.category = category;
         this.gateway = gateway;
     }

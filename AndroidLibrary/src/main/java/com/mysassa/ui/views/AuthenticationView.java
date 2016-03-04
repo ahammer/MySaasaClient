@@ -7,27 +7,24 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.common.eventbus.Subscribe;
 import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.api.LoginUserResponse;
-import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.messages.LoginStateChanged;
+import com.mysassa.api.model.User;
 import com.mysassa.ui.ActivityMessages;
 import com.mysassa.ui.ActivitySignin;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Adam on 1/4/2015.
  */
 public class AuthenticationView extends FrameLayout {
 
+
+    private Button signout;
+    private Button signin;
+    private Button messages;
 
     public AuthenticationView(Context context) {
         super(context);
@@ -37,9 +34,10 @@ public class AuthenticationView extends FrameLayout {
     private void init() {
         inflate(getContext(), R.layout.view_authentication,this);
 
-        Button signin = (Button) findViewById(R.id.signin);
-        Button signout = (Button) findViewById(R.id.logout);
-        Button messages = (Button) findViewById(R.id.message);
+        signin = (Button) findViewById(R.id.signin);
+        signout = (Button) findViewById(R.id.logout);
+        messages = (Button) findViewById(R.id.message);
+
         signin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,13 +45,15 @@ public class AuthenticationView extends FrameLayout {
                 getContext().startActivity(i);
             }
         });
+
         signout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MySaasaAndroidApplication.getInstance().clearCredentials();
+                MySaasaAndroidApplication.getService().getLoginManager().signOut();
 
             }
         });
+
         messages.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,20 +68,11 @@ public class AuthenticationView extends FrameLayout {
 
     private void setVisibilities() {
         if (MySaasaAndroidApplication.getInstance()!=null) {
-            MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
-            Observable<LoginUserResponse> observable = mySaasaClient.getLoginManager().getLastLoginResponseObservable();
-            if (observable != null) {
-                observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers
-                        .mainThread())
-                        .subscribe(new Action1<LoginUserResponse>() {
-                            @Override
-                            public void call(LoginUserResponse loginUserResponse) {
-                                Toast.makeText(getContext(), "Am I logged in"+loginUserResponse.isSuccess(), Toast.LENGTH_SHORT).show();
-
-                            }
-                });
-            }
+            User u = MySaasaAndroidApplication.getService().getLoginManager().getAuthenticatedUser();
+            boolean auth = u != null;
+            signin.setVisibility(auth?View.GONE:View.VISIBLE);
+            messages.setVisibility(auth?View.VISIBLE:View.GONE);
+            signout.setVisibility(auth?View.VISIBLE:View.GONE);
         }
     }
 
@@ -90,4 +81,29 @@ public class AuthenticationView extends FrameLayout {
         init();
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        MySaasaAndroidApplication.getService().bus.register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        MySaasaAndroidApplication.getService().bus.unregister(this);
+    }
+
+    @Subscribe
+    public void onLogin(LoginStateChanged message) {
+        if (getContext() instanceof Activity) {
+            Activity a = (Activity) getContext();
+            a.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setVisibilities();
+                }
+            });
+        }
+
+    }
 }
