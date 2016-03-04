@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.messages.SigninMessage;
 import com.mysassa.api.model.Category;
 
@@ -91,7 +91,7 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
             public void run() {
                 if (message.isSuccess()) {
                     if (rememberMe.isChecked()) {
-                        SimpleApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
+                        MySaasaAndroidApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
                     }
                     setResult(RESULT_OK);
                     finish();

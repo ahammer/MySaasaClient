@@ -6,22 +6,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.mysassa.R;
 import com.mysassa.ApplicationSectionsManager;
 
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.Category;
 import com.mysassa.ui.adapters.NavigationDrawerAdapter;
 
 import java.util.List;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Adam on 1/4/2015.

@@ -13,10 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.Window;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
 import com.mysassa.ApplicationSectionsManager;
 
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.model.Category;
 import com.mysassa.ui.sidenav.LeftNavigationFrameLayout;
@@ -51,7 +51,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         return selectedCategory;
     }
     public MySaasaClient getService() {
-        return SimpleApplication.getService();
+        return MySaasaAndroidApplication.getService();
     }
 
     public final boolean isConnected() {
@@ -83,7 +83,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
             }
         },filter);
         FOREGROUND_REF_COUNT++;
-        SimpleApplication.getService().bus.register(this);
+        MySaasaAndroidApplication.getService().bus.register(this);
 
     }
 
@@ -92,7 +92,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         super.onPause();
         unregisterReceiver(receiver);
         FOREGROUND_REF_COUNT--;
-        SimpleApplication.getService().bus.unregister(this);
+        MySaasaAndroidApplication.getService().bus.unregister(this);
 
     }
 
@@ -136,7 +136,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
 
 
     protected void categoryChanged(Category c) {
-        ApplicationSectionsManager.CategoryDef def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(c);
+        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(c);
         ActivityMain.startFreshTop(this, c);
     }
 

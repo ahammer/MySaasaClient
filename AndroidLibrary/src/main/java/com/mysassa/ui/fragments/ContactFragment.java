@@ -9,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
-import com.mysassa.api.MessageSuccessfullySent;
 import com.mysassa.api.model.User;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.functions.Action1;
 
 /**
@@ -51,7 +48,7 @@ public class ContactFragment extends Fragment {
                     body.setEnabled(false);
                     send.setEnabled(false);
 
-                    requestCode = SimpleApplication.getService().sendMessage("admin", "App Feedback", body.getText().toString(), name.getText().toString(), email.getText().toString(), phone.getText().toString());
+                    requestCode = MySaasaAndroidApplication.getService().sendMessage("admin", "App Feedback", body.getText().toString(), name.getText().toString(), email.getText().toString(), phone.getText().toString());
                 }
             }
         });

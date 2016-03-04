@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.SigninMessage;
 import com.mysassa.api.messages.SignoutMessage;
@@ -45,8 +45,8 @@ public class AuthenticationView extends FrameLayout {
         signout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleApplication.getInstance().clearCredentials();
-                SimpleApplication.getService().signout();
+                MySaasaAndroidApplication.getInstance().clearCredentials();
+                MySaasaAndroidApplication.getService().signout();
             }
         });
         messages.setOnClickListener(new OnClickListener() {
@@ -61,8 +61,8 @@ public class AuthenticationView extends FrameLayout {
     }
 
     private void setVisibilities() {
-        if (SimpleApplication.getInstance()!=null) {
-            MySaasaClient mySaasaClient = SimpleApplication.getService();
+        if (MySaasaAndroidApplication.getInstance()!=null) {
+            MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
             signin.setVisibility(mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
             signout.setVisibility(!mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
             title.setVisibility(!mySaasaClient.getState().authenticated ? View.GONE : View.VISIBLE);

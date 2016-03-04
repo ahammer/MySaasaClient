@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Message;
@@ -58,7 +58,7 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
     }
 
     private void updateMessageAdapter() {
-        final MySaasaClient mySaasaClient = SimpleApplication.getService();
+        final MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
         if (mySaasaClient != null && mySaasaClient.getState().authenticated) {
             final MySaasaClient mySaasaClient1 = mySaasaClient;
             list.setAdapter(new BaseAdapter() {
@@ -91,9 +91,9 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
                                 switch (m.getType()) {
                                     case Reply:
                                         ReplyMessage msg = (ReplyMessage) m.getDataObj();
-                                        BlogPost blogPost = null;// = SimpleApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
+                                        BlogPost blogPost = null;// = MySaasaAndroidApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
                                         if (blogPost == null) {
-                                            SimpleApplication.getService().getBlogPostById(msg.blogpost_id);
+                                            MySaasaAndroidApplication.getService().getBlogPostById(msg.blogpost_id);
                                             state.waiting = true;
                                             state.waitingFor = msg;
                                             asyncDialog.show();

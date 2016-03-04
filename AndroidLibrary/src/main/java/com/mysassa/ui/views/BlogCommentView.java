@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.User;
@@ -62,7 +62,7 @@ public abstract class BlogCommentView extends FrameLayout {
 
 
 
-        User u = SimpleApplication.getService().getState().user;
+        User u = MySaasaAndroidApplication.getService().getState().user;
         if (u == null) {
             vote.setVisibility(View.GONE);
             remove.setVisibility(View.GONE);
@@ -93,7 +93,7 @@ public abstract class BlogCommentView extends FrameLayout {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SimpleApplication.getService().deleteBlogComment(comment);
+                                MySaasaAndroidApplication.getService().deleteBlogComment(comment);
                             }
 
                         })
@@ -115,7 +115,7 @@ public abstract class BlogCommentView extends FrameLayout {
         }
         body.setText(comment.content);
         depth.setDepth(comment.depth);
-        User u = SimpleApplication.getService().getState().user;
+        User u = MySaasaAndroidApplication.getService().getState().user;
 
         if (comment.author == null) {                       //Only Deleted comments have null author
             remove.setVisibility(View.GONE);

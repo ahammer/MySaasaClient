@@ -22,7 +22,7 @@ public class ReceivePush extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //We get a push, that means update messages for now
-        MySaasaClient s = SimpleApplication.getService();
+        MySaasaClient s = MySaasaAndroidApplication.getService();
         Types type;
         try {
             String sType = intent.getExtras().getString("class");

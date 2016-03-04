@@ -19,10 +19,10 @@ import java.io.IOException;
 /**
  * Created by administrator on 2014-06-30.
  */
-public class SimpleApplication extends Application {
-    private static SimpleApplication instance;
+public class MySaasaAndroidApplication extends Application {
+    private static MySaasaAndroidApplication instance;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "SimpleApplication";
+    private static final String TAG = "MySaasaAndroidApplication";
     private static final String PROPERTY_REG_ID = "ID";
     private static final String PROPERTY_APP_VERSION = "APP_VERSION";
     private final EventBus bus = new EventBus();
@@ -31,7 +31,7 @@ public class SimpleApplication extends Application {
     private GoogleCloudMessaging gcm;
     private String regid;
 
-    public static SimpleApplication getInstance() {
+    public static MySaasaAndroidApplication getInstance() {
         return instance;
     }
     public static MySaasaClient getService() {
@@ -123,7 +123,7 @@ public class SimpleApplication extends Application {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
-        return getSharedPreferences(SimpleApplication.class.getSimpleName()+"GCM",
+        return getSharedPreferences(MySaasaAndroidApplication.class.getSimpleName()+"GCM",
                 Context.MODE_PRIVATE);
     }
 
@@ -136,7 +136,7 @@ public class SimpleApplication extends Application {
                     String msg = "";
                     try {
                         if (gcm == null) {
-                            gcm = GoogleCloudMessaging.getInstance(SimpleApplication.this);
+                            gcm = GoogleCloudMessaging.getInstance(MySaasaAndroidApplication.this);
                         }
                         String key = getString(R.string.gcm_key);
                         regid = gcm.register(key);
@@ -155,7 +155,7 @@ public class SimpleApplication extends Application {
                         // message using the 'from' address in the message.
 
                         // Persist the registration ID - no need to register again.
-                        storeRegistrationId(SimpleApplication.this, regid);
+                        storeRegistrationId(MySaasaAndroidApplication.this, regid);
                     } catch (IOException ex) {
                         msg = "Error :" + ex.getMessage();
                         // If there is an error, don't just keep trying to register.
@@ -172,7 +172,7 @@ public class SimpleApplication extends Application {
 
     }
 
-    private void storeRegistrationId(SimpleApplication simpleApplication, String regid) {
+    private void storeRegistrationId(MySaasaAndroidApplication simpleApplication, String regid) {
 
     }
 

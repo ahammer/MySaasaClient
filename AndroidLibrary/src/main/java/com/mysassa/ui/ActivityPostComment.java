@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 
@@ -75,12 +75,12 @@ public class ActivityPostComment extends Activity {
             @Override
             public void onClick(View view) {
                 if (editMode) {
-                        SimpleApplication.getService().updateBlogComment(state.comment, commentBox.getText().toString());
+                        MySaasaAndroidApplication.getService().updateBlogComment(state.comment, commentBox.getText().toString());
                 } else {
                     if (state.comment == null) {
-                        SimpleApplication.getService().commentOnBlog(state.post.id, commentBox.getText().toString());
+                        MySaasaAndroidApplication.getService().commentOnBlog(state.post.id, commentBox.getText().toString());
                     } else {
-                        SimpleApplication.getService().replyToComment(state.comment.id, commentBox.getText().toString());
+                        MySaasaAndroidApplication.getService().replyToComment(state.comment.id, commentBox.getText().toString());
                     }
                 }
                 setResult(Activity.RESULT_OK);
@@ -88,7 +88,7 @@ public class ActivityPostComment extends Activity {
             }
         });
 
-        if (!SimpleApplication.getService().getState().authenticated) {
+        if (!MySaasaAndroidApplication.getService().getState().authenticated) {
 
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);

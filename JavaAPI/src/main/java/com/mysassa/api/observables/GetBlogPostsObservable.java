@@ -17,8 +17,8 @@ import rx.Subscriber;
  */
 public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> {
     private final Category category;
-    final IMySaasaGateway gateway;
-    
+    private final IMySaasaGateway gateway;
+
     public GetBlogPostsObservable(Category category, IMySaasaGateway gateway) {
         this.category = category;
         this.gateway = gateway;

@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.Message;
 import com.mysassa.ui.views.ExtendedMessageView;
 
@@ -32,21 +32,21 @@ public class ActivityMessage extends SideNavigationCompatibleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         rootMessage = (Message)getIntent().getSerializableExtra("message");
-        SimpleApplication.getService().requestMessageThread(rootMessage);
+        MySaasaAndroidApplication.getService().requestMessageThread(rootMessage);
         threadList = (ListView) findViewById(R.id.list);
         replyButton = (Button) findViewById(R.id.post_reply_button);
         replyText = (EditText) findViewById(R.id.reply_text);
         replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleApplication.getService().replyToMessage(rootMessage, replyText.getText().toString());
+                MySaasaAndroidApplication.getService().replyToMessage(rootMessage, replyText.getText().toString());
             }
         });
         setupList();
     }
 
     private void setupList() {
-        thread = SimpleApplication.getService().getState().messages.getThread(rootMessage);
+        thread = MySaasaAndroidApplication.getService().getState().messages.getThread(rootMessage);
         threadList.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {

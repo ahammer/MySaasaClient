@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.mysassa.ApplicationSectionsManager;
 
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.api.model.User;
@@ -70,7 +70,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         getMenuInflater().inflate(R.menu.blog_article, menu);
         ApplicationSectionsManager.CategoryDef def;
         try {
-            def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
+            def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         } catch (Exception e) {
             def = new ApplicationSectionsManager.CategoryDef();
         }
@@ -109,7 +109,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                 }
             });
 
-            User u = SimpleApplication.getService().getState().user;
+            User u = MySaasaAndroidApplication.getService().getState().user;
             MenuItem delete = menu.findItem(R.id.action_delete);
             MenuItem edit = menu.findItem(R.id.action_edit);
             if (u == null || u.id != state.post.author.id) {
@@ -127,7 +127,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        SimpleApplication.getService().deleteBlogPost(state.post);
+                                        MySaasaAndroidApplication.getService().deleteBlogPost(state.post);
                                         finish();
                                     }
 
@@ -203,7 +203,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         viewer.setSelected_comment_id(selected_comment_id);
         viewer.setPost(state.post);
 
-        ApplicationSectionsManager.CategoryDef def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
+        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         if (def.commentsAllowed) {
             switch (currentState) {
                 case BlogOnly:

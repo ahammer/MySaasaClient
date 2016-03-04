@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mysassa.ApplicationSectionsManager;
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 
@@ -63,7 +63,7 @@ public class ActivityPostToBlog extends Activity {
         } else {
             state.category = (Category) getIntent().getSerializableExtra("category");
             if (state.category != null) {
-                state.categoryDef = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
+                state.categoryDef = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
             }
             state.post = (BlogPost) getIntent().getSerializableExtra("post");
             state.editMode = state.post!=null;
@@ -95,7 +95,7 @@ public class ActivityPostToBlog extends Activity {
                             body.getText().toString());
                             Intent i = new Intent();
 
-                    SimpleApplication.getService().updateBlogPost(
+                    MySaasaAndroidApplication.getService().updateBlogPost(
                             state.post,
                             title.getText().toString(),
                             subtitle.getText().toString(),
@@ -109,7 +109,7 @@ public class ActivityPostToBlog extends Activity {
                     return;
 
                 } else {
-                    SimpleApplication.getService().postToBlog(
+                    MySaasaAndroidApplication.getService().postToBlog(
                             title.getText().toString(),
                             subtitle.getText().toString(),
                             summary.getText().toString(),
@@ -125,7 +125,7 @@ public class ActivityPostToBlog extends Activity {
         });
 
 
-        if (!SimpleApplication.getService().getState().authenticated) {
+        if (!MySaasaAndroidApplication.getService().getState().authenticated) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }

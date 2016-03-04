@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 
 import com.mysassa.ApplicationSectionsManager;
+import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.messages.BlogPostsModified;
 import com.mysassa.api.messages.SigninMessage;
 import com.mysassa.api.model.BlogPost;
@@ -31,7 +31,9 @@ import com.mysassa.ui.fragments.EmptyListAdapter;
 import java.util.List;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -50,6 +52,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     private MenuItem refresh;
     private FrameLayout fragmentFrame;
     private MenuItem cart;
+    private Subscription subscription;
 
 
     @Override
@@ -84,10 +87,22 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SimpleApplication.getService().getBlogPostsObservable(getSelectedCategory())
+
+        updateBlogPostSubscription();
+
+    }
+
+    private void updateBlogPostSubscription() {
+        if (subscription != null) subscription.unsubscribe();
+        subscription = MySaasaAndroidApplication.getService().getBlogPostsObservable(getSelectedCategory())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .toList().subscribe(new Subscriber<List<BlogPost>>() {
+                .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
+                    @Override
+                    public Integer call(BlogPost blogPost, BlogPost blogPost2) {
+                        return Integer.valueOf((int) (blogPost2.id - blogPost.id));
+                    }
+                }).subscribe(new Subscriber<List<BlogPost>>() {
             @Override
             public void onCompleted() {
 
@@ -103,11 +118,11 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                 newsList.setAdapter(new BlogAdapter(blogPosts));
             }
         });
-
     }
 
     @Override
     protected void onPause() {
+        subscription.unsubscribe();
         super.onPause();
     }
 
@@ -119,7 +134,8 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
     @Override
     protected void categoryChanged(Category c) {
-        updateNewsList();
+        super.selectedCategory = c;
+        updateBlogList();
     }
 
 
@@ -145,13 +161,13 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    updateNewsList();
+                    updateBlogList();
                     return true;
                 }
             });
         }
 
-        updateNewsList();
+        updateBlogList();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -186,24 +202,21 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
         } else {
             mDrawerLayout.openDrawer(sidenav);
         }
-
     }
 
-    protected void updateNewsList() {
-        ApplicationSectionsManager.CategoryDef def =SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
-        title.setText(def.title);
+    protected void updateBlogList() {
+        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
 
+        title.setText(def.title);
         if (TextUtils.isEmpty(def.fragment)) {
             newsList.setVisibility(View.VISIBLE);
             fragmentFrame.setVisibility(View.GONE);
-            //newsList.setAdapter(new BlogAdapter(this));
+            updateBlogPostSubscription();
             title.setVisibility(View.VISIBLE);
             if (post != null) {
                 post.setVisible(def.postsAllowed);
                 refresh.setVisible(true);
             }
-
-
         } else {
             refresh.setVisible(false);
             post.setVisible(false);

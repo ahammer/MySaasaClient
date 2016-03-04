@@ -12,7 +12,7 @@
 
 
     <application
-            android:name="com.mysassa.SimpleApplication">
+            android:name="com.mysassa.MySaasaAndroidApplication">
         <!--
         <activity
                 android:name="com.mysassa.ui.ActivityMain"

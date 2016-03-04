@@ -16,7 +16,7 @@
 
 
     <application
-            android:name="com.mysassa.SimpleApplication"
+            android:name="com.mysassa.MySaasaAndroidApplication"
         android:theme="@style/SimpleTheme"
         android:icon="@drawable/ic_app">
 
