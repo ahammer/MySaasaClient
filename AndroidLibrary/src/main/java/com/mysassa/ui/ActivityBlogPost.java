@@ -104,12 +104,13 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
             menu.findItem(R.id.action_refresh).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    viewer.refresh();
                     return true;
                 }
             });
 
-            User u = MySaasaAndroidApplication.getService().getState().user;
+            //User u = MySaasaAndroidApplication.getService().get().user;
+            User u = null;
+
             MenuItem delete = menu.findItem(R.id.action_delete);
             MenuItem edit = menu.findItem(R.id.action_edit);
             if (u == null || u.id != state.post.author.id) {
@@ -127,7 +128,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        MySaasaAndroidApplication.getService().deleteBlogPost(state.post);
+
                                         finish();
                                     }
 
@@ -231,7 +232,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200202 && resultCode == Activity.RESULT_OK) {
-            viewer.refresh();
+            //viewer.refresh();
             if (data != null && data.hasExtra("post")) {
                 state.post = (BlogPost) data.getSerializableExtra("post");
                 handleVisibility();

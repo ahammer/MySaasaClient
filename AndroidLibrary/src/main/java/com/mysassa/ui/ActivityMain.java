@@ -94,7 +94,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
     private void updateBlogPostSubscription() {
         if (subscription != null) subscription.unsubscribe();
-        subscription = MySaasaAndroidApplication.getService().getBlogPostsObservable(getSelectedCategory())
+        subscription = MySaasaAndroidApplication.getService().getBlogManager().getBlogPostsObservable(getSelectedCategory())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
@@ -103,6 +103,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                         return Integer.valueOf((int) (blogPost2.id - blogPost.id));
                     }
                 }).subscribe(new Subscriber<List<BlogPost>>() {
+
             @Override
             public void onCompleted() {
 

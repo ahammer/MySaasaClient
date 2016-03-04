@@ -1,5 +1,6 @@
 package com.mysassa.rss;
 
+import com.mysassa.api.LoginUserResponse;
 import com.mysassa.api.MySaasaClient;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -13,6 +14,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
+
+import rx.Observable;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by adam on 2014-09-28.
  */
@@ -28,7 +34,17 @@ public class Injector {
 
     private static void updateNews(String site, int port, String scheme) throws IOException, FeedException {
         MySaasaClient mySaasaClient = new MySaasaClient(site,port,scheme);
-        mySaasaClient.login("admin", "admin");
+
+        mySaasaClient.getLoginManager()
+                .login("adam", "adam")
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Action1<LoginUserResponse>() {
+            @Override
+            public void call(LoginUserResponse loginUserResponse) {
+                System.out.println("Response: "+loginUserResponse);
+            }
+        });
 
         for (String urlString:newsUrl) {
             URL url = new URL(urlString);
@@ -41,7 +57,7 @@ public class Injector {
             while (itEntries.hasNext()) {
                 SyndEntry entry = (SyndEntry) itEntries.next();
                 System.out.println();
-                mySaasaClient.postToBlog(entry.getTitle(),entry.getAuthor(),entry.getContents().toString(), entry.getLink(), "News");
+
             }
         }
     }

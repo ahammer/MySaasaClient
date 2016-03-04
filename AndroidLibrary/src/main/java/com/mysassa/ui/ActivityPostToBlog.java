@@ -95,27 +95,13 @@ public class ActivityPostToBlog extends Activity {
                             body.getText().toString());
                             Intent i = new Intent();
 
-                    MySaasaAndroidApplication.getService().updateBlogPost(
-                            state.post,
-                            title.getText().toString(),
-                            subtitle.getText().toString(),
-                            summary.getText().toString(),
-                            body.getText().toString()
-
-                    );
                     i.putExtra("post",updatedPost);
                     setResult(Activity.RESULT_OK,i);
                     finish();
                     return;
 
                 } else {
-                    MySaasaAndroidApplication.getService().postToBlog(
-                            title.getText().toString(),
-                            subtitle.getText().toString(),
-                            summary.getText().toString(),
-                            body.getText().toString(),
-                            state.category.name
-                    );
+
                 }
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -124,11 +110,12 @@ public class ActivityPostToBlog extends Activity {
             }
         });
 
-
+        /*
         if (!MySaasaAndroidApplication.getService().getState().authenticated) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }
+        */
 
         if (state.editMode && savedInstanceState == null) {
             title.setText(state.post.title);

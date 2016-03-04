@@ -14,6 +14,10 @@ import com.mysassa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.ui.ActivityMain;
 import com.mysassa.ui.ActivityMessages;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by adam on 15-02-13.
  */
@@ -48,7 +52,15 @@ public class ReceivePush extends BroadcastReceiver {
 
     private void HandleNewMessage(Context context, MySaasaClient s) {
         if (s!=null) {
-            s.getMessageCount();
+            s.getMessagesManager().getMessageCount()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(new Action1<Integer>() {
+                @Override
+                public void call(Integer integer) {
+
+                }
+            });
         }
 
         if (!SideNavigationCompatibleActivity.isInForeground()) {

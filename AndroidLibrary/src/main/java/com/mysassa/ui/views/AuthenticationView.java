@@ -46,7 +46,7 @@ public class AuthenticationView extends FrameLayout {
             @Override
             public void onClick(View view) {
                 MySaasaAndroidApplication.getInstance().clearCredentials();
-                MySaasaAndroidApplication.getService().signout();
+
             }
         });
         messages.setOnClickListener(new OnClickListener() {
@@ -63,12 +63,14 @@ public class AuthenticationView extends FrameLayout {
     private void setVisibilities() {
         if (MySaasaAndroidApplication.getInstance()!=null) {
             MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
+            /* TODO handle this logic
             signin.setVisibility(mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
             signout.setVisibility(!mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
             title.setVisibility(!mySaasaClient.getState().authenticated ? View.GONE : View.VISIBLE);
             if (mySaasaClient.getState().user!=null) {
                 title.setText(mySaasaClient.getState().user.identifier);
             }
+            */
         }
     }
 

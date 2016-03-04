@@ -26,7 +26,8 @@ public class CommentManager {
     public List<BlogComment> getComments(long blogpost_id) {
         List<BlogComment> result = toplevel_comments.get(blogpost_id);
         if (result != null) return processTopLevelComments(result);
-        mySaasaClient.retrieveBlogComments(blogpost_id,1000);
+
+
         return Collections.EMPTY_LIST;
     }
 

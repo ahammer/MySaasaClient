@@ -51,8 +51,7 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getService().login(username.getText().toString(), password.getText().toString());
-
+                getService().getLoginManager().login(username.getText().toString(), password.getText().toString());
             }
         });
 
@@ -64,7 +63,7 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
                 if (password.getText().toString().equals(password_repeat.getText().toString())) {
                     crouton = Crouton.makeText(ActivitySignin.this, "Creating account", Style.INFO);
                     crouton.show();
-                    getService().createUser(username.getText().toString(), password.getText().toString());
+
                 } else {
                     crouton = Crouton.makeText(ActivitySignin.this, "Passwords do not match " + password_repeat.getText().toString() + " " + password.getText().toString(), Style.ALERT);
                     crouton.show();

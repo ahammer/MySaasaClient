@@ -22,7 +22,7 @@ import java.io.IOException;
 public class MySaasaAndroidApplication extends Application {
     private static MySaasaAndroidApplication instance;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "MySaasaAndroidApplication";
+    private static final String TAG = "MySaasa";
     private static final String PROPERTY_REG_ID = "ID";
     private static final String PROPERTY_APP_VERSION = "APP_VERSION";
     private final EventBus bus = new EventBus();
@@ -62,7 +62,7 @@ public class MySaasaAndroidApplication extends Application {
     private void autoLogin() {
         SharedPreferences sp = getSharedPreferences("autologin",0);
         if (sp.contains("identifier") && sp.contains("password"))
-            mySaasaClient.login(sp.getString("identifier", null), sp.getString("password", null));
+            mySaasaClient.getLoginManager().login(sp.getString("identifier", null), sp.getString("password", null));
     }
 
     public ApplicationSectionsManager getAndroidCategoryManager() {
@@ -147,8 +147,8 @@ public class MySaasaAndroidApplication extends Application {
                         // so it can use GCM/HTTP or CCS to send messages to your app.
                         // The request to your server should be authenticated if your app
                         // is using accounts.
-                        mySaasaClient.registerGcmSenderId(regid);
-                        sendRegistrationIdToBackend();
+                        //mySaasaClient.registerGcmSenderId(regid);
+                        //sendRegistrationIdToBackend();
 
                         // For this demo: we don't need to send it because the device
                         // will send upstream messages to a server that echo back the
@@ -176,9 +176,6 @@ public class MySaasaAndroidApplication extends Application {
 
     }
 
-    private void sendRegistrationIdToBackend() {
-
-    }
 
     public EventBus getBus() {
         return bus;

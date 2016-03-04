@@ -19,6 +19,8 @@ import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.User;
 import com.mysassa.ui.ActivityPostComment;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by Adam on 1/6/2015.
  */
@@ -62,7 +64,7 @@ public abstract class BlogCommentView extends FrameLayout {
 
 
 
-        User u = MySaasaAndroidApplication.getService().getState().user;
+        User u = null;
         if (u == null) {
             vote.setVisibility(View.GONE);
             remove.setVisibility(View.GONE);
@@ -93,7 +95,8 @@ public abstract class BlogCommentView extends FrameLayout {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                MySaasaAndroidApplication.getService().deleteBlogComment(comment);
+                                checkNotNull(comment);
+
                             }
 
                         })
@@ -115,7 +118,8 @@ public abstract class BlogCommentView extends FrameLayout {
         }
         body.setText(comment.content);
         depth.setDepth(comment.depth);
-        User u = MySaasaAndroidApplication.getService().getState().user;
+        //TODO put Signed in user here
+        User u = null;
 
         if (comment.author == null) {                       //Only Deleted comments have null author
             remove.setVisibility(View.GONE);

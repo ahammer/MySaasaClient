@@ -18,6 +18,7 @@ import rx.Subscriber;
 public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> {
     private final Category category;
     private final IMySaasaGateway gateway;
+    private GetBlogPostsResponse response;
 
     public GetBlogPostsObservable(Category category, IMySaasaGateway gateway) {
         this.category = category;
@@ -27,13 +28,20 @@ public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> 
     @Override
     public void call(Subscriber<? super BlogPost> subscriber) {
         if (!subscriber.isUnsubscribed()) {
-            Call<GetBlogPostsResponse> call = gateway.getBlogPosts(category.name, 0, 100, "priority", "DESC");
+            if (response != null) {
+
+            }
+
             try {
-                Response<GetBlogPostsResponse> response = call.execute();
-                if (!response.body().isSuccess()) {
-                    subscriber.onError(new RuntimeException(response.message()));
+                if (response == null) {
+                    Call<GetBlogPostsResponse> call = gateway.getBlogPosts(category.name, 0, 100, "priority", "DESC");
+                    this.response = call.execute().body();
                 }
-                for (BlogPost bp : response.body().getData()) {
+
+                if (!this.response.isSuccess()) {
+                    subscriber.onError(new RuntimeException(response.getMessage()));
+                }
+                for (BlogPost bp : response.getData()) {
                     subscriber.onNext(bp);
                 }
             } catch (IOException e) {

@@ -59,6 +59,7 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
 
     private void updateMessageAdapter() {
         final MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
+        /*
         if (mySaasaClient != null && mySaasaClient.getState().authenticated) {
             final MySaasaClient mySaasaClient1 = mySaasaClient;
             list.setAdapter(new BaseAdapter() {
@@ -93,7 +94,6 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
                                         ReplyMessage msg = (ReplyMessage) m.getDataObj();
                                         BlogPost blogPost = null;// = MySaasaAndroidApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
                                         if (blogPost == null) {
-                                            MySaasaAndroidApplication.getService().getBlogPostById(msg.blogpost_id);
                                             state.waiting = true;
                                             state.waitingFor = msg;
                                             asyncDialog.show();
@@ -115,9 +115,11 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
                     return standardMessageView;
                 }
             });
+
         } else {
             list.setAdapter(new MessagesEmptyListAdapter());
         }
+        */
     }
 
     public static void showMessages(Context ctx) {

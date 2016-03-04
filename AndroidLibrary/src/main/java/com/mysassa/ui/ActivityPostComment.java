@@ -75,12 +75,12 @@ public class ActivityPostComment extends Activity {
             @Override
             public void onClick(View view) {
                 if (editMode) {
-                        MySaasaAndroidApplication.getService().updateBlogComment(state.comment, commentBox.getText().toString());
+
                 } else {
                     if (state.comment == null) {
-                        MySaasaAndroidApplication.getService().commentOnBlog(state.post.id, commentBox.getText().toString());
+
                     } else {
-                        MySaasaAndroidApplication.getService().replyToComment(state.comment.id, commentBox.getText().toString());
+
                     }
                 }
                 setResult(Activity.RESULT_OK);
@@ -88,11 +88,13 @@ public class ActivityPostComment extends Activity {
             }
         });
 
+        /*
         if (!MySaasaAndroidApplication.getService().getState().authenticated) {
 
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }
+        */
         if (editMode) {
             reply.setVisibility(View.GONE);
             postButton.setText("Save Post");

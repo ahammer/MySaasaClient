@@ -17,6 +17,7 @@ import com.mysassa.api.model.BlogPost;
 import com.mysassa.ui.ActivityPostComment;
 import com.mysassa.ui.views.BlogCommentView;
 
+import java.util.Collections;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -74,7 +75,8 @@ public class BlogCommentViewer extends Fragment {
 
     public void blogCommentsReceived(BlogCommentsRetrievedMessage message) {
         if (post == null) return;
-        final List<BlogComment> list = MySaasaAndroidApplication.getService().getBlogComments(post.id, 100, false);
+
+        final List<BlogComment> list = Collections.EMPTY_LIST;
         if (getActivity() == null) return;
         if (list.size() == 0) {
 
@@ -157,7 +159,4 @@ public class BlogCommentViewer extends Fragment {
 
     }
 
-    public void refresh() {
-        MySaasaAndroidApplication.getService().getBlogComments(post.id, 100,true);
-    }
 }

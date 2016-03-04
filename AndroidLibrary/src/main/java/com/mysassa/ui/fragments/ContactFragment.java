@@ -48,7 +48,7 @@ public class ContactFragment extends Fragment {
                     body.setEnabled(false);
                     send.setEnabled(false);
 
-                    requestCode = MySaasaAndroidApplication.getService().sendMessage("admin", "App Feedback", body.getText().toString(), name.getText().toString(), email.getText().toString(), phone.getText().toString());
+                    requestCode = MySaasaAndroidApplication.getService().getMessagesManager().sendMessage("admin", "App Feedback", body.getText().toString(), name.getText().toString(), email.getText().toString(), phone.getText().toString());
                 }
             }
         });
