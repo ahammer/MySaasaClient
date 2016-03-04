@@ -66,7 +66,7 @@
 
     </LinearLayout>
     <!-- The navigation drawer -->
-    <com.mysassa.ui.sidenav.Sidenav
+    <com.mysassa.ui.sidenav.LeftNavigationFrameLayout
         android:id="@+id/left_drawer"
         android:layout_width="@dimen/sidenav_width"
         android:layout_height="match_parent"

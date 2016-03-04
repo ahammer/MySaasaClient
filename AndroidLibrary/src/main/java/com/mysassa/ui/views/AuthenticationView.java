@@ -11,13 +11,11 @@ import android.widget.TextView;
 
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
-import com.mysassa.api.Service;
+import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.SigninMessage;
 import com.mysassa.api.messages.SignoutMessage;
 import com.mysassa.ui.ActivityMessages;
 import com.mysassa.ui.ActivitySignin;
-
-import rx.functions.Action1;
 
 /**
  * Created by Adam on 1/4/2015.
@@ -64,12 +62,12 @@ public class AuthenticationView extends FrameLayout {
 
     private void setVisibilities() {
         if (SimpleApplication.getInstance()!=null) {
-            Service service = SimpleApplication.getService();
-            signin.setVisibility(service.getState().authenticated?View.GONE:View.VISIBLE);
-            signout.setVisibility(!service.getState().authenticated?View.GONE:View.VISIBLE);
-            title.setVisibility(!service.getState().authenticated ? View.GONE : View.VISIBLE);
-            if (service.getState().user!=null) {
-                title.setText(service.getState().user.identifier);
+            MySaasaClient mySaasaClient = SimpleApplication.getService();
+            signin.setVisibility(mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
+            signout.setVisibility(!mySaasaClient.getState().authenticated?View.GONE:View.VISIBLE);
+            title.setVisibility(!mySaasaClient.getState().authenticated ? View.GONE : View.VISIBLE);
+            if (mySaasaClient.getState().user!=null) {
+                title.setText(mySaasaClient.getState().user.identifier);
             }
         }
     }
@@ -82,19 +80,6 @@ public class AuthenticationView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (SimpleApplication.getInstance() != null) {
-            SimpleApplication.getService().bus.toObserverable().subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof  SigninMessage) {
-                        onLoginResult((SigninMessage) o);
-                    } else if (o instanceof SignoutMessage) {
-                        onLogoutResult((SignoutMessage) o);
-                    }
-
-                }
-            });
-        }
     }
 
     @Override

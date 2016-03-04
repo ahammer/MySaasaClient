@@ -8,9 +8,9 @@ import java.util.List;
  * Created by Adam on 2/29/2016.
  */
 public class GetBlogCategoriesResponse {
-    List<Category> results;
+    List<Category> data;
 
-    public List<Category> getResults() {
-        return results;
+    public List<Category> getData() {
+        return data;
     }
 }

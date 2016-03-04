@@ -48,23 +48,14 @@ public class BlogCommentViewer extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SimpleApplication.getService().bus.toObserverable().subscribe(messageHook = new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                if (o instanceof DeletedBlogPost) {
-                    blogPostDeleted((DeletedBlogComment) o);
-                } else if (o instanceof  BlogCommentsRetrievedMessage) {
-                    blogCommentsReceived((BlogCommentsRetrievedMessage) o);
-                }
-
-            }
-        });
+        SimpleApplication.getService().bus.register(this);
         blogCommentsReceived(null);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        SimpleApplication.getService().bus.unregister(this);
     }
 
     public BlogPost getPost() {

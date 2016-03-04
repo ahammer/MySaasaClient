@@ -6,32 +6,48 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mysassa.R;
-import com.mysassa.AndroidCategoryManager;
+import com.mysassa.ApplicationSectionsManager;
 
-import com.mysassa.api.messages.BlogCategoriesReceivedMessage;
+import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.Category;
 import com.mysassa.ui.adapters.NavigationDrawerAdapter;
+
+import java.util.List;
+
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Adam on 1/4/2015.
  */
-public class Sidenav extends FrameLayout {
+public class LeftNavigationFrameLayout extends FrameLayout {
     private ListView categoryList;
     private ChangeListener listener = null;
+
+    private Subscription categorySubscription;
+    private List<Category> categories;
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     public static interface  ChangeListener {
         public void categoryClicked(Category c);
     }
 
-    public Sidenav(Context context) {
+    public LeftNavigationFrameLayout(Context context) {
         super(context);
         init();
 
     }
 
-    public Sidenav(Context context, AttributeSet attrs) {
+    public LeftNavigationFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -47,8 +63,8 @@ public class Sidenav extends FrameLayout {
                 if (o instanceof Category) {
                     Category c = (Category) o;
                     categoryClicked(c);
-                } else if (o instanceof AndroidCategoryManager.CategoryDef) {
-                    AndroidCategoryManager.CategoryDef c = (AndroidCategoryManager.CategoryDef) o;
+                } else if (o instanceof ApplicationSectionsManager.CategoryDef) {
+                    ApplicationSectionsManager.CategoryDef c = (ApplicationSectionsManager.CategoryDef) o;
                     categoryClicked(c.toCategory());
                 }
             }
@@ -65,8 +81,5 @@ public class Sidenav extends FrameLayout {
         this.listener = listener;
     }
 
-    public void blogCategoriesReceived(BlogCategoriesReceivedMessage message) {
-        categoryList.setAdapter(new NavigationDrawerAdapter());
 
-    }
 }

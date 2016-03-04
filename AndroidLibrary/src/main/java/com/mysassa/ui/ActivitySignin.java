@@ -18,7 +18,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * Created by administrator on 2014-06-30.
  */
-public class ActivitySignin extends ActivityBase {
+public class ActivitySignin extends SideNavigationCompatibleActivity {
 
     EditText username;
     EditText password;
@@ -85,15 +85,6 @@ public class ActivitySignin extends ActivityBase {
         return true;
     }
 
-
-    @Override
-    protected void handleMessage(Object o) {
-        super.handleMessage(o);
-        if (o instanceof  SigninMessage) {
-            SigninResult((SigninMessage)o);
-        }
-    }
-
     private void SigninResult(final SigninMessage message) {
         runOnUiThread(new Runnable() {
             @Override
@@ -105,7 +96,7 @@ public class ActivitySignin extends ActivityBase {
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Crouton.makeText(ActivitySignin.this, "Got a result: "+message.response.message, Style.ALERT).show();
+                    Crouton.makeText(ActivitySignin.this, "Got a result: "+message.response.getMessage(), Style.ALERT).show();
                 }
             }
         });

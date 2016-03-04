@@ -12,8 +12,6 @@ import android.widget.ListView;
 
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
-import com.mysassa.ThreadUpdatedPushMessage;
-import com.mysassa.api.messages.ThreadUpdated;
 import com.mysassa.api.model.Message;
 import com.mysassa.ui.views.ExtendedMessageView;
 
@@ -22,7 +20,7 @@ import java.util.List;
 /**
  * Created by Adam on 2/16/2015.
  */
-public class ActivityMessage extends ActivityBase{
+public class ActivityMessage extends SideNavigationCompatibleActivity {
     ListView threadList;
     private Message rootMessage;
     private List<Message> thread;
@@ -77,21 +75,6 @@ public class ActivityMessage extends ActivityBase{
         });
     }
 
-    @Override
-    protected void handleMessage(Object o) {
-        super.handleMessage(o);
-        if (o instanceof ThreadUpdated) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setupList();
-                }
-            });
-        } else if (o instanceof ThreadUpdatedPushMessage) {
-            //Request a refresh on the thread
-            SimpleApplication.getService().requestMessageThread(rootMessage);
-        }
-    }
 
 
 

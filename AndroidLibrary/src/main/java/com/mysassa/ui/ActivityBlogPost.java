@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mysassa.AndroidCategoryManager;
+import com.mysassa.ApplicationSectionsManager;
 
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
@@ -32,7 +32,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * Created by Adam on 12/30/2014.
  */
-public class ActivityBlogPost extends ActivityBase {
+public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
     public static void startActivity(Context ctx, BlogPost post, Category c, long comment_id) {
         Intent intent = new Intent(ctx, ActivityBlogPost.class);
@@ -68,11 +68,11 @@ public class ActivityBlogPost extends ActivityBase {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.blog_article, menu);
-        AndroidCategoryManager.CategoryDef def;
+        ApplicationSectionsManager.CategoryDef def;
         try {
             def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         } catch (Exception e) {
-            def = new AndroidCategoryManager.CategoryDef();
+            def = new ApplicationSectionsManager.CategoryDef();
         }
         if (def.commentsAllowed) {
 
@@ -203,7 +203,7 @@ public class ActivityBlogPost extends ActivityBase {
         viewer.setSelected_comment_id(selected_comment_id);
         viewer.setPost(state.post);
 
-        AndroidCategoryManager.CategoryDef def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
+        ApplicationSectionsManager.CategoryDef def = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         if (def.commentsAllowed) {
             switch (currentState) {
                 case BlogOnly:

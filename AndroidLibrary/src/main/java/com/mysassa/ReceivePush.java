@@ -8,9 +8,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.mysassa.api.Service;
+import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.NewMessage;
-import com.mysassa.ui.ActivityBase;
+import com.mysassa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.ui.ActivityMain;
 import com.mysassa.ui.ActivityMessages;
 
@@ -22,7 +22,7 @@ public class ReceivePush extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //We get a push, that means update messages for now
-        Service s = SimpleApplication.getService();
+        MySaasaClient s = SimpleApplication.getService();
         Types type;
         try {
             String sType = intent.getExtras().getString("class");
@@ -46,12 +46,12 @@ public class ReceivePush extends BroadcastReceiver {
 
     }
 
-    private void HandleNewMessage(Context context, Service s) {
+    private void HandleNewMessage(Context context, MySaasaClient s) {
         if (s!=null) {
             s.getMessageCount();
         }
 
-        if (!ActivityBase.isInForeground()) {
+        if (!SideNavigationCompatibleActivity.isInForeground()) {
             Notification.Builder mBuilder =
                     new Notification.Builder(context)
                             .setSmallIcon(R.drawable.ic_app)

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by adam on 2014-10-16.
  */
-public class ServiceState implements Serializable {
+public class MySaasaManagerState implements Serializable {
     public MessageManager messages = new MessageManager();
     public List<Category> blogCategories = Collections.EMPTY_LIST;
 

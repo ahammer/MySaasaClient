@@ -1,6 +1,6 @@
 package com.mysassa.rss;
 
-import com.mysassa.api.Service;
+import com.mysassa.api.MySaasaClient;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
@@ -27,8 +27,8 @@ public class Injector {
     }
 
     private static void updateNews(String site, int port, String scheme) throws IOException, FeedException {
-        Service service = new Service(site,port,scheme);
-        service.login("admin", "admin");
+        MySaasaClient mySaasaClient = new MySaasaClient(site,port,scheme);
+        mySaasaClient.login("admin", "admin");
 
         for (String urlString:newsUrl) {
             URL url = new URL(urlString);
@@ -41,7 +41,7 @@ public class Injector {
             while (itEntries.hasNext()) {
                 SyndEntry entry = (SyndEntry) itEntries.next();
                 System.out.println();
-                service.postToBlog(entry.getTitle(),entry.getAuthor(),entry.getContents().toString(), entry.getLink(), "News");
+                mySaasaClient.postToBlog(entry.getTitle(),entry.getAuthor(),entry.getContents().toString(), entry.getLink(), "News");
             }
         }
     }

@@ -13,20 +13,20 @@ import java.util.Stack;
  * Created by Adam on 1/6/2015.
  */
 public class CommentManager {
-    private final Service service;
+    private final MySaasaClient mySaasaClient;
     public Map<Long, List<BlogComment>> comments = new HashMap<Long, List<BlogComment>>();
     public Map<Long, List<BlogComment>> toplevel_comments = new HashMap<Long, List<BlogComment>>();
     public Map<Long, BlogComment> id_lookup = new HashMap<Long, BlogComment>();
 
-    public CommentManager(Service service) {
-        this.service = service;
-     //   service.bus.register(this);
+    public CommentManager(MySaasaClient mySaasaClient) {
+        this.mySaasaClient = mySaasaClient;
+     //   mySaasaClient.bus.register(this);
     }
 
     public List<BlogComment> getComments(long blogpost_id) {
         List<BlogComment> result = toplevel_comments.get(blogpost_id);
         if (result != null) return processTopLevelComments(result);
-        service.retrieveBlogComments(blogpost_id,1000);
+        mySaasaClient.retrieveBlogComments(blogpost_id,1000);
         return Collections.EMPTY_LIST;
     }
 

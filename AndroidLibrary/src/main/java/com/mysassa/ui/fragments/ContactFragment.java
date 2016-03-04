@@ -70,32 +70,7 @@ public class ContactFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SimpleApplication.getService().bus.toObserverable().subscribe(messageHook = new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                if (o instanceof MessageSuccessfullySent) {
-                    final MessageSuccessfullySent msg = (MessageSuccessfullySent)o;
-                    if (msg.requestCode == requestCode) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (msg.isSuccess()) {
-                                    Crouton.makeText(getActivity(), "Successfully sent", Style.INFO).show();
-                                } else {
-                                    name.setEnabled(false);
-                                    email.setEnabled(false);
-                                    phone.setEnabled(false);
-                                    body.setEnabled(false);
-                                    send.setEnabled(false);
-                                    Crouton.makeText(getActivity(), "Error Sending", Style.ALERT).show();
-                                }
 
-                            }
-                        });
-                    }
-                }
-            }
-        });
     }
 
 }

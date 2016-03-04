@@ -3,7 +3,6 @@ package com.mysassa;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Observable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,8 +10,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.mysassa.api.Service;
-import com.mysassa.api.model.BlogPost;
+import com.google.common.eventbus.EventBus;
+import com.mysassa.api.MySaasaClient;
 import com.splunk.mint.Mint;
 
 import java.io.IOException;
@@ -26,32 +25,30 @@ public class SimpleApplication extends Application {
     private static final String TAG = "SimpleApplication";
     private static final String PROPERTY_REG_ID = "ID";
     private static final String PROPERTY_APP_VERSION = "APP_VERSION";
-
-
-    private Service service;
-    private AndroidCategoryManager categoryManager;
+    private final EventBus bus = new EventBus();
+    private MySaasaClient mySaasaClient;
+    private ApplicationSectionsManager mSectionManager;
     private GoogleCloudMessaging gcm;
     private String regid;
 
     public static SimpleApplication getInstance() {
         return instance;
     }
-
-
-    public static Service getService() {
-        return instance.service;
+    public static MySaasaClient getService() {
+        return instance.mySaasaClient;
     }
+
     @Override
     public void onCreate() {
         Mint.initAndStartSession(this, "a8d16bad");
         super.onCreate();
-        String domain = getString(R.string.domain);
-        String scheme = getString(R.string.scheme);
-        int port = getResources().getInteger(R.integer.port);
-        service = new Service(domain,port,scheme);
         instance = this;
-        autoLogin();
+        mSectionManager = new ApplicationSectionsManager(this);
+        mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
+        registerGoogleCloudMessaging();
+    }
 
+    private void registerGoogleCloudMessaging() {
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(this);
@@ -60,17 +57,16 @@ public class SimpleApplication extends Application {
                 registerInBackground();
             }
         }
-
     }
 
     private void autoLogin() {
         SharedPreferences sp = getSharedPreferences("autologin",0);
         if (sp.contains("identifier") && sp.contains("password"))
-            service.login(sp.getString("identifier", null), sp.getString("password", null));
+            mySaasaClient.login(sp.getString("identifier", null), sp.getString("password", null));
     }
 
-    public AndroidCategoryManager getAndroidCategoryManager() {
-        return categoryManager;
+    public ApplicationSectionsManager getAndroidCategoryManager() {
+        return mSectionManager;
     }
 
     public void saveCredentials(String username, String password) {
@@ -95,7 +91,7 @@ public class SimpleApplication extends Application {
     }
 
     /**
-     * Gets the current registration ID for application on GCM service.
+     * Gets the current registration ID for application on GCM mySaasaClient.
      * <p>
      * If result is empty, the app needs to register.
      *
@@ -151,7 +147,7 @@ public class SimpleApplication extends Application {
                         // so it can use GCM/HTTP or CCS to send messages to your app.
                         // The request to your server should be authenticated if your app
                         // is using accounts.
-                        service.registerGcmSenderId(regid);
+                        mySaasaClient.registerGcmSenderId(regid);
                         sendRegistrationIdToBackend();
 
                         // For this demo: we don't need to send it because the device
@@ -182,5 +178,9 @@ public class SimpleApplication extends Application {
 
     private void sendRegistrationIdToBackend() {
 
+    }
+
+    public EventBus getBus() {
+        return bus;
     }
 }

@@ -5,10 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.mysassa.AndroidCategoryManager;
-import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogPost;
-import com.mysassa.ui.ActivityMain;
 import com.mysassa.ui.views.BlogPostListItem;
 import com.mysassa.ui.views.EmptyListItem;
 
@@ -20,22 +17,9 @@ import java.util.List;
 */
 public class BlogAdapter extends BaseAdapter {
     List<BlogPost> posts;
-    AndroidCategoryManager.CategoryDef categoryDef;
 
-    public BlogAdapter(ActivityMain blogCategoryActivity) {
-        categoryDef = SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(blogCategoryActivity.selectedCategory);
-        posts = getBlogPosts();
-    }
-
-    public List<BlogPost> getBlogPosts() {
-        return SimpleApplication.getService().getBlogPosts(categoryDef.toCategory(), 0, categoryDef.pagesize, categoryDef.sortColumn, categoryDef.sortOrder);
-    }
-
-
-    @Override
-    public void notifyDataSetChanged() {
-        posts = SimpleApplication.getService().mBlogPostManager.getBlogPostsForCategory(categoryDef.toCategory());
-        super.notifyDataSetChanged();
+    public BlogAdapter(List<BlogPost> posts) {
+        this.posts = posts;
     }
 
     @Override

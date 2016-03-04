@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
-import com.mysassa.AndroidCategoryManager;
+import com.mysassa.ApplicationSectionsManager;
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
 import com.mysassa.api.messages.BlogPostsModified;
@@ -28,6 +28,12 @@ import com.mysassa.api.model.Category;
 import com.mysassa.ui.adapters.BlogAdapter;
 import com.mysassa.ui.fragments.EmptyListAdapter;
 
+import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * This is the launch point for the applicatoin, the root activity.
  *
@@ -36,7 +42,7 @@ import com.mysassa.ui.fragments.EmptyListAdapter;
  *
  * Created by adam on 2014-10-31.
  */
-public class ActivityMain extends ActivityBase {
+public class ActivityMain extends SideNavigationCompatibleActivity {
     //ListView navList;
     private ListView newsList;
     private TextView title;
@@ -74,6 +80,37 @@ public class ActivityMain extends ActivityBase {
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SimpleApplication.getService().getBlogPostsObservable(getSelectedCategory())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toList().subscribe(new Subscriber<List<BlogPost>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<BlogPost> blogPosts) {
+                newsList.setAdapter(new BlogAdapter(blogPosts));
+            }
+        });
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -105,7 +142,6 @@ public class ActivityMain extends ActivityBase {
         }
 
         if (refresh != null) {
-
             refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
@@ -119,14 +155,48 @@ public class ActivityMain extends ActivityBase {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ActivityPostToBlog.REQUEST_CODE && RESULT_OK == resultCode) {
+            Adapter a = newsList.getAdapter();
+            if (a instanceof BlogAdapter) {
+                BlogAdapter ba = (BlogAdapter) a;
+
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isSidenavOpen()){
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing Activity")
+                    .setMessage("Are you sure you want to close this activity?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        } else {
+            mDrawerLayout.openDrawer(sidenav);
+        }
+
+    }
+
     protected void updateNewsList() {
-        AndroidCategoryManager.CategoryDef def =SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
+        ApplicationSectionsManager.CategoryDef def =SimpleApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
         title.setText(def.title);
 
         if (TextUtils.isEmpty(def.fragment)) {
             newsList.setVisibility(View.VISIBLE);
             fragmentFrame.setVisibility(View.GONE);
-            newsList.setAdapter(new BlogAdapter(this));
+            //newsList.setAdapter(new BlogAdapter(this));
             title.setVisibility(View.VISIBLE);
             if (post != null) {
                 post.setVisible(def.postsAllowed);
@@ -163,28 +233,6 @@ public class ActivityMain extends ActivityBase {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ActivityPostToBlog.REQUEST_CODE && RESULT_OK == resultCode) {
-            Adapter a = newsList.getAdapter();
-            if (a instanceof BlogAdapter) {
-                BlogAdapter ba = (BlogAdapter) a;
-                ba.getBlogPosts();
-            }
-        }
-    }
-
-    @Override
-    protected void handleMessage(Object o) {
-        super.handleMessage(o);
-        if (o instanceof  SigninMessage) {
-            onLoginResult((SigninMessage)o);
-        } else if (o instanceof BlogPostsModified) {
-            blogPostsUpdated((BlogPostsModified)o);
-
-        }
-    }
 
 
     public void onLoginResult(final SigninMessage m) {
@@ -216,25 +264,5 @@ public class ActivityMain extends ActivityBase {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isSidenavOpen()){
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Closing Activity")
-                    .setMessage("Are you sure you want to close this activity?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
 
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        } else {
-            mDrawerLayout.openDrawer(sidenav);
-        }
-
-    }
 }

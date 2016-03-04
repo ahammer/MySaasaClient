@@ -11,9 +11,7 @@ import android.widget.ListView;
 
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
-import com.mysassa.api.Service;
-import com.mysassa.api.messages.BlogPostsModified;
-import com.mysassa.api.messages.MessagesUpdated;
+import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Message;
 import com.mysassa.api.model.ReplyMessage;
@@ -25,7 +23,7 @@ import java.io.Serializable;
 /**
  * Created by Adam on 2/16/2015.
  */
-public class ActivityMessages  extends ActivityBase{
+public class ActivityMessages  extends SideNavigationCompatibleActivity {
     private ListView list;
     ProgressDialog asyncDialog;
 
@@ -59,75 +57,41 @@ public class ActivityMessages  extends ActivityBase{
         }
     }
 
-
-    @Override
-    protected void handleMessage(Object o) {
-        super.handleMessage(o);
-        if (o instanceof MessagesUpdated) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateMessageAdapter();
-                }
-            });
-        } else if (o instanceof BlogPostsModified) {
-            final BlogPostsModified msg = (BlogPostsModified) o;
-            if (msg.blogResponse != null && msg.blogResponse.isSuccess()) {
-                for (BlogPost post:msg.blogResponse.getData()) {
-                    if (post.id == state.waitingFor.blogpost_id) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                asyncDialog.hide();
-                                BlogPost blogPost = SimpleApplication.getService().mBlogPostManager.getBlogPostById(state.waitingFor.blogpost_id);
-                                if (blogPost != null) {
-                                    ActivityBlogPost.startActivity(ActivityMessages.this, blogPost, blogPost.categories.get(0), state.waitingFor.comment_id);
-                                    state.waitingFor=null;
-                                }
-                                state.waiting=false;
-                            }
-                        });
-                    }
-                }
-            }
-        }
-    }
-
     private void updateMessageAdapter() {
-        final Service service = SimpleApplication.getService();
-        if (service != null && service.getState().authenticated) {
-            final Service service1 = service;
+        final MySaasaClient mySaasaClient = SimpleApplication.getService();
+        if (mySaasaClient != null && mySaasaClient.getState().authenticated) {
+            final MySaasaClient mySaasaClient1 = mySaasaClient;
             list.setAdapter(new BaseAdapter() {
-                private final Service service = service1;
+                private final MySaasaClient mySaasaClient = mySaasaClient1;
 
                 @Override
                 public int getCount() {
-                    return service.getState().messages.getRootMessages().size();
+                    return this.mySaasaClient.getState().messages.getRootMessages().size();
                 }
 
                 @Override
                 public Object getItem(int i) {
-                    return service.getState().messages.getRootMessages().get(i);
+                    return this.mySaasaClient.getState().messages.getRootMessages().get(i);
                 }
 
                 @Override
                 public long getItemId(int i) {
-                    return service.getState().messages.getRootMessages().get(i).id;
+                    return this.mySaasaClient.getState().messages.getRootMessages().get(i).id;
                 }
 
                 @Override
                 public View getView(final int i, View view, final ViewGroup viewGroup) {
                     final Message m = (Message) getItem(i);
-                    StandardMessageView tv= new StandardMessageView(viewGroup.getContext());
-                    tv.setMessage(m);
-                    tv.setOnClickListener(new View.OnClickListener() {
+                    StandardMessageView standardMessageView= new StandardMessageView(viewGroup.getContext());
+                    standardMessageView.setMessage(m);
+                    standardMessageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if (m.getType() != null) {
                                 switch (m.getType()) {
                                     case Reply:
                                         ReplyMessage msg = (ReplyMessage) m.getDataObj();
-                                        BlogPost blogPost = SimpleApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
+                                        BlogPost blogPost = null;// = SimpleApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
                                         if (blogPost == null) {
                                             SimpleApplication.getService().getBlogPostById(msg.blogpost_id);
                                             state.waiting = true;
@@ -148,7 +112,7 @@ public class ActivityMessages  extends ActivityBase{
                             }
                         }
                     });
-                    return tv;
+                    return standardMessageView;
                 }
             });
         } else {

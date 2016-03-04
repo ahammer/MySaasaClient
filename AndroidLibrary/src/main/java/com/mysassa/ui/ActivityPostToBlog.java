@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mysassa.AndroidCategoryManager;
+import com.mysassa.ApplicationSectionsManager;
 import com.mysassa.R;
 import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.BlogPost;
@@ -24,7 +24,7 @@ public class ActivityPostToBlog extends Activity {
 
     static class State implements Serializable{
         Category category;
-        AndroidCategoryManager.CategoryDef categoryDef;
+        ApplicationSectionsManager.CategoryDef categoryDef;
         BlogPost post;
         boolean editMode = false;
     }

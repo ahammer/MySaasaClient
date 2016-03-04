@@ -19,7 +19,15 @@
             android:name="com.mysassa.SimpleApplication"
         android:theme="@style/SimpleTheme"
         >
+        <activity
+            android:name="com.mysassa.ui.ActivityMain"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
+        </activity>
         <receiver android:name="com.mysassa.ReceivePush">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>

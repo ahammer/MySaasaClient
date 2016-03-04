@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.mysassa.AndroidCategoryManager;
+import com.mysassa.ApplicationSectionsManager;
 import com.mysassa.SimpleApplication;
 import com.mysassa.api.model.Category;
 import com.mysassa.ui.views.BlogCategoryView;
@@ -16,8 +16,8 @@ import java.util.List;
 * Created by Adam on 1/4/2015.
 */
 public class NavigationDrawerAdapter extends BaseAdapter {
-    final List<AndroidCategoryManager.CategoryDef> defs;
-    //final List<Category> cats;
+    final List<ApplicationSectionsManager.CategoryDef> defs;
+
 
 
     public NavigationDrawerAdapter() {
@@ -50,7 +50,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         BlogCategoryView bcv = new BlogCategoryView(parent.getContext());
         if (defs.size()>0) {
-            bcv.setCategory(((AndroidCategoryManager.CategoryDef) getItem(position)).toCategory());
+            bcv.setCategory(((ApplicationSectionsManager.CategoryDef) getItem(position)).toCategory());
         } else {
             bcv.setCategory((Category) getItem(position));
         }
