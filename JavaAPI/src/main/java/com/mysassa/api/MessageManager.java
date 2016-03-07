@@ -1,13 +1,9 @@
 package com.mysassa.api;
 
 import com.mysassa.api.model.Message;
+import com.mysassa.api.responses.GetMessageCountResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Response;

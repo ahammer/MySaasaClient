@@ -1,6 +1,6 @@
 package com.mysassa.rss;
 
-import com.mysassa.api.LoginUserResponse;
+import com.mysassa.api.responses.LoginUserResponse;
 import com.mysassa.api.MySaasaClient;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 

@@ -1,5 +1,9 @@
 package com.mysassa.api;
 
+import com.mysassa.api.messages.LoginStateChanged;
+import com.mysassa.api.model.User;
+import com.mysassa.api.responses.LoginUserResponse;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -12,31 +16,44 @@ import rx.Subscriber;
 public class LoginManager {
     private final MySaasaClient mySaasa;
 
+    private LoginObservable loginSubscription;
     private Observable<LoginUserResponse> lastLoginResponseObservable;
+
 
     public LoginManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
     }
 
     /**
-     * Log the user in. Will not execute if already in progress,
+     * Log the lastAuthenticatedUser in. Will not execute if already in progress,
      *
      * @param username
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        lastLoginResponseObservable = Observable.create(new LoginObservable(username, password));
+        lastLoginResponseObservable = Observable.create(loginSubscription = new LoginObservable(username, password));
         return lastLoginResponseObservable;
     }
 
-    public Observable<LoginUserResponse> getLastLoginResponseObservable() {
-        return lastLoginResponseObservable;
+    public void signOut() {
+        loginSubscription = null;
+        lastLoginResponseObservable = null;
+        mySaasa.bus.post(new LoginStateChanged());
+    }
+
+    public User getAuthenticatedUser() {
+        try {
+            return loginSubscription.lastResponse.getData();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     private class LoginObservable implements Observable.OnSubscribe<LoginUserResponse> {
         private LoginUserResponse lastResponse;
         private final String username;
         private final String password;
+
 
         public LoginObservable(String username, String password) {
             this.username = username;
@@ -54,6 +71,10 @@ public class LoginManager {
                 Call<LoginUserResponse> loginUserResponseCall = mySaasa.gateway.loginUser(username, password);
                 try {
                     lastResponse = loginUserResponseCall.execute().body();
+                    if (lastResponse.isSuccess()) {
+                        mySaasa.bus.post(new LoginStateChanged());
+                    }
+
                     subscriber.onNext(lastResponse);
                     subscriber.onCompleted();
                 } catch (IOException e) {
@@ -62,7 +83,6 @@ public class LoginManager {
             }
 
         }
-
     }
 
 }

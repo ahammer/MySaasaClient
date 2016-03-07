@@ -1,7 +1,7 @@
 package com.mysassa.api.observables;
 
-import com.mysassa.api.GetBlogCategoriesResponse;
-import com.mysassa.api.IMySaasaGateway;
+import com.mysassa.api.responses.GetBlogCategoriesResponse;
+import com.mysassa.api.MySaasaGateway;
 import com.mysassa.api.model.Category;
 
 import java.io.IOException;
@@ -17,9 +17,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Get's the Categories from the server.
  */
 public class CategoryObservable implements Observable.OnSubscribe<Category> {
-    private final IMySaasaGateway gateway;
+    private final MySaasaGateway gateway;
 
-    public CategoryObservable(IMySaasaGateway gateway) {
+    public CategoryObservable(MySaasaGateway gateway) {
         checkNotNull(gateway);
         this.gateway = gateway;
     }

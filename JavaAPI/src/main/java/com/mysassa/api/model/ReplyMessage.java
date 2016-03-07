@@ -1,6 +1,6 @@
 package com.mysassa.api.model;
 
-import com.mysassa.api.IActionableMessage;
+import com.mysassa.api.messages.IActionableMessage;
 
 /**
  * A Message has come in and it has Json Metadata that make it a Reply message

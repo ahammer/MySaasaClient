@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import com.mysassa.MySaasaAndroidApplication;
 import com.mysassa.R;
-import com.mysassa.api.LoginUserResponse;
+import com.mysassa.api.responses.LoginUserResponse;
 import com.mysassa.api.model.Category;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;

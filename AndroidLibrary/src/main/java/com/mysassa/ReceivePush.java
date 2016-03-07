@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.messages.ThreadUpdatedPushMessage;
 import com.mysassa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.ui.ActivityMain;
 import com.mysassa.ui.ActivityMessages;
