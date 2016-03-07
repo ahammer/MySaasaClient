@@ -18,7 +18,11 @@ import com.mysassa.ui.views.BlogCommentView;
 import java.util.Collections;
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Adam on 1/5/2015.
@@ -27,8 +31,8 @@ public class BlogCommentViewer extends Fragment {
     BlogPost post;
     ListView comments;
     long selected_comment_id=0;
+    private Subscription subscription;
 
-    private Action1<Object> messageHook;
 
     public void setSelected_comment_id(long selected_comment_id) {
         this.selected_comment_id = selected_comment_id;
@@ -38,7 +42,6 @@ public class BlogCommentViewer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_blogcommentviewer,container);
         comments = (ListView) v.findViewById(R.id.comments);
-
         comments.setDividerHeight(1);
         return v;
     }
@@ -54,6 +57,11 @@ public class BlogCommentViewer extends Fragment {
     public void onPause() {
         super.onPause();
         MySaasaAndroidApplication.getService().bus.unregister(this);
+        if (subscription != null) {
+            subscription.unsubscribe();
+            subscription = null;
+        }
+
     }
 
     public BlogPost getPost() {
@@ -63,16 +71,26 @@ public class BlogCommentViewer extends Fragment {
     public void setPost(BlogPost post) {
         if (post == null) return;
         this.post = post;
-        //blogCommentsReceived(null);
+
+        subscription = MySaasaAndroidApplication
+                .getService()
+                .getBlogManager()
+                .getBlogCommentsObservable(post)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .toList().subscribe(new Action1<List<BlogComment>>() {
+                    @Override
+                    public void call(List<BlogComment> blogComments) {
+                        blogCommentsReceived(blogComments);
+                    }
+                });
     }
 
 
 
-    /*
-    public void blogCommentsReceived(BlogCommentsRetrievedMessage message) {
-        if (post == null) return;
 
-        final List<BlogComment> list = Collections.EMPTY_LIST;
+    public void blogCommentsReceived(final List<BlogComment> list) {
+        if (post == null) return;
         if (getActivity() == null) return;
         if (list.size() == 0) {
 
@@ -154,5 +172,5 @@ public class BlogCommentViewer extends Fragment {
         }
 
     }
-*/
+
 }

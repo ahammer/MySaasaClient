@@ -33,7 +33,7 @@ public class AuthenticationView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_authentication,this);
-        
+
         username = (TextView) findViewById(R.id.user);
         signin = (Button) findViewById(R.id.signin);
         signout = (Button) findViewById(R.id.logout);

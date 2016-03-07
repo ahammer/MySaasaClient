@@ -33,19 +33,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * Created by Adam on 12/30/2014.
  */
 public class ActivityBlogPost extends SideNavigationCompatibleActivity {
-
-    public static void startActivity(Context ctx, BlogPost post, Category c, long comment_id) {
-        Intent intent = new Intent(ctx, ActivityBlogPost.class);
-        intent.putExtra("post",post);
-        intent.putExtra("category",c);
-        intent.putExtra("selected_comment_id",comment_id);
-
-        ctx.startActivity(intent);
-    }
-
-    static class State implements Serializable {
-        private BlogPost post;
-    }
     private State state = new State();
     TextView body;
     TextView title;
@@ -54,16 +41,62 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     BlogCommentViewer viewer;
     long selected_comment_id = 0;
 
-    enum States {BlogOnly, CommentsOnly, Both}
-    States currentState = States.Both;
-
-
     public static void startActivity(Context ctx, BlogPost post, Category c) {
         Intent intent = new Intent(ctx, ActivityBlogPost.class);
         intent.putExtra("post",post);
         intent.putExtra("category",c);
         ctx.startActivity(intent);
     }
+
+
+    enum States {BlogOnly, CommentsOnly, Both}
+    States currentState = States.Both;
+
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_blog_post);
+        selected_comment_id = getIntent().getLongExtra("selected_comment_id",0);
+        initializeSideNav();
+        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
+            state = (State) savedInstanceState.getSerializable("state");
+        } else {
+            state.post = (BlogPost) getIntent().getSerializableExtra("post");
+        }
+
+        if (selected_comment_id != 0) currentState = States.CommentsOnly;
+        title = (TextView) findViewById(R.id.title);
+        bodyContainer = (ViewGroup) findViewById(R.id.body_container);
+        subtitle = (TextView) findViewById(R.id.subtitle);
+        body = (TextView) findViewById(R.id.body);
+        handleVisibility();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("state", state);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200202 && resultCode == Activity.RESULT_OK) {
+            //viewer.refresh();
+            if (data != null && data.hasExtra("post")) {
+                state.post = (BlogPost) data.getSerializableExtra("post");
+                handleVisibility();
+            } else {
+
+            }
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,31 +193,6 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blog_post);
-        selected_comment_id = getIntent().getLongExtra("selected_comment_id",0);
-        initializeSideNav();
-        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
-            state = (State) savedInstanceState.getSerializable("state");
-        } else {
-            state.post = (BlogPost) getIntent().getSerializableExtra("post");
-        }
-
-        if (selected_comment_id != 0) currentState = States.CommentsOnly;
-        title = (TextView) findViewById(R.id.title);
-        bodyContainer = (ViewGroup) findViewById(R.id.body_container);
-        subtitle = (TextView) findViewById(R.id.subtitle);
-        body = (TextView) findViewById(R.id.body);
-        handleVisibility();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("state",state);
-    }
 
     private void handleVisibility() {
         if (state.post == null) return;
@@ -228,17 +236,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200202 && resultCode == Activity.RESULT_OK) {
-            //viewer.refresh();
-            if (data != null && data.hasExtra("post")) {
-                state.post = (BlogPost) data.getSerializableExtra("post");
-                handleVisibility();
-            } else {
-
-            }
-        }
+    static class State implements Serializable {
+        private BlogPost post;
     }
 }
