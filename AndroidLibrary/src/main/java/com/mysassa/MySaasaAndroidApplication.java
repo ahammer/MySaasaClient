@@ -46,6 +46,7 @@ public class MySaasaAndroidApplication extends Application {
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
         registerGoogleCloudMessaging();
+        autoLogin();
     }
 
     private void registerGoogleCloudMessaging() {
@@ -73,8 +74,6 @@ public class MySaasaAndroidApplication extends Application {
         SharedPreferences sp = getSharedPreferences("autologin",0);
         sp.edit().putString("identifier", username).commit();
         sp.edit().putString("password", password).commit();
-
-
     }
     public void clearCredentials() {
         SharedPreferences sp = getSharedPreferences("autologin",0);

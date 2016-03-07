@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysassa.MySaasaAndroidApplication;
@@ -20,8 +21,7 @@ import com.mysassa.ui.ActivitySignin;
  * Created by Adam on 1/4/2015.
  */
 public class AuthenticationView extends FrameLayout {
-
-
+    private TextView username;
     private Button signout;
     private Button signin;
     private Button messages;
@@ -33,7 +33,8 @@ public class AuthenticationView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_authentication,this);
-
+        
+        username = (TextView) findViewById(R.id.user);
         signin = (Button) findViewById(R.id.signin);
         signout = (Button) findViewById(R.id.logout);
         messages = (Button) findViewById(R.id.message);
@@ -70,6 +71,10 @@ public class AuthenticationView extends FrameLayout {
         if (MySaasaAndroidApplication.getInstance()!=null) {
             User u = MySaasaAndroidApplication.getService().getLoginManager().getAuthenticatedUser();
             boolean auth = u != null;
+            username.setVisibility(u != null?VISIBLE:GONE);
+            if (auth) {
+                username.setText(u.identifier);
+            }
             signin.setVisibility(auth?View.GONE:View.VISIBLE);
             messages.setVisibility(auth?View.VISIBLE:View.GONE);
             signout.setVisibility(auth?View.VISIBLE:View.GONE);

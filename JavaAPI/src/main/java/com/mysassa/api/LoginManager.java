@@ -9,6 +9,7 @@ import java.io.IOException;
 import retrofit2.Call;
 import rx.Observable;
 import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Adam on 3/3/2016.
@@ -32,6 +33,7 @@ public class LoginManager {
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
         lastLoginResponseObservable = Observable.create(loginSubscription = new LoginObservable(username, password));
+        lastLoginResponseObservable.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe();
         return lastLoginResponseObservable;
     }
 
