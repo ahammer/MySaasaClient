@@ -14,16 +14,16 @@ repositories {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     lintOptions {
         abortOnError false
     }
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 19
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -35,15 +35,15 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:19.+'
-    compile "com.google.android.gms:play-services:3.1.+"
+    compile rootProject.supportLibraryV13
+    compile rootProject.googleMessaging
+
+    compile(project(':JavaAPI'))
+
     compile files('libs/crouton-1.8.1.jar')
     compile files('libs/splunk-mint-4.0.8.jar')
+
     compile 'io.reactivex:rxandroid:+'
-    compile(project(':JavaAPI')) {
-        exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
-    }
-    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5'
     compile 'com.jakewharton:butterknife:+'
     compile 'com.squareup.picasso:picasso:2.3.4'
 

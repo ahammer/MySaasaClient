@@ -19,7 +19,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.mysassa.ui.sidenav.LeftNavigationFrameLayout
+    <com.mysaasa.ui.sidenav.LeftNavigationFrameLayout
 
         android:id="@+id/left_drawer"
         android:layout_width="@dimen/sidenav_width"

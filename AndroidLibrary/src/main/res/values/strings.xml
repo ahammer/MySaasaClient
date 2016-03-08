@@ -12,5 +12,7 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_products">ProductsActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 
 </resources>

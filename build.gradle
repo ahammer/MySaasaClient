@@ -1,3 +1,15 @@
+ext {
+    supportAnnotations = 'com.android.support:support-annotations:23.2.0'
+    supportLibraryV13 = 'com.android.support:support-v13:19.+'
+    googleMessaging = "com.google.android.gms:play-services:3.1.+"
+    testRunner =  'com.android.support.test:runner:0.4.1'
+    espresso = 'com.android.support.test.espresso:espresso-core:2.2.1'
+    rules = 'com.android.support.test:rules:0.4'
+    buildToolsVersion = "23.0.2"
+    compileSdkVersion = 23
+    minSdkVersion = 16
+    targetSdkVersion = 19
+}
 
 
 

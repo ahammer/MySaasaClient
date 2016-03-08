@@ -13,8 +13,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -33,10 +33,11 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 19
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 5
         versionName "1.0.5"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     productFlavors {
@@ -47,5 +48,13 @@ android {
 }
 
 dependencies {
+    // App's dependencies, including test
+    compile rootProject.supportAnnotations
+
+    // Testing-only dependencies
+    androidTestCompile rootProject.testRunner
+    androidTestCompile rootProject.espresso
+    androidTestCompile rootProject.supportAnnotations
+    androidTestCompile rootProject.rules
     compile project(':AndroidLibrary')
 }

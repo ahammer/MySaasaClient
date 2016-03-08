@@ -41,7 +41,7 @@
     <item>
         <title>Contact</title>
         <category>Contact</category>
-        <fragment>com.mysassa.ui.fragments.ContactFragment</fragment>
+        <fragment>com.mysaasa.ui.fragments.ContactFragment</fragment>
     </item>
 
 

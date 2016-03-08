@@ -2,8 +2,6 @@ package com.mysassa.api.model;
 
 import com.google.gson.JsonObject;
 
-import org.apache.http.util.TextUtils;
-
 import java.io.Serializable;
 
 /*
@@ -102,7 +100,7 @@ public class ContactInfo implements Serializable {
     }
 
     private boolean has(String field) {
-        return !TextUtils.isEmpty(field);
+        return field != null && field.trim().length() != 0;
     }
 
     public boolean isPopulated() {
