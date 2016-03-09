@@ -7,8 +7,8 @@ ext {
     rules = 'com.android.support.test:rules:0.4'
     buildToolsVersion = "23.0.2"
     compileSdkVersion = 23
-    minSdkVersion = 16
-    targetSdkVersion = 19
+    minSdkVersion = 21
+    targetSdkVersion = 21
 }
 
 

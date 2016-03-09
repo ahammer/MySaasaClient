@@ -1,5 +1,6 @@
 package com.mysassa.api.observables;
 
+import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.MySaasaGateway;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
@@ -17,21 +18,20 @@ import rx.Subscriber;
 public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> {
     private final Category category;
     private final MySaasaGateway gateway;
+    private final MySaasaClient client;
     private GetBlogPostsResponse response;
 
-    public GetBlogPostsObservable(Category category, MySaasaGateway gateway) {
+    public GetBlogPostsObservable(Category category, MySaasaClient client) {
         this.category = category;
-        this.gateway = gateway;
+        this.gateway = client.getGateway();
+        this.client = client;
     }
 
     @Override
     public void call(Subscriber<? super BlogPost> subscriber) {
         if (!subscriber.isUnsubscribed()) {
-            if (response != null) {
-
-            }
-
             try {
+                client.startNetwork();
                 if (response == null) {
                     Call<GetBlogPostsResponse> call = gateway.getBlogPosts(category.name, 0, 100, "priority", "DESC");
                     this.response = call.execute().body();
@@ -45,6 +45,8 @@ public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> 
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                client.stopNetwork();
             }
             subscriber.onCompleted();
         }

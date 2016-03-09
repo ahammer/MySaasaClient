@@ -1,14 +1,13 @@
 package com.mysassa.api.messages;
 
-import com.mysassa.api.enums.NetworkState;
-
-/**
- * Created by Adam on 1/13/2015.
- */
 public class NetworkStateChange {
-    public final NetworkState state;
+   private final int depth;
 
-    public NetworkStateChange(NetworkState state) {
-        this.state = state;
+    public NetworkStateChange(int depth) {
+        this.depth = depth;
+    }
+
+    public boolean isBusy() {
+        return depth>0;
     }
 }

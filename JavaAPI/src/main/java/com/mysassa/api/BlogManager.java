@@ -39,7 +39,7 @@ public class BlogManager {
         //If in cache, return cache version
         if (mBlogPostCache.containsKey(c)) { return mBlogPostCache.get(c); }
         //Otherwise create one, put it in the cache and return it.
-        Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa.gateway));
+        Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa));
         mBlogPostCache.put(c,observable);
         return observable;
     }
@@ -62,14 +62,15 @@ public class BlogManager {
                     Call<PostCommentResponse> call = mySaasa.gateway.postComment(post.id, text);
                     try {
                         Response<PostCommentResponse> response = call.execute();
+                        subscriber.onNext(response.body());
+                        subscriber.onCompleted();
                         System.out.println(response.toString());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        subscriber.onError(e);
                     }
                 }
             }
         });
-        observable.observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe();
         return observable;
 
     }

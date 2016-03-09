@@ -1,7 +1,13 @@
 package com.mysassa.api;
 
 import com.google.common.eventbus.EventBus;
+import com.mysassa.api.messages.NetworkStateChange;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+
+import okhttp3.JavaNetCookieJar;
 import retrofit2.Retrofit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,6 +40,7 @@ public class MySaasaClient {
     private final LoginManager loginManager;
     private final MessageManager messagesManager;
     private final CategoryManager categoryManager;
+    private int callDepth = 0;
 
 
     //Observables
@@ -54,7 +61,15 @@ public class MySaasaClient {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(new JavaNetCookieJar(CookieHandler.getDefault()))
+                .addInterceptor(interceptor).build();
+
 
         gateway = new Retrofit.Builder()
                 .baseUrl(scheme+"://"+domain+":"+port)
@@ -86,8 +101,21 @@ public class MySaasaClient {
     }
 
 
+    public boolean isNetworkBusy() {
+        return callDepth > 0;
+    }
 
+    public void stopNetwork() {
+        callDepth--;
+        bus.post(new NetworkStateChange(callDepth));
+    }
 
+    public void startNetwork() {
+        callDepth++;
+        bus.post(new NetworkStateChange(callDepth));
+    }
 
-
+    public MySaasaGateway getGateway() {
+        return gateway;
+    }
 }

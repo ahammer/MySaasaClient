@@ -12,8 +12,15 @@ import com.mysaasa.MySaasaAndroidApplication;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
+import com.mysassa.api.responses.PostCommentResponse;
 
 import java.io.Serializable;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by administrator on 2014-06-30.
@@ -76,14 +83,32 @@ public class ActivityPostComment extends Activity {
                 if (editMode) {
                     System.out.println(state);
                 } else {
-                    if (state.comment == null) {
-                        MySaasaAndroidApplication.getService().getBlogManager().postBlogComment(state.post, commentBox.getText().toString());
-                    } else {
-                        MySaasaAndroidApplication.getService().getBlogManager().postBlogComment(state.post, commentBox.getText().toString());
-                    }
+                        MySaasaAndroidApplication
+                                .getService()
+                                .getBlogManager()
+                                .postBlogComment(state.post, commentBox.getText().toString())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .doOnError(new Action1<Throwable>() {
+                                    @Override
+                                    public void call(Throwable throwable) {
+                                        Crouton.makeText(ActivityPostComment.this, throwable.getMessage(), Style.ALERT).show();
+                                    }
+                                })
+                                .subscribe(new Action1<PostCommentResponse>() {
+                                    @Override
+                                    public void call(PostCommentResponse postCommentResponse) {
+                                        if (postCommentResponse.isSuccess()) {
+                                            setResult(Activity.RESULT_OK);
+                                            finish();
+                                        } else {
+                                            Crouton.makeText(ActivityPostComment.this, postCommentResponse.getMessage(), Style.ALERT).show();
+                                        }
+                                    }
+
+                                });
+
                 }
-                setResult(Activity.RESULT_OK);
-                finish();
             }
         });
 

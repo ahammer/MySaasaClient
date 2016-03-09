@@ -70,8 +70,10 @@ public class LoginManager {
                     subscriber.onCompleted();
                     return;
                 }
+
                 Call<LoginUserResponse> loginUserResponseCall = mySaasa.gateway.loginUser(username, password);
                 try {
+                    mySaasa.startNetwork();
                     lastResponse = loginUserResponseCall.execute().body();
                     if (lastResponse.isSuccess()) {
                         mySaasa.bus.post(new LoginStateChanged());
@@ -81,6 +83,8 @@ public class LoginManager {
                     subscriber.onCompleted();
                 } catch (IOException e) {
                     subscriber.onError(e);
+                } finally {
+                    mySaasa.stopNetwork();
                 }
             }
 

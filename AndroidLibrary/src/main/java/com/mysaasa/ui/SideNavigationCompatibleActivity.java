@@ -11,14 +11,17 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 
+import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaAndroidApplication;
 import com.mysaasa.ui.sidenav.LeftNavigationFrameLayout;
 import com.mysassa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.messages.NetworkStateChange;
 import com.mysassa.api.model.Category;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -65,7 +68,6 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         if (savedInstanceState == null) {
             selectedCategory  = new Category(getString(R.string.defaultSection));
         }
@@ -84,7 +86,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         },filter);
         FOREGROUND_REF_COUNT++;
         MySaasaAndroidApplication.getService().bus.register(this);
-
+        setProgressBarIndeterminate(MySaasaAndroidApplication.getService().isNetworkBusy());
     }
 
     @Override
@@ -93,10 +95,24 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         unregisterReceiver(receiver);
         FOREGROUND_REF_COUNT--;
         MySaasaAndroidApplication.getService().bus.unregister(this);
-
     }
 
+    @Subscribe
+    public void NetworkStateChanged(final NetworkStateChange msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showProgressBar(msg.isBusy());
+            }
+        });
+    }
 
+    private void showProgressBar(boolean busy) {
+        View v = findViewById(R.id.progress_indicator);
+        if (v!=null) {
+            v.setVisibility(busy?View.VISIBLE:View.GONE);
+        }
+    }
 
 
     private void checkNetworkState() {

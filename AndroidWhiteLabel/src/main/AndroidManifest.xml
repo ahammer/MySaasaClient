@@ -25,10 +25,12 @@
         </activity>
         -->
         <activity android:name="com.mysaasa.ui.ActivitySignin"
+            android:theme="@android:style/Theme.Material.Dialog"
             android:label="Sign In"/>
         <activity android:name="com.mysaasa.ui.ActivityBlogPost"
             android:label="Post"/>
         <activity android:name="com.mysaasa.ui.ActivityPostComment"
+            android:theme="@android:style/Theme.Dialog"
             android:label="Post Comment"/>
         <activity android:name="com.mysaasa.ui.ActivityPostToBlog"
             android:label="Post to Blog"/>

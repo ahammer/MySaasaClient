@@ -89,13 +89,17 @@ public class AuthenticationView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        MySaasaAndroidApplication.getService().bus.register(this);
+        if (!isInEditMode()) {
+            MySaasaAndroidApplication.getService().bus.register(this);
+        }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        MySaasaAndroidApplication.getService().bus.unregister(this);
+        if (!isInEditMode()) {
+            MySaasaAndroidApplication.getService().bus.unregister(this);
+        }
     }
 
     @Subscribe

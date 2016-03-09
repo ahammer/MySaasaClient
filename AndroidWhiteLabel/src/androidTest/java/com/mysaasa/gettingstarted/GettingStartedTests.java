@@ -52,22 +52,18 @@ public class GettingStartedTests extends ActivityInstrumentationTestCase2<Activi
 
     @Test
     public void testPostToBlogComments() throws Exception {
-        onView(withId(android.R.id.home)).perform(click());
-        if (client.getLoginManager().getAuthenticatedUser() != null) {
-            onView(withId(R.id.logout)).perform(click());
-        }
-        onView(withId(R.id.signin)).perform(click());
-        onView(withId(R.id.username)).perform(click()).perform(typeText("admin"));
-        onView(withId(R.id.password)).perform(click()).perform(typeText("test123"));
-        onView(withId(R.id.button_login)).perform(click());
-        assertTrue(client.getLoginManager().getAuthenticatedUser() != null);
-        onView(withId(android.R.id.home)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(0).perform(click());
         onView(withId(R.id.action_comment)).perform(click());
+        if (client.getLoginManager().getAuthenticatedUser() == null) {
+            onView(withId(R.id.username)).perform(click()).perform(typeText("admin"));
+            onView(withId(R.id.password)).perform(click()).perform(typeText("test123"));
+            onView(withId(R.id.button_login)).perform(click());
+            assertTrue(client.getLoginManager().getAuthenticatedUser() != null);
+        }
         onView(withId(R.id.comment)).perform(click()).perform(typeText("This is a test comment"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.post)).perform(click());
-        Thread.sleep(1000);
+
     }
 
 

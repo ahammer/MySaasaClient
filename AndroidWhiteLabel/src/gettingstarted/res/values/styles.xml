@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SimpleTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:windowBackground">@drawable/background_scale</item>
+    <style name="SimpleTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <!-- <item name="android:windowBackground">@drawable/background_scale</item> -->
     </style>
 
     <style name="simple_news_list">
         <item name="android:background">@drawable/low_padding_box</item>
-        </style>
+    </style>
 
     <style name="simple_news_list_item"></style>
 
@@ -34,7 +34,6 @@
     </style>
 
     <style name="simple_form">
-        <item name="android:background">@drawable/comment_box</item>
     </style>
 
     <style name="simple_subtitle_text" parent="simple_title_text">
