@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
 <ScrollView
-    style="@style/simple_cart"
+    style="@style/mysaasa_cart"
     android:layout_width="match_parent"
 
     android:layout_height="0px"
@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/simple_uid_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        style="@style/simple_field_label"
+        style="@style/mysaasa_field_label"
         android:layout_height="wrap_content"
         android:text="UID:"/>
 
@@ -43,7 +43,7 @@
     <TextView
         android:id="@+id/simple_date_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        style="@style/simple_field_label"
+        style="@style/mysaasa_field_label"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple_uid_label"
         android:text="DATE:"/>
@@ -61,7 +61,7 @@
     <TextView
         android:id="@+id/simple_status_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        style="@style/simple_field_label"
+        style="@style/mysaasa_field_label"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple_date_label"
         android:text="Status:"/>
@@ -79,7 +79,7 @@
     <TextView
         android:id="@+id/simple_payto_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        style="@style/simple_field_label"
+        style="@style/mysaasa_field_label"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple_status_label"
         android:text="Pay to:"/>
@@ -97,7 +97,7 @@
 
     <!-- Order Items -->
     <TextView
-        style="@style/simple_field_label"
+        style="@style/mysaasa_field_label"
         android:id="@+id/simple_order_items_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
 
-        style="@style/simple_order_item">
+        style="@style/mysaasa_order_item">
         <TextView
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/simple_field_label"
+                style="@style/mysaasa_field_label"
                 android:id="@+id/simple_subtotal_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"

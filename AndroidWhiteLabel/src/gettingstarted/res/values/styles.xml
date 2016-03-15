@@ -36,7 +36,7 @@
     <style name="simple_form">
     </style>
 
-    <style name="simple_subtitle_text" parent="simple_title_text">
+    <style name="simple_subtitle_text" parent="mysaasa_title_text">
         <item name="android:textColor">@android:color/white</item>
     </style>
 

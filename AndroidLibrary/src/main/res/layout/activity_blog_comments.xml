@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Title"
-        style="@style/simple_title_text"
+        style="@style/mysaasa_title_text"
         android:id="@+id/title"
         android:gravity="center"/>
 

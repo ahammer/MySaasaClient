@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Body"
-        style="@style/simple_message_body"
+        style="@style/mysaasa_message_body"
         android:layout_below="@id/author"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"

@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
     <ListView
-            style="@style/simple_news_list"
+            style="@style/mysaasa_news_list"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:id="@+id/list"/>
 

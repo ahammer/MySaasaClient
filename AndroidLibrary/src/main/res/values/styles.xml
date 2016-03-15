@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Except for absolute basics, these styles are placeholders, giving places to hook into the styling
+of the system without affecting code.
+-->
 <resources>
     <!-- Placeholder Styles -->
-    <style name="simple_news_list"/>
-    <style name="simple_news_list_item"/>
-    <style name="simple_sidenav"/>
-    <style name="simple_title_text"/>
-    <style name="simple_blogcomment_fragment"/>
-    <style name="simple_blogpost_container"></style>
-    <style name="simple_subtitle_text"></style>
-    <style name="simple_form"></style>
-    <style name="simple_blogpost_body"></style>
-    <style name="simple_blogcomment"></style>
-    <style name="simple_fragment_frame"></style>
-    <style name="simple_empty_list_item"></style>
-    <style name="simple_messages_list"></style>
-    <style name="simple_product_category_view"></style>
+    <style name="mysaasa_news_list"/>
+    <style name="mysaasa_news_list_item"/>
+    <style name="mysaasa_sidenav"/>
+    <style name="mysaasa_title_text"/>
+    <style name="mysaasa_blogcomment_fragment"/>
+    <style name="mysaasa_blogpost_container"></style>
+    <style name="mysaasa_subtitle_text"></style>
+    <style name="mysaasa_horm"></style>
+    <style name="mysaasa_blogpost_body"></style>
+    <style name="mysaasa_blogcomment"></style>
+    <style name="mysaasa_fragment_frame"></style>
+    <style name="mysaasa_empty_list_item"></style>
+    <style name="mysaasa_messages_list"></style>
+    <style name="mysaasa_product_category_view"></style>
 
-    <style name="simple_fragment_contact_info"></style>
+    <style name="mysaasa_fragment_contact_info"></style>
 
-    <style name="simple_cart"></style>
+    <style name="mysaasa_cart"></style>
 
-    <style name="simple_field_label">
+    <style name="mysaasa_field_label">
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="simple_order_item"></style>
+    <style name="mysaasa_order_item"></style>
 
-    <style name="simple_activity_address"></style>
+    <style name="mysaasa_activity_address"></style>
 
-    <style name="simple_address_field">
+    <style name="mysaasa_address_field">
         <item name="android:layout_width">300dp</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="simple_order_total_view"></style>
+    <style name="mysaasa_order_total_view"></style>
 
 
     <!-- The body of a message -->
-    <style name="simple_message_body"></style>
+    <style name="mysaasa_message_body"></style>
 
-    <style name="simple_thread_list"></style>
+    <style name="mysaasa_thread_list"></style>
 
-    <style name="simple_reply_box"></style>
+    <style name="mysaasa_reply_box"></style>
 
-    <style name="simple_small_icon_button">
+    <!-- Used for small action items -->
+    <style name="mysaasa_small_icon_button">
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_margin">8dp</item>

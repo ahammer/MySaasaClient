@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical"
                 android:layout_margin="@dimen/simple_listitem_margin"
-              style="@style/simple_news_list_item">
+              style="@style/mysaasa_news_list_item">
 
     <TextView
             android:layout_width="match_parent"

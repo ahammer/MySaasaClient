@@ -19,7 +19,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        style="@style/simple_title_text"
+        style="@style/mysaasa_title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -28,7 +28,7 @@
         android:id="@+id/title" />
 
     <TextView
-        style="@style/simple_subtitle_text"
+        style="@style/mysaasa_subtitle_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -37,7 +37,7 @@
         android:gravity="center" />
 
     <LinearLayout
-        style="@style/simple_blogpost_container"
+        style="@style/mysaasa_blogpost_container"
         android:id="@+id/body_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="body"
-                style="@style/simple_blogpost_body"
+                style="@style/mysaasa_blogpost_body"
                 android:id="@+id/body" />
         </ScrollView>
 

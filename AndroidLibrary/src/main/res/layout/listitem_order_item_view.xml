@@ -6,7 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal"
 
-style="@style/simple_order_item">
+style="@style/mysaasa_order_item">
 <TextView
     android:layout_width="0px"
     android:layout_height="wrap_content"

@@ -11,7 +11,7 @@
         <!-- UID -->
         <TextView
             android:id="@+id/amount_owed_label"
-            style="@style/simple_field_label"
+            style="@style/mysaasa_field_label"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="Due: "
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/amount_paid_label"
-            style="@style/simple_field_label"
+            style="@style/mysaasa_field_label"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/amount_owed_label"

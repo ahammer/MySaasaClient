@@ -24,7 +24,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Title"
             android:id="@+id/title"
-            style="@style/simple_title_text"
+            style="@style/mysaasa_title_text"
             android:layout_gravity="center_horizontal"
             android:gravity="center"/>
 
@@ -33,9 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-            style="@style/simple_news_list"/>
+            style="@style/mysaasa_news_list"/>
         <FrameLayout
-            style="@style/simple_fragment_frame"
+            style="@style/mysaasa_fragment_frame"
             android:id="@+id/fragment_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
