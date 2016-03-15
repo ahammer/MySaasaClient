@@ -44,7 +44,7 @@ public class BlogManager {
         //Otherwise create one, put it in the cache and return it.
         Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa));
         mBlogPostCache.put(c,observable);
-        return observable;
+        return observable.subscribeOn(Schedulers.io());
     }
 
     public Observable<BlogComment> getBlogCommentsObservable(BlogPost post) {
@@ -53,7 +53,7 @@ public class BlogManager {
         //Otherwise create one, put it in the cache and return it.
         Observable<BlogComment> observable = Observable.create(new GetBlogCommentsObservable(post, mySaasa.gateway));
         //mBlogCommentCache.put(post,observable);
-        return observable;
+        return observable.subscribeOn(Schedulers.io());
     }
 
     public Observable<PostCommentResponse> postBlogComment(final BlogPost post, final String text) {
@@ -76,11 +76,11 @@ public class BlogManager {
                 }
             }
         });
-        return observable;
+        return observable.subscribeOn(Schedulers.io());
 
     }
-    public Observable<PostReplyResponse> postCommentResponse(final BlogComment comment, final String text) {
 
+    public Observable<PostReplyResponse> postCommentResponse(final BlogComment comment, final String text) {
         Observable<PostReplyResponse> observable = Observable.create(new Observable.OnSubscribe<PostReplyResponse>() {
             @Override
             public void call(Subscriber<? super PostReplyResponse> subscriber) {
@@ -99,7 +99,7 @@ public class BlogManager {
                 }
             }
         });
-        return observable;
+        return observable.subscribeOn(Schedulers.io());
 
     }
 

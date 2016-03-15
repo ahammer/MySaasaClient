@@ -4,14 +4,13 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityMain;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.whitelabel.R;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -34,7 +33,7 @@ import static org.hamcrest.CoreMatchers.anything;
  */
 public class GettingStartedTests extends ActivityInstrumentationTestCase2<ActivityMain> {
     private ActivityMain mActivity;
-    private MySaasaAndroidApplication application;
+    private MySaasaApplication application;
     private MySaasaClient client;
 
     public GettingStartedTests() {
@@ -46,7 +45,7 @@ public class GettingStartedTests extends ActivityInstrumentationTestCase2<Activi
         super.setUp();
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         mActivity = getActivity();
-        application = (MySaasaAndroidApplication) mActivity.getApplication();
+        application = (MySaasaApplication) mActivity.getApplication();
         client = application.getMySaasaClient();
     }
 

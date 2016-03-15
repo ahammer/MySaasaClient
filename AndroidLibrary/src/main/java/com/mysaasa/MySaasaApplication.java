@@ -20,8 +20,8 @@ import java.io.IOException;
 /**
  * Created by administrator on 2014-06-30.
  */
-public class MySaasaAndroidApplication extends Application {
-    private static MySaasaAndroidApplication instance;
+public class MySaasaApplication extends Application {
+    private static MySaasaApplication instance;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MySaasa";
     private static final String PROPERTY_REG_ID = "ID";
@@ -32,10 +32,11 @@ public class MySaasaAndroidApplication extends Application {
     private GoogleCloudMessaging gcm;
     private String regid;
 
-    public static MySaasaAndroidApplication getInstance() {
+    public static MySaasaApplication getInstance() {
         return instance;
     }
     public static MySaasaClient getService() {
+        if (instance == null) return null;
         return instance.mySaasaClient;
     }
 
@@ -127,7 +128,7 @@ public class MySaasaAndroidApplication extends Application {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
-        return getSharedPreferences(MySaasaAndroidApplication.class.getSimpleName()+"GCM",
+        return getSharedPreferences(MySaasaApplication.class.getSimpleName()+"GCM",
                 Context.MODE_PRIVATE);
     }
 
@@ -140,7 +141,7 @@ public class MySaasaAndroidApplication extends Application {
                     String msg = "";
                     try {
                         if (gcm == null) {
-                            gcm = GoogleCloudMessaging.getInstance(MySaasaAndroidApplication.this);
+                            gcm = GoogleCloudMessaging.getInstance(MySaasaApplication.this);
                         }
                         String key = getString(R.string.gcm_key);
                         regid = gcm.register(key);
@@ -159,7 +160,7 @@ public class MySaasaAndroidApplication extends Application {
                         // message using the 'from' address in the message.
 
                         // Persist the registration ID - no need to register again.
-                        storeRegistrationId(MySaasaAndroidApplication.this, regid);
+                        storeRegistrationId(MySaasaApplication.this, regid);
                     } catch (IOException ex) {
                         msg = "Error :" + ex.getMessage();
                         // If there is an error, don't just keep trying to register.
@@ -176,7 +177,7 @@ public class MySaasaAndroidApplication extends Application {
 
     }
 
-    private void storeRegistrationId(MySaasaAndroidApplication simpleApplication, String regid) {
+    private void storeRegistrationId(MySaasaApplication simpleApplication, String regid) {
 
     }
 

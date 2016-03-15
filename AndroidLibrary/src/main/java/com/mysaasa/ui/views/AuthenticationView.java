@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivitySignin;
 import com.mysassa.R;
 import com.mysassa.api.messages.LoginStateChanged;
@@ -50,7 +50,7 @@ public class AuthenticationView extends FrameLayout {
         signout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MySaasaAndroidApplication.getService().getLoginManager().signOut();
+                MySaasaApplication.getService().getLoginManager().signOut();
 
             }
         });
@@ -68,8 +68,8 @@ public class AuthenticationView extends FrameLayout {
 
 
     private void setVisibilities() {
-        if (MySaasaAndroidApplication.getInstance()!=null) {
-            User u = MySaasaAndroidApplication.getService().getLoginManager().getAuthenticatedUser();
+        if (MySaasaApplication.getInstance()!=null) {
+            User u = MySaasaApplication.getService().getLoginManager().getAuthenticatedUser();
             boolean auth = u != null;
             username.setVisibility(u != null?VISIBLE:GONE);
             if (auth) {
@@ -90,7 +90,7 @@ public class AuthenticationView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (!isInEditMode()) {
-            MySaasaAndroidApplication.getService().bus.register(this);
+            MySaasaApplication.getService().bus.register(this);
         }
     }
 
@@ -98,7 +98,7 @@ public class AuthenticationView extends FrameLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (!isInEditMode()) {
-            MySaasaAndroidApplication.getService().bus.unregister(this);
+            MySaasaApplication.getService().bus.unregister(this);
         }
     }
 

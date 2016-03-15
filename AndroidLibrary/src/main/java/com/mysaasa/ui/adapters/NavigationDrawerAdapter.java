@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
 import com.mysassa.api.model.Category;
 import com.mysaasa.ui.views.BlogCategoryView;
@@ -21,9 +21,9 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
 
     public NavigationDrawerAdapter() {
-        if (MySaasaAndroidApplication.getInstance()!= null) {
-            defs = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getItems();
-            //cats = MySaasaAndroidApplication.getService().getBlogCategories();
+        if (MySaasaApplication.getInstance()!= null) {
+            defs = MySaasaApplication.getInstance().getAndroidCategoryManager().getItems();
+            //cats = MySaasaApplication.getService().getBlogCategories();
         } else {
             defs = Collections.EMPTY_LIST;
             //cats = Collections.EMPTY_LIST;

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
 import com.mysassa.api.responses.LoginUserResponse;
 import com.mysassa.api.model.Category;
@@ -62,7 +62,7 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
                     public void call(LoginUserResponse loginUserResponse) {
                         if (loginUserResponse.isSuccess()) {
                             if (rememberMe.isChecked()) {
-                                MySaasaAndroidApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
+                                MySaasaApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
                             }
                             setResult(RESULT_OK);
                             finish();

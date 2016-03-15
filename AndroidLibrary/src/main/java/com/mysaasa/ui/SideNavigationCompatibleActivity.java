@@ -11,17 +11,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 
-import com.google.common.eventbus.Subscribe;
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.sidenav.LeftNavigationFrameLayout;
 import com.mysassa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.messages.NetworkStateChange;
 import com.mysassa.api.model.Category;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -54,7 +50,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         return selectedCategory;
     }
     public MySaasaClient getService() {
-        return MySaasaAndroidApplication.getService();
+        return MySaasaApplication.getService();
     }
 
     public final boolean isConnected() {
@@ -85,8 +81,8 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
             }
         },filter);
         FOREGROUND_REF_COUNT++;
-        MySaasaAndroidApplication.getService().bus.register(this);
-        setProgressBarIndeterminate(MySaasaAndroidApplication.getService().isNetworkBusy());
+        MySaasaApplication.getService().bus.register(this);
+        setProgressBarIndeterminate(MySaasaApplication.getService().isNetworkBusy());
     }
 
     @Override
@@ -94,7 +90,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         super.onPause();
         unregisterReceiver(receiver);
         FOREGROUND_REF_COUNT--;
-        MySaasaAndroidApplication.getService().bus.unregister(this);
+        MySaasaApplication.getService().bus.unregister(this);
     }
 
     private void checkNetworkState() {
@@ -135,7 +131,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
 
 
     protected void categoryChanged(Category c) {
-        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(c);
+        ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(c);
         ActivityMain.startFreshTop(this, c);
     }
 

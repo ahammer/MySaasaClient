@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.views.ExtendedMessageView;
 import com.mysassa.R;
 import com.mysassa.api.model.Message;
@@ -33,7 +33,7 @@ public class ActivityMessage extends SideNavigationCompatibleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         rootMessage = (Message)getIntent().getSerializableExtra("message");
-        MySaasaAndroidApplication.getService().getMessagesManager().requestMessageThread(rootMessage);
+        MySaasaApplication.getService().getMessagesManager().requestMessageThread(rootMessage);
         threadList = (ListView) findViewById(R.id.list);
         replyButton = (Button) findViewById(R.id.post_reply_button);
         replyText = (EditText) findViewById(R.id.reply_text);
@@ -49,7 +49,7 @@ public class ActivityMessage extends SideNavigationCompatibleActivity {
     private void setupList() {
         thread = Collections.emptyList();
         //TODO fill this list up with a thread or something
-        // MySaasaAndroidApplication.getService().getState().messages.getThread(rootMessage);
+        // MySaasaApplication.getService().getState().messages.getThread(rootMessage);
         threadList.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {

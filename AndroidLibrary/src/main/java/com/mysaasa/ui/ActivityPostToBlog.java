@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mysaasa.ApplicationSectionsManager;
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
@@ -135,7 +135,7 @@ public class ActivityPostToBlog extends Activity {
         } else {
             state.category = (Category) getIntent().getSerializableExtra("category");
             if (state.category != null) {
-                state.categoryDef = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
+                state.categoryDef = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
             }
             state.post = (BlogPost) getIntent().getSerializableExtra("post");
             state.editMode = state.post!=null;
@@ -143,7 +143,7 @@ public class ActivityPostToBlog extends Activity {
     }
 
     private void authenticateUserIfNecessary() {
-        if (MySaasaAndroidApplication.getService().getLoginManager().getAuthenticatedUser() == null) {
+        if (MySaasaApplication.getService().getLoginManager().getAuthenticatedUser() == null) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }

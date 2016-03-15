@@ -7,8 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
-import com.mysaasa.MySaasaAndroidApplication;
-import com.mysassa.api.MySaasaClient;
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.api.messages.NetworkStateChange;
 
 /**
@@ -26,14 +25,16 @@ public class NetworkProgressBar extends ProgressBar {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        MySaasaAndroidApplication.getService().bus.register(this);
+        if (MySaasaApplication.getService() != null)
+            MySaasaApplication.getService().bus.register(this);
         handleVisibility();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        MySaasaAndroidApplication.getService().bus.unregister(this);
+        if (MySaasaApplication.getService() != null)
+            MySaasaApplication.getService().bus.unregister(this);
     }
 
     @Subscribe
@@ -56,7 +57,7 @@ public class NetworkProgressBar extends ProgressBar {
         if (isInEditMode()) {
             setVisibility(VISIBLE);
         } else {
-            setVisibility(MySaasaAndroidApplication.getService().isNetworkBusy()?VISIBLE:GONE);
+            setVisibility(MySaasaApplication.getService().isNetworkBusy()?VISIBLE:GONE);
         }
 
     }

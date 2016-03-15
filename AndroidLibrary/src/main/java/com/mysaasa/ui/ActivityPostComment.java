@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
@@ -85,7 +85,7 @@ public class ActivityPostComment extends Activity {
                     System.out.println(state);
                 } else {
                     if (state.post != null) {
-                        MySaasaAndroidApplication
+                        MySaasaApplication
                                 .getService()
                                 .getBlogManager()
                                 .postBlogComment(state.post, commentBox.getText().toString())
@@ -110,12 +110,11 @@ public class ActivityPostComment extends Activity {
 
                                 });
                     } else if (state.comment != null) {
-                        MySaasaAndroidApplication
+                        MySaasaApplication
                                 .getService()
                                 .getBlogManager()
                                 .postCommentResponse(state.comment, commentBox.getText().toString())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.io())
                                 .doOnError(new Action1<Throwable>() {
                                     @Override
                                     public void call(Throwable throwable) {
@@ -142,7 +141,7 @@ public class ActivityPostComment extends Activity {
         });
 
 
-        if (MySaasaAndroidApplication.getService().getLoginManager().getAuthenticatedUser() == null) {
+        if (MySaasaApplication.getService().getLoginManager().getAuthenticatedUser() == null) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }
@@ -159,7 +158,6 @@ public class ActivityPostComment extends Activity {
                 title.setVisibility(View.GONE);
             }
         }
-
     }
 
     @Override

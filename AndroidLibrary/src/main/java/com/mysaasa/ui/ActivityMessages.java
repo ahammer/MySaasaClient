@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.fragments.EmptyListAdapter;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
@@ -52,7 +52,7 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
     }
 
     private void updateMessageAdapter() {
-        final MySaasaClient mySaasaClient = MySaasaAndroidApplication.getService();
+        final MySaasaClient mySaasaClient = MySaasaApplication.getService();
         /*
         if (mySaasaClient != null && mySaasaClient.getState().authenticated) {
             final MySaasaClient mySaasaClient1 = mySaasaClient;
@@ -86,7 +86,7 @@ public class ActivityMessages  extends SideNavigationCompatibleActivity {
                                 switch (m.getType()) {
                                     case Reply:
                                         ReplyMessage msg = (ReplyMessage) m.getDataObj();
-                                        BlogPost blogPost = null;// = MySaasaAndroidApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
+                                        BlogPost blogPost = null;// = MySaasaApplication.getService().mBlogPostManager.getBlogPostById(msg.blogpost_id);
                                         if (blogPost == null) {
                                             state.waiting = true;
                                             state.waitingFor = msg;

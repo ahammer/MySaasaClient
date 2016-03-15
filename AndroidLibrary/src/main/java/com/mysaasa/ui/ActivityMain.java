@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogPost;
@@ -44,7 +44,7 @@ import rx.schedulers.Schedulers;
 public class ActivityMain extends SideNavigationCompatibleActivity {
     //ListView navList;
     private ListView newsList;
-    private TextView title;
+
     private MenuItem post;
     private FrameLayout fragmentFrame;
     private MenuItem cart;
@@ -73,7 +73,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             }
         });
 
-        title = (TextView)findViewById(R.id.title);
         if (savedInstanceState != null && savedInstanceState.get("category") != null) {
             selectedCategory = (Category) savedInstanceState.getSerializable("category");
         }
@@ -90,7 +89,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
     private void updateBlogPostSubscription() {
         if (subscription != null) subscription.unsubscribe();
-        subscription = MySaasaAndroidApplication.getService()
+        subscription = MySaasaApplication.getService()
                 .getBlogManager()
                 .getBlogPostsObservable(getSelectedCategory())
                 .subscribeOn(Schedulers.newThread())
@@ -193,14 +192,13 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
     protected void updateBlogList() {
-        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
+        ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
 
-        title.setText(def.title);
+        setTitle(def.title);
         if (TextUtils.isEmpty(def.fragment)) {
             newsList.setVisibility(View.VISIBLE);
             fragmentFrame.setVisibility(View.GONE);
             updateBlogPostSubscription();
-            title.setVisibility(View.VISIBLE);
             if (post != null) {
                 post.setVisible(def.postsAllowed);
             }
@@ -217,7 +215,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                     return "--- No News ---";
                 }
             });
-            title.setVisibility(View.GONE);
             fragmentFrame.setVisibility(View.VISIBLE);
             newsList.setVisibility(View.GONE);
             try {

@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mysaasa.MySaasaAndroidApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysassa.R;
@@ -35,8 +35,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     private State state = new State();
     TextView body;
-    TextView title;
-    TextView subtitle;
     ViewGroup bodyContainer;
     BlogCommentViewer viewer;
     long selected_comment_id = 0;
@@ -69,9 +67,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         }
 
         if (selected_comment_id != 0) currentState = States.CommentsOnly;
-        title = (TextView) findViewById(R.id.title);
         bodyContainer = (ViewGroup) findViewById(R.id.body_container);
-        subtitle = (TextView) findViewById(R.id.subtitle);
         body = (TextView) findViewById(R.id.body);
         handleVisibility();
     }
@@ -103,7 +99,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         getMenuInflater().inflate(R.menu.blog_article, menu);
         ApplicationSectionsManager.CategoryDef def;
         try {
-            def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
+            def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         } catch (Exception e) {
             def = new ApplicationSectionsManager.CategoryDef();
         }
@@ -135,7 +131,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                 }
             });
 
-            //User u = MySaasaAndroidApplication.getService().get().user;
+            //User u = MySaasaApplication.getService().get().user;
             User u = null;
 
             MenuItem delete = menu.findItem(R.id.action_delete);
@@ -198,15 +194,13 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         }
 
         body.setMovementMethod(LinkMovementMethod.getInstance());
-        title.setText(Html.fromHtml(state.post.title));
-        if (!TextUtils.isEmpty(state.post.subtitle)) subtitle.setText(Html.fromHtml(state.post.subtitle));
-        else subtitle.setVisibility(View.GONE);
+        setTitle(state.post.title);
         getActionBar().setDisplayShowTitleEnabled(false);
         viewer = (BlogCommentViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
         viewer.setSelected_comment_id(selected_comment_id);
-        viewer.  setPost(state.post);
+        viewer.setPost(state.post);
 
-        ApplicationSectionsManager.CategoryDef def = MySaasaAndroidApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
+        ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
         if (def.commentsAllowed) {
             switch (currentState) {
                 case BlogOnly:
