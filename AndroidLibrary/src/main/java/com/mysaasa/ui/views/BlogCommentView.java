@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -45,7 +46,7 @@ public abstract class BlogCommentView extends FrameLayout {
     }
 
     public BlogCommentView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context);
         init();
     }
 
@@ -170,8 +171,6 @@ public abstract class BlogCommentView extends FrameLayout {
             }
 
         }
-
-
     }
 
     public void hideChildren(BlogComment comment) {

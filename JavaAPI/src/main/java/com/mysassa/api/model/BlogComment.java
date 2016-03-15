@@ -23,16 +23,6 @@ public class BlogComment implements Serializable{
     public Boolean client_visible = true;
     public List<BlogComment> children = new ArrayList();
 
-    public BlogComment(JsonObject obj) {
-        id = !obj.has("id")?0:obj.get("id").getAsLong();
-        content = !obj.has("content")?"":obj.get("content").getAsString();
-        author = !obj.has("author")?null:new User(obj.get("author").getAsJsonObject());
-        score = !obj.has("score")?0:obj.get("score").getAsInt();
-        visible = !obj.has("visible")?true:obj.get("visible").getAsBoolean();
-        parent_id = obj.get("parent_id").getAsLong();
-        dateCreated = new Date(obj.get("dateCreated").getAsString());
-    }
-
     @Override
     public String toString() {
         return "BlogComment{" +

@@ -214,7 +214,6 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                     bodyContainer.setVisibility(View.VISIBLE);
                     viewer.getView().setVisibility(View.VISIBLE);
                     break;
-
             }
 
         } else {
