@@ -195,7 +195,6 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
         body.setMovementMethod(LinkMovementMethod.getInstance());
         setTitle(state.post.title);
-        getActionBar().setDisplayShowTitleEnabled(false);
         viewer = (BlogCommentViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
         viewer.setSelected_comment_id(selected_comment_id);
         viewer.setPost(state.post);
