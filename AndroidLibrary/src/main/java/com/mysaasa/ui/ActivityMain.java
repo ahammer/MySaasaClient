@@ -90,7 +90,9 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
     private void updateBlogPostSubscription() {
         if (subscription != null) subscription.unsubscribe();
-        subscription = MySaasaAndroidApplication.getService().getBlogManager().getBlogPostsObservable(getSelectedCategory())
+        subscription = MySaasaAndroidApplication.getService()
+                .getBlogManager()
+                .getBlogPostsObservable(getSelectedCategory())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
