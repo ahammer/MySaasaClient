@@ -134,12 +134,6 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                     return true;
                 }
             });
-            menu.findItem(R.id.action_refresh).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    return true;
-                }
-            });
 
             //User u = MySaasaAndroidApplication.getService().get().user;
             User u = null;

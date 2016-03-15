@@ -30,9 +30,11 @@ public class GetBlogCommentsObservable implements Observable.OnSubscribe<BlogCom
             Call<GetBlogCommentsResponse> call = gateway.getBlogComments(post.id, 100);
             try {
                 Response<GetBlogCommentsResponse> response = call.execute();
-                System.out.println(response.toString());
+                for (BlogComment bc:response.body().getData())
+                    subscriber.onNext(bc);
+                subscriber.onCompleted();
             } catch (IOException e) {
-                e.printStackTrace();
+                subscriber.onError(e);
             }
         }
     }

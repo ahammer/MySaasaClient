@@ -97,24 +97,6 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         MySaasaAndroidApplication.getService().bus.unregister(this);
     }
 
-    @Subscribe
-    public void NetworkStateChanged(final NetworkStateChange msg) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showProgressBar(msg.isBusy());
-            }
-        });
-    }
-
-    private void showProgressBar(boolean busy) {
-        View v = findViewById(R.id.progress_indicator);
-        if (v!=null) {
-            v.setVisibility(busy?View.VISIBLE:View.GONE);
-        }
-    }
-
-
     private void checkNetworkState() {
         if (!isConnected()) {
             Crouton.makeText(this, "Network Disconnected", Style.ALERT).show();
@@ -136,7 +118,7 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         if (mDrawerLayout!=null) mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.menu_sidenav_launcher,  /* nav drawer icon to replace 'Up' caret */
+                R.drawable.ic_reorder_black_24dp,  /* nav drawer icon to replace 'Up' caret */
                 R.string.open_drawer,  /* "open drawer" description */
                 R.string.close_drawer  /* "close drawer" description */
 

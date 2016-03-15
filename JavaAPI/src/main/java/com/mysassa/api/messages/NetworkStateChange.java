@@ -10,4 +10,8 @@ public class NetworkStateChange {
     public boolean isBusy() {
         return depth>0;
     }
+
+    public int getDepth() {
+        return depth;
+    }
 }

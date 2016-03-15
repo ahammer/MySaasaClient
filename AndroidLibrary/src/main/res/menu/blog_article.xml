@@ -1,29 +1,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.mysaasa.ui.ActivityMain">
+
     <item android:id="@+id/action_switch_layout"
         android:title="Switch Layout"
-        android:icon="@drawable/menu_switch_layout"
+        android:icon="@drawable/ic_view_stream_black_24dp"
         android:showAsAction="always"
         />
+
     <item android:id="@+id/action_comment"
         android:title="Comment"
-        android:icon="@drawable/menu_comment"
+        android:icon="@drawable/ic_comment_black_24dp"
         android:showAsAction="always"
         />
-    <item android:id="@+id/action_refresh"
-        android:title="Refresh"
-        android:icon="@drawable/menu_refresh"
-        android:showAsAction="always"
-        />
+
     <item android:id="@+id/action_delete"
         android:title="Delete"
-        android:icon="@drawable/icon_x"
+        android:icon="@drawable/ic_delete_black_24dp"
         android:showAsAction="ifRoom"
         />
     <item android:id="@+id/action_edit"
         android:title="Edit"
-        android:icon="@drawable/menu_edit"
+        android:icon="@drawable/ic_mode_edit_black_24dp"
         android:showAsAction="ifRoom"
         />
 

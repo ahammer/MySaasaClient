@@ -51,7 +51,8 @@ public class GettingStartedTests extends ActivityInstrumentationTestCase2<Activi
     }
 
     @Test
-    public void testPostToBlogComments() throws Exception {
+    public void smokeTestClient() throws Exception {
+
         onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(0).perform(click());
         onView(withId(R.id.action_comment)).perform(click());
         if (client.getLoginManager().getAuthenticatedUser() == null) {
@@ -60,7 +61,9 @@ public class GettingStartedTests extends ActivityInstrumentationTestCase2<Activi
             onView(withId(R.id.button_login)).perform(click());
             assertTrue(client.getLoginManager().getAuthenticatedUser() != null);
         }
+
         onView(withId(R.id.comment)).perform(click()).perform(typeText("This is a test comment"));
+        //onData(withText("This is a test comment"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.post)).perform(click());
 

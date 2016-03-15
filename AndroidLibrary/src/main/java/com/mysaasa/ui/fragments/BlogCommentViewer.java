@@ -112,47 +112,7 @@ public class BlogCommentViewer extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    comments.setAdapter(new BaseAdapter() {
-                        @Override
-                        public int getCount() {
-                            return list.size();
-                        }
-
-
-                        @Override
-                        public Object getItem(int i) {
-                            return list.get(i);
-                        }
-
-                        @Override
-                        public long getItemId(int i) {
-                            return list.get(i).id;
-                        }
-
-                        @Override
-                        public View getView(int i, View view, ViewGroup viewGroup) {
-                            BlogCommentView bcv = new BlogCommentView(getActivity()) {
-                                @Override
-                                protected BlogPost getBlogPost() {
-                                    return post;
-                                }
-
-                                @Override
-                                protected void notifyChildVisibilityChanged() {
-                                    blogCommentsReceived(null);
-                                }
-                            };
-
-                            bcv.setComment(list.get(i));
-                            if (list.get(i).id == selected_comment_id) {
-                                bcv.setHighlight(true);
-                            } else {
-                                bcv.setHighlight(false);
-                            }
-
-                            return bcv;
-                        }
-                    });
+                    comments.setAdapter(new MyBlogCommentsAdapter(list));
 
                     if (selected_comment_id != 0) {
                         for (int i=0;i<list.size();i++) {
@@ -171,4 +131,51 @@ public class BlogCommentViewer extends Fragment {
 
     }
 
+    private class MyBlogCommentsAdapter extends BaseAdapter {
+        private final List<BlogComment> list;
+
+        public MyBlogCommentsAdapter(List<BlogComment> list) {
+            this.list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+
+        @Override
+        public Object getItem(int i) {
+            return list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return list.get(i).id;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            BlogCommentView bcv = new BlogCommentView(getActivity()) {
+                @Override
+                protected BlogPost getBlogPost() {
+                    return post;
+                }
+
+                @Override
+                protected void notifyChildVisibilityChanged() {
+                    blogCommentsReceived(null);
+                }
+            };
+
+            bcv.setComment(list.get(i));
+            if (list.get(i).id == selected_comment_id) {
+                bcv.setHighlight(true);
+            } else {
+                bcv.setHighlight(false);
+            }
+
+            return bcv;
+        }
+    }
 }

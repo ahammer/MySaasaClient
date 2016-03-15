@@ -43,4 +43,10 @@
     <style name="simple_thread_list"></style>
 
     <style name="simple_reply_box"></style>
+
+    <style name="simple_small_icon_button">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
 </resources>

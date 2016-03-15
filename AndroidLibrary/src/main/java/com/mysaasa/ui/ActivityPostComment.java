@@ -13,6 +13,7 @@ import com.mysassa.R;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.responses.PostCommentResponse;
+import com.mysassa.api.responses.PostReplyResponse;
 
 import java.io.Serializable;
 
@@ -83,6 +84,7 @@ public class ActivityPostComment extends Activity {
                 if (editMode) {
                     System.out.println(state);
                 } else {
+                    if (state.post != null) {
                         MySaasaAndroidApplication
                                 .getService()
                                 .getBlogManager()
@@ -107,6 +109,33 @@ public class ActivityPostComment extends Activity {
                                     }
 
                                 });
+                    } else if (state.comment != null) {
+                        MySaasaAndroidApplication
+                                .getService()
+                                .getBlogManager()
+                                .postCommentResponse(state.comment, commentBox.getText().toString())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .doOnError(new Action1<Throwable>() {
+                                    @Override
+                                    public void call(Throwable throwable) {
+                                        Crouton.makeText(ActivityPostComment.this, throwable.getMessage(), Style.ALERT).show();
+                                    }
+                                })
+                                .subscribe(new Action1<PostReplyResponse>() {
+                                    @Override
+                                    public void call(PostReplyResponse postReplyResponse) {
+                                        if (postReplyResponse.isSuccess()) {
+                                            setResult(Activity.RESULT_OK);
+                                            finish();
+                                        } else {
+                                            Crouton.makeText(ActivityPostComment.this, postReplyResponse.getMessage(), Style.ALERT).show();
+                                        }
+                                    }
+
+                                });
+
+                    }
 
                 }
             }

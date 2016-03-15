@@ -46,7 +46,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     private ListView newsList;
     private TextView title;
     private MenuItem post;
-    private MenuItem refresh;
     private FrameLayout fragmentFrame;
     private MenuItem cart;
     private Subscription subscription;
@@ -141,7 +140,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.standard,menu);
         post = menu.findItem(R.id.action_post);
-        refresh = menu.findItem(R.id.action_refresh);
 
 
         if (post != null) {
@@ -153,16 +151,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                 }
             });
 
-        }
-
-        if (refresh != null) {
-            refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    updateBlogList();
-                    return true;
-                }
-            });
         }
 
         updateBlogList();
@@ -213,10 +201,8 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             title.setVisibility(View.VISIBLE);
             if (post != null) {
                 post.setVisible(def.postsAllowed);
-                refresh.setVisible(true);
             }
         } else {
-            refresh.setVisible(false);
             post.setVisible(false);
             newsList.setAdapter(new EmptyListAdapter() {
                 @Override

@@ -135,7 +135,7 @@ public interface MySaasaGateway {
 
     @FormUrlEncoded
     @POST("BlogApiService/getBlogComments")
-    Call<GetBlogCommentsResponse> getBlogComments(@Field("id")long id, @Field("count")int count);
+    Call<GetBlogCommentsResponse> getBlogComments(@Field("post_id")long id, @Field("count")int count);
 
 
     @FormUrlEncoded

@@ -59,7 +59,7 @@ public abstract class BlogCommentView extends FrameLayout {
         vote = (ImageView) findViewById(R.id.vote);
         reply = (ImageView) findViewById(R.id.reply);
         edit = (ImageView) findViewById(R.id.edit);
-         showChildren = (TextView)findViewById(R.id.showChildren);
+        showChildren = (TextView)findViewById(R.id.showChildren);
 
 
 
@@ -143,7 +143,7 @@ public abstract class BlogCommentView extends FrameLayout {
         }
 
 
-        if (comment.children.size() == 0) {
+        if (comment.children == null || comment.children.size() == 0) {
             showChildren.setText(TREE_NO_CHILDREN);
             showChildren.setEnabled(false);
         } else {

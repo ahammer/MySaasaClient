@@ -3,17 +3,7 @@
       tools:context="com.mysaasa.ui.ActivityMain">
     <item android:id="@+id/action_post"
             android:title="Post"
-            android:icon="@drawable/menu_add"
+            android:icon="@drawable/ic_add_circle_outline_black_24dp"
             android:showAsAction="always"
         />
-    <item android:id="@+id/action_refresh"
-        android:title="Post"
-        android:icon="@drawable/menu_refresh"
-        android:showAsAction="always"
-        />
-    <item android:id="@+id/cart"
-        android:title="Cart"
-        android:showAsAction="always"
-        />
-
 </menu>
