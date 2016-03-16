@@ -71,10 +71,9 @@ public class BlogCommentViewer extends Fragment {
 
         subscription = MySaasaApplication
                 .getService()
-                .getBlogManager()
+                .getCommentManager()
                 .getBlogCommentsObservable(post)
                 .observeOn(AndroidSchedulers.mainThread())
-
                 .toList().subscribe(new Action1<List<BlogComment>>() {
                     @Override
                     public void call(List<BlogComment> blogComments) {
@@ -112,7 +111,6 @@ public class BlogCommentViewer extends Fragment {
                 @Override
                 public void run() {
                     comments.setAdapter(new MyBlogCommentsAdapter(list));
-
                     if (selected_comment_id != 0) {
                         for (int i=0;i<list.size();i++) {
                             if (list.get(i).id == selected_comment_id) {

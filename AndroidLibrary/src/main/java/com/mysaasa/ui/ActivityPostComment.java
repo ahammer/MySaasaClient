@@ -87,7 +87,7 @@ public class ActivityPostComment extends Activity {
                     if (state.post != null) {
                         MySaasaApplication
                                 .getService()
-                                .getBlogManager()
+                                .getCommentManager()
                                 .postBlogComment(state.post, commentBox.getText().toString())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribeOn(Schedulers.io())
@@ -112,7 +112,7 @@ public class ActivityPostComment extends Activity {
                     } else if (state.comment != null) {
                         MySaasaApplication
                                 .getService()
-                                .getBlogManager()
+                                .getCommentManager()
                                 .postCommentResponse(state.comment, commentBox.getText().toString())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnError(new Action1<Throwable>() {

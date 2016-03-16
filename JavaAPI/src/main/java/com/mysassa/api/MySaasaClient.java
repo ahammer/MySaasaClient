@@ -41,6 +41,7 @@ public class MySaasaClient {
     private final MessageManager messagesManager;
     private final CategoryManager categoryManager;
     private int callDepth = 0;
+    private CommentManager commentManager;
 
 
     //Observables
@@ -82,6 +83,7 @@ public class MySaasaClient {
         blogManager = new BlogManager(this);
         loginManager = new LoginManager(this);
         messagesManager = new MessageManager(this);
+        commentManager = new CommentManager(this);
     }
 
     public BlogManager getBlogManager() {
@@ -117,5 +119,9 @@ public class MySaasaClient {
 
     public MySaasaGateway getGateway() {
         return gateway;
+    }
+
+    public CommentManager getCommentManager() {
+        return commentManager;
     }
 }
