@@ -16,6 +16,7 @@ import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -73,13 +74,15 @@ public class BlogCommentViewer extends Fragment {
                 .getService()
                 .getCommentManager()
                 .getBlogCommentsObservable(post)
+                .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
-                .toList().subscribe(new Action1<List<BlogComment>>() {
+                .toList()
+                .subscribe(new Action1<List<BlogComment>>() {
                     @Override
                     public void call(List<BlogComment> blogComments) {
                         setBlogComments(blogComments);
                     }
-                });
+                }); 
     }
 
 

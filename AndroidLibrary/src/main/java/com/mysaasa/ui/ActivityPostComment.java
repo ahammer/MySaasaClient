@@ -114,6 +114,7 @@ public class ActivityPostComment extends Activity {
                                 .getService()
                                 .getCommentManager()
                                 .postCommentResponse(state.comment, commentBox.getText().toString())
+                                .onBackpressureBuffer()
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnError(new Action1<Throwable>() {
                                     @Override
