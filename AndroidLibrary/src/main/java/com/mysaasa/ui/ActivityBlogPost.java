@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +17,11 @@ import android.widget.TextView;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
 
+import com.mysaasa.ui.fragments.BlogCommentsViewer;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.api.model.User;
-import com.mysaasa.ui.fragments.BlogCommentViewer;
 
 import java.io.Serializable;
 
@@ -36,7 +35,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     private State state = new State();
     TextView body;
     ViewGroup bodyContainer;
-    BlogCommentViewer viewer;
+    BlogCommentsViewer viewer;
     long selected_comment_id = 0;
 
     public static void startActivity(Context ctx, BlogPost post, Category c) {
@@ -195,7 +194,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
         body.setMovementMethod(LinkMovementMethod.getInstance());
         setTitle(state.post.title);
-        viewer = (BlogCommentViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
+        viewer = (BlogCommentsViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
         viewer.setSelected_comment_id(selected_comment_id);
         viewer.setPost(state.post);
 

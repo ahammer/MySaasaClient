@@ -50,8 +50,11 @@ public class CommentManager {
                         Response<GetBlogCommentsResponse> response = call.execute();
                         registerComments(post.id, response.body().getData());
                         List<BlogComment> normalized = processTopLevelComments(response.body().getData());
-                        for (BlogComment bc:normalized)
-                            subscriber.onNext(bc);
+                        for (BlogComment bc:normalized) {
+                            if (bc.getChildren().size() > 0) {
+                                subscriber.onNext(bc);
+                            }
+                        }
                         subscriber.onCompleted();
                     } catch (Exception e) {
                         subscriber.onError(e);
@@ -91,12 +94,11 @@ public class CommentManager {
             @Override
             public void call(Subscriber<? super PostReplyResponse> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
-                    Call<PostReplyResponse> call = mySaasaClient.gateway.postReply(comment.id, text);
+                    Call<PostReplyResponse> call = mySaasaClient.gateway.postReply(comment.getId(), text);
                     try {
                         Response<PostReplyResponse> response = call.execute();
                         subscriber.onNext(response.body());
                         subscriber.onCompleted();
-                        System.out.println(response.toString());
                     } catch (IOException e) {
                         subscriber.onError(e);
                     } catch (Exception e) {
@@ -122,14 +124,14 @@ public class CommentManager {
 
 
         for (BlogComment comment : comments) {
-            id_lookup.remove(comment.id);
-            id_lookup.put(comment.id, comment);
+            id_lookup.remove(comment.getId());
+            id_lookup.put(comment.getId(), comment);
 
 
             if (blogComments.contains(comment)) blogComments.remove(comment);
             blogComments.add(comment);
 
-            if (comment.parent_id==0) {
+            if (comment.getParent_id() ==0) {
                 if (toplevelBlogComments.contains(comment)) toplevelBlogComments.remove(comment);
                 comment.client_visible=true;
                 toplevelBlogComments.remove(comment);
@@ -145,7 +147,7 @@ public class CommentManager {
 
     private void scanAndLink() {
         for (BlogComment comment:id_lookup.values()) {
-            BlogComment bc = id_lookup.get(comment.parent_id);
+            BlogComment bc = id_lookup.get(comment.getParent_id());
             if (bc != null) {
                 bc.registerChild(comment);
             }
@@ -167,7 +169,7 @@ public class CommentManager {
 
             while (!stk.empty()) {
                 BlogComment top = stk.pop();
-                for (BlogComment child : top.children) {
+                for (BlogComment child : top.getChildren()) {
                     stk.push(child);
                 }
                 if (top.client_visible) {
@@ -176,30 +178,18 @@ public class CommentManager {
             }
         }
 
+        /*
         for (BlogComment bc:output) {
-            if (bc.parent_id != 0) {
-                BlogComment parent = id_lookup.get(bc.parent_id);
+            if (bc.getParent_id() != 0) {
+                BlogComment parent = id_lookup.get(bc.getParent_id());
                 bc.depth = parent.depth+1;
             }
         }
+        */
         return output;
     }
 
-
-    /**
-     * This removes it in the client, matching the successful behaviour of the server
-     *
-     * @param comment
-     */
-    public void fauxRemove(BlogComment comment) {
-
-        if (comment.children.size() > 0) {
-            comment.author = null;
-            comment.content = "[DELETED]";
-        } else {
-            comment.author = null;
-            comment.content = "[DELETED]";
-            comment.client_visible = false;
-        }
+    public int getCommentDepth(BlogComment comment) {
+        return 0;
     }
 }

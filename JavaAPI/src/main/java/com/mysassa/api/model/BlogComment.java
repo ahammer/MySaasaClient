@@ -11,17 +11,16 @@ import java.util.List;
  * Created by Adam on 1/5/2015.
  */
 public class BlogComment implements Serializable{
-    public long id;
-    public long parent_id;
-    public String content;
-    public User author;
-    public Date dateCreated;
-    public int score=0;
-    public int depth=0;
+    private long id;
+    private long parent_id;
+    private String content;
+    private User author;
+    private Date dateCreated;
+    private int score=0;
 
-    public Boolean visible = true;
+    private Boolean visible = true;
     public Boolean client_visible = true;
-    public List<BlogComment> children = new ArrayList();
+    private List<BlogComment> children = new ArrayList();
 
     @Override
     public String toString() {
@@ -58,5 +57,37 @@ public class BlogComment implements Serializable{
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getParent_id() {
+        return parent_id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public List<BlogComment> getChildren() {
+        return children;
     }
 }

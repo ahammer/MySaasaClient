@@ -36,7 +36,7 @@ public class MySaasaApplication extends Application {
         return instance;
     }
     public static MySaasaClient getService() {
-        if (instance == null) return null;
+        if (instance == null) throw new RuntimeException("Application not initialized");
         return instance.mySaasaClient;
     }
 

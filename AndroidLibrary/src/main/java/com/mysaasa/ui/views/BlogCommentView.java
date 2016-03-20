@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
@@ -62,48 +62,26 @@ public abstract class BlogCommentView extends FrameLayout {
         edit = (ImageView) findViewById(R.id.edit);
         showChildren = (TextView)findViewById(R.id.showChildren);
 
-
-
         User u = null;
         if (u == null) {
             vote.setVisibility(View.GONE);
             remove.setVisibility(View.GONE);
         }
 
-        reply.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityPostComment.postComment((Activity) getContext(),null,comment);
-            }
-        });
-
-        edit.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityPostComment.editComment((Activity) getContext(),comment);
-            }
-        });
+        reply.setOnClickListener(view -> ActivityPostComment.postComment((Activity) getContext(), null, comment));
+        edit.setOnClickListener(view -> ActivityPostComment.editComment((Activity) getContext(),comment));
 
 
-        remove.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(getContext())
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Deleting Comment")
-                        .setMessage("Are you sure you want to delete?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                checkNotNull(comment);
-
-                            }
-
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-
-            }
+        remove.setOnClickListener(view->{
+            new AlertDialog.Builder(getContext())
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Deleting Comment")
+                    .setMessage("Are you sure you want to delete?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        checkNotNull(comment);
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
     }
 
@@ -111,22 +89,22 @@ public abstract class BlogCommentView extends FrameLayout {
 
     public void setComment(final BlogComment comment) {
         this.comment = comment;
-        if (comment.author!=null) {
-            author.setText("Posted by " + comment.author.identifier + " on " + comment.dateCreated );
+        if (comment.getAuthor() !=null) {
+            author.setText("Posted by " + comment.getAuthor().identifier + " on " + comment.getDateCreated());
         }else  {
             author.setText("");
         }
-        body.setText(comment.content);
-        depth.setDepth(comment.depth);
+        body.setText(comment.getContent());
+        depth.setDepth(MySaasaApplication.getService().getCommentManager().getCommentDepth(comment));
         //TODO put Signed in user here
         User u = null;
 
-        if (comment.author == null) {                       //Only Deleted comments have null author
+        if (comment.getAuthor() == null) {                       //Only Deleted comments have null author
             remove.setVisibility(View.GONE);
             vote.setVisibility(View.GONE);
             reply.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
-        } else if (u!=null && u.id == comment.author.id){   //You are the author
+        } else if (u!=null && u.id == comment.getAuthor().id){   //You are the author
             remove.setVisibility(View.VISIBLE);
             vote.setVisibility(View.GONE);
             reply.setVisibility(View.VISIBLE);
@@ -144,7 +122,7 @@ public abstract class BlogCommentView extends FrameLayout {
         }
 
 
-        if (comment.children == null || comment.children.size() == 0) {
+        if (comment.getChildren() == null || comment.getChildren().size() == 0) {
             showChildren.setText(TREE_NO_CHILDREN);
             showChildren.setEnabled(false);
         } else {
@@ -157,14 +135,14 @@ public abstract class BlogCommentView extends FrameLayout {
                         hideChildren(comment);
 
                     } else {
-                        for (BlogComment comment:BlogCommentView.this.comment.children) {
+                        for (BlogComment comment: BlogCommentView.this.comment.getChildren()) {
                             comment.client_visible = true;
                         }
                     }
                     notifyChildVisibilityChanged();
                 }
             });
-            if (comment.children.get(0).client_visible) {
+            if (comment.getChildren().get(0).client_visible) {
                 showChildren.setText(TREE_CLOSE);
             } else {
                 showChildren.setText(TREE_OPEN);
@@ -174,7 +152,7 @@ public abstract class BlogCommentView extends FrameLayout {
     }
 
     public void hideChildren(BlogComment comment) {
-        for (BlogComment comment1:comment.children) {
+        for (BlogComment comment1: comment.getChildren()) {
             comment1.client_visible = false;
             hideChildren(comment1);
         }
@@ -182,7 +160,6 @@ public abstract class BlogCommentView extends FrameLayout {
     protected abstract void notifyChildVisibilityChanged();
 
     public void setHighlight(boolean b) {
-
         if (b == true) setBackgroundColor(Color.argb(25,255,255,255));
     }
 }

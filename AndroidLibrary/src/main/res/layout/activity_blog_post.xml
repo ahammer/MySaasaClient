@@ -46,7 +46,7 @@
     </LinearLayout>
     <fragment
         android:id="@+id/blog_comments"
-        android:name="com.mysaasa.ui.fragments.BlogCommentViewer"
+        android:name="com.mysaasa.ui.fragments.BlogCommentsViewer"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_weight="1"

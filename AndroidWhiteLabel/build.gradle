@@ -1,12 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-    }
-}
-
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
     mavenCentral()
@@ -44,6 +37,11 @@ android {
         blank { applicationId "com.mysassa.whitelabel" }
         gettingstarted { applicationId "com.mysassa.gettingstarted" }
  //       adamhammer { applicationId "com.mysassa.adamhammer"}
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

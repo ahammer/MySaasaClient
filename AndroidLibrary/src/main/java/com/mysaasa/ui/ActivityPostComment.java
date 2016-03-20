@@ -74,7 +74,7 @@ public class ActivityPostComment extends Activity {
 
 
         if (state.comment != null) {
-            reply.setText(state.comment.author.identifier + " said \""+state.comment.content+"\"");
+            reply.setText(state.comment.getAuthor().identifier + " said \""+ state.comment.getContent() +"\"");
         } else {
             reply.setVisibility(View.GONE);
         }
@@ -151,7 +151,7 @@ public class ActivityPostComment extends Activity {
             reply.setVisibility(View.GONE);
             postButton.setText("Save Post");
             title.setVisibility(View.GONE);
-            commentBox.setText(state.comment.content);
+            commentBox.setText(state.comment.getContent());
         } else {
             if (state.post != null && state.post.title != null) {
                 title.setText(state.post.title);

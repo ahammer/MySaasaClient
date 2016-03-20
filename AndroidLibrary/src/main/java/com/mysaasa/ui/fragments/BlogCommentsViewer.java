@@ -16,7 +16,6 @@ import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,7 +24,7 @@ import rx.functions.Action1;
 /**
  * Created by Adam on 1/5/2015.
  */
-public class BlogCommentViewer extends Fragment {
+public class BlogCommentsViewer extends Fragment {
     BlogPost post;
     ListView comments;
     long selected_comment_id=0;
@@ -77,58 +76,45 @@ public class BlogCommentViewer extends Fragment {
                 .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()
-                .subscribe(new Action1<List<BlogComment>>() {
-                    @Override
-                    public void call(List<BlogComment> blogComments) {
-                        setBlogComments(blogComments);
-                    }
-                }); 
+                .subscribe(this::setBlogComments);
     }
 
-
-
-
     private void setBlogComments(final List<BlogComment> list) {
-        if (post == null) return;
-        if (getActivity() == null) return;
-        if (list.size() == 0) {
+        getActivity().runOnUiThread(() -> {
+            if (post == null) return;
+            if (getActivity() == null) return;
+            if (list.size() == 0) {
+                setupEmptyList();
+            } else {
+                setupListAndScan(list);
+            }
+        });
+    }
 
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    comments.setAdapter(new EmptyListAdapter() {
-                        @Override
-                        protected void Clicked() {
-                            ActivityPostComment.postComment(getActivity(), post,null);
-                        }
-
-                        @Override
-                        protected String getText() {
-                            return "--- No Comments ---";
-                        }
-                    });
+    private void setupListAndScan(List<BlogComment> list) {
+        comments.setAdapter(new MyBlogCommentsAdapter(list));
+        if (selected_comment_id != 0) {
+            for (int i=0;i<list.size();i++) {
+                if (list.get(i).getId() == selected_comment_id) {
+                    comments.setSelection(i);
+                    break;
                 }
-            });
-        } else {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    comments.setAdapter(new MyBlogCommentsAdapter(list));
-                    if (selected_comment_id != 0) {
-                        for (int i=0;i<list.size();i++) {
-                            if (list.get(i).id == selected_comment_id) {
-                                comments.setSelection(i);
-                                break;
-
-                            }
-                        };
-                    }
-
-
-                }
-            });
+            };
         }
+    }
 
+    private void setupEmptyList() {
+        comments.setAdapter(new EmptyListAdapter() {
+            @Override
+            protected void Clicked() {
+                ActivityPostComment.postComment(getActivity(), post, null);
+            }
+
+            @Override
+            protected String getText() {
+                return "--- No Comments ---";
+            }
+        });
     }
 
     private class MyBlogCommentsAdapter extends BaseAdapter {
@@ -151,7 +137,7 @@ public class BlogCommentViewer extends Fragment {
 
         @Override
         public long getItemId(int i) {
-            return list.get(i).id;
+            return list.get(i).getId();
         }
 
         @Override
@@ -169,7 +155,7 @@ public class BlogCommentViewer extends Fragment {
             };
 
             bcv.setComment(list.get(i));
-            if (list.get(i).id == selected_comment_id) {
+            if (list.get(i).getId() == selected_comment_id) {
                 bcv.setHighlight(true);
             } else {
                 bcv.setHighlight(false);
