@@ -48,13 +48,12 @@ public class CommentManager {
                     Call<GetBlogCommentsResponse> call = gateway.getBlogComments(post.id, 100);
                     try {
                         Response<GetBlogCommentsResponse> response = call.execute();
-                        registerComments(post.id, response.body().getData());
-                        List<BlogComment> normalized = processTopLevelComments(response.body().getData());
-                        for (BlogComment bc:normalized) {
-                            if (bc.getChildren().size() > 0) {
-                                subscriber.onNext(bc);
-                            }
+
+                        for (BlogComment bc : response.body().getData()) {
+                            id_lookup.put(bc.getId(), bc);
+                            subscriber.onNext(bc);
                         }
+
                         subscriber.onCompleted();
                     } catch (Exception e) {
                         subscriber.onError(e);
@@ -66,7 +65,6 @@ public class CommentManager {
     }
 
     public Observable<PostCommentResponse> postBlogComment(final BlogPost post, final String text) {
-
         Observable<PostCommentResponse> observable = Observable.create(new Observable.OnSubscribe<PostCommentResponse>() {
             @Override
             public void call(Subscriber<? super PostCommentResponse> subscriber) {
@@ -111,85 +109,7 @@ public class CommentManager {
 
     }
 
-    public void registerComments(long post, List<BlogComment> comments) {
-        List<BlogComment> blogComments = CommentManager.this.comments.get(post);
-        List<BlogComment> toplevelBlogComments = CommentManager.this.toplevel_comments.get(post);
-        if (blogComments == null) {
-            blogComments = new ArrayList<BlogComment>();
-        }
-
-        if (toplevelBlogComments == null) {
-            toplevelBlogComments = new ArrayList<BlogComment>();
-        }
-
-
-        for (BlogComment comment : comments) {
-            id_lookup.remove(comment.getId());
-            id_lookup.put(comment.getId(), comment);
-
-
-            if (blogComments.contains(comment)) blogComments.remove(comment);
-            blogComments.add(comment);
-
-            if (comment.getParent_id() ==0) {
-                if (toplevelBlogComments.contains(comment)) toplevelBlogComments.remove(comment);
-                comment.client_visible=true;
-                toplevelBlogComments.remove(comment);
-                toplevelBlogComments.add(comment);
-            }
-
-        }
-
-        CommentManager.this.toplevel_comments.put(post, toplevelBlogComments);
-        CommentManager.this.comments.put(post, blogComments);
-        scanAndLink();
-    }
-
-    private void scanAndLink() {
-        for (BlogComment comment:id_lookup.values()) {
-            BlogComment bc = id_lookup.get(comment.getParent_id());
-            if (bc != null) {
-                bc.registerChild(comment);
-            }
-        }
-    }
-
-    /**
-     * This takes the ones list, and parses it into another list that accounts for the children
-     * @param topLevelComments
-     * @return
-     */
-    private List<BlogComment> processTopLevelComments(List<BlogComment> topLevelComments) {
-        if (topLevelComments == null || topLevelComments.size() == 0) return Collections.EMPTY_LIST;
-        ArrayList<BlogComment> output = new ArrayList<BlogComment>();
-        Stack<BlogComment> stk = new Stack();
-
-        for (BlogComment rootNode:topLevelComments) {
-            stk.push(rootNode);
-
-            while (!stk.empty()) {
-                BlogComment top = stk.pop();
-                for (BlogComment child : top.getChildren()) {
-                    stk.push(child);
-                }
-                if (top.client_visible) {
-                    output.add(top);
-                }
-            }
-        }
-
-        /*
-        for (BlogComment bc:output) {
-            if (bc.getParent_id() != 0) {
-                BlogComment parent = id_lookup.get(bc.getParent_id());
-                bc.depth = parent.depth+1;
-            }
-        }
-        */
-        return output;
-    }
-
-    public int getCommentDepth(BlogComment comment) {
-        return 0;
+    public BlogComment lookupCommentById(long parent_id) {
+        return id_lookup.get(parent_id);
     }
 }

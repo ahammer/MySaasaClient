@@ -1,6 +1,8 @@
 package com.mysassa.api.model;
 
 import com.google.gson.JsonObject;
+import com.mysassa.api.CommentManager;
+import com.mysassa.api.MySaasaClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -89,5 +91,20 @@ public class BlogComment implements Serializable{
 
     public List<BlogComment> getChildren() {
         return children;
+    }
+
+    public BlogComment getParent(CommentManager commentManager) {
+        if (parent_id == 0) return null;
+        BlogComment parent = commentManager.lookupCommentById(parent_id);
+        return parent;
+    }
+    public int calculateDepth(BlogComment comment, CommentManager commentManager) {
+        int depth = 0;
+        BlogComment parent = getParent(commentManager);
+        while (parent != null) {
+            depth++;
+            parent = parent.getParent(commentManager);
+        }
+        return depth;
     }
 }

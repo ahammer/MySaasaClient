@@ -95,7 +95,7 @@ public abstract class BlogCommentView extends FrameLayout {
             author.setText("");
         }
         body.setText(comment.getContent());
-        depth.setDepth(MySaasaApplication.getService().getCommentManager().getCommentDepth(comment));
+        depth.setDepth(comment.calculateDepth(comment, MySaasaApplication.getService().getCommentManager()));
         //TODO put Signed in user here
         User u = null;
 
