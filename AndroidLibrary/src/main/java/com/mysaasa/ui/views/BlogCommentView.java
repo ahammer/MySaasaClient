@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by Adam on 1/6/2015.
  */
 public class BlogCommentView extends FrameLayout {
+    CardView cardView;
     BlogComment comment;
     BlogPost post;
     private TextView body;
@@ -51,7 +53,7 @@ public class BlogCommentView extends FrameLayout {
         reply = (ImageView) findViewById(R.id.reply);
         edit = (ImageView) findViewById(R.id.edit);
         children = (LinearLayout) findViewById(R.id.children);
-
+        cardView = (CardView) findViewById(R.id.cardview);
         User u = null;
         if (u == null) {
             vote.setVisibility(View.GONE);
@@ -84,7 +86,7 @@ public class BlogCommentView extends FrameLayout {
         }
 
         body.setText(comment.getContent());
-
+        cardView.setCardElevation(20+comment.calculateDepth(MySaasaApplication.getService().getCommentManager()));
         handleButtonVisibilities(comment);
 
         List<BlogComment> blogComments = comment.getChildren(MySaasaApplication.getService().getCommentManager());
@@ -93,6 +95,7 @@ public class BlogCommentView extends FrameLayout {
             BlogCommentView bcv = new BlogCommentView(getContext(),post,blogComment);
             children.addView(bcv);
         }
+
 
     }
 

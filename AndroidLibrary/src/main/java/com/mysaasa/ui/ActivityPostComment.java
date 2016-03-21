@@ -52,7 +52,7 @@ public class ActivityPostComment extends Activity {
         i.putExtra("edit_mode",false);
         i.putExtra("post",post);
         i.putExtra("comment",comment);
-        ctx.startActivityForResult(i, 200202);
+        ctx.startActivityForResult(i, 12345);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
