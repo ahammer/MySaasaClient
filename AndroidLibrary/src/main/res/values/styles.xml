@@ -51,8 +51,20 @@ of the system without affecting code.
 
     <!-- Used for small action items -->
     <style name="mysaasa_small_icon_button">
-        <item name="android:layout_width">24dp</item>
-        <item name="android:layout_height">24dp</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="MySaasaCardViewDark" parent="@style/CardView">
+
+        <item name="cardBackgroundColor">@color/cardview_dark_background</item>
+        <item name="cardCornerRadius">@dimen/cardview_default_radius</item>
+        <item name="cardElevation">@dimen/cardview_default_elevation</item>
+        <item name="cardMaxElevation">5dp</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="android:layout_margin">5dp</item>
+
     </style>
 </resources>

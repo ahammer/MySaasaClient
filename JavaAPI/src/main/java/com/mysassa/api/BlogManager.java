@@ -34,7 +34,7 @@ public class BlogManager {
     public Observable<BlogPost> getBlogPostsObservable(final Category c) {
         //If in cache, return cache version
         if (mBlogPostCache.containsKey(c)) { return mBlogPostCache.get(c); }
-        //Otherwise create one, put it in the cache and return it.
+        //Otherwise create one, registerComment it in the cache and return it.
         Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa));
         mBlogPostCache.put(c,observable);
         return observable.subscribeOn(Schedulers.io());

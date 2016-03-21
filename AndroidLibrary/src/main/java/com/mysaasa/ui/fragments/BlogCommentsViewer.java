@@ -25,12 +25,12 @@ import rx.android.schedulers.AndroidSchedulers;
 public class BlogCommentsViewer extends Fragment {
     BlogPost post;
     ListView comments;
-    long selected_comment_id=0;
+    long selectedCommentId =0;
     private Subscription subscription;
 
 
-    public void setSelected_comment_id(long selected_comment_id) {
-        this.selected_comment_id = selected_comment_id;
+    public void setselectedCommentId(long selected_comment_id) {
+        this.selectedCommentId = selected_comment_id;
     }
 
     @Override
@@ -66,7 +66,6 @@ public class BlogCommentsViewer extends Fragment {
         if (post == null) return;
         this.post = post;
 
-
         subscription = MySaasaApplication
                 .getService()
                 .getCommentManager()
@@ -88,16 +87,15 @@ public class BlogCommentsViewer extends Fragment {
     }
 
     private void setupCommentAdapter(List<BlogComment> list) {
-        comments.setAdapter(new BlogCommentsAdapter(list, selected_comment_id, post));
+        comments.setAdapter(new BlogCommentsAdapter(list, selectedCommentId, post));
         findCurrentSelection();
     }
 
     private void findCurrentSelection() {
-
-        if (selected_comment_id != 0) {
+        if (selectedCommentId != 0) {
             for (int i=0;i<comments.getAdapter().getCount();i++) {
                 if (comments.getAdapter().getItem(i) instanceof BlogComment) {
-                    if (((BlogComment) comments.getAdapter().getItem(i)).getId() == selected_comment_id) {
+                    if (((BlogComment) comments.getAdapter().getItem(i)).getId() == selectedCommentId) {
                         comments.setSelection(i);
                         break;
                     }

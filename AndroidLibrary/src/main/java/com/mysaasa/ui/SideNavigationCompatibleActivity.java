@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.mysaasa.MySaasaApplication;
@@ -28,7 +29,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * <p/>
  * Created by administrator on 2014-06-30.
  */
-public abstract class SideNavigationCompatibleActivity extends Activity  {
+public abstract class SideNavigationCompatibleActivity extends AppCompatActivity {
     private static volatile int FOREGROUND_REF_COUNT = 0;
 
     public static boolean isInForeground() {
@@ -123,8 +124,9 @@ public abstract class SideNavigationCompatibleActivity extends Activity  {
         if (mDrawerLayout !=null) {
             mDrawerLayout.setDrawerListener(mDrawerToggle);
             mDrawerLayout.setFocusableInTouchMode(false);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
     }
 

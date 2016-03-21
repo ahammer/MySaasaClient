@@ -40,6 +40,7 @@ dependencies {
     compile rootProject.supportLibraryV13
     compile rootProject.googleMessaging
     compile rootProject.supportCardView
+    compile rootProject.supportDesign
 
     compile(project(':JavaAPI'))
     compile files('libs/crouton-1.8.1.jar')

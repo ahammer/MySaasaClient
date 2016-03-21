@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <com.mysaasa.ui.views.BlogDepthView
-        android:id="@+id/depth"
-        android:layout_width="10px"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="#F00"
-        />
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0px"
-    android:layout_weight="1"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true">
-
+    style="@style/CardView"
+    >
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -64,10 +48,10 @@
     <TextView
                 style="@style/mysaasa_blogcomment"
                 android:id="@+id/content"
-                android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/buttons"
+                android:layout_alignParentLeft="true"
                 android:text="Content"
                  />
 
@@ -76,11 +60,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/content"
-                android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/buttons"
+                android:layout_alignParentLeft="true"
                 android:text="Posted By: Author on Date"
-
                  />
+    <LinearLayout
+        android:background="#3000"
+        android:id="@+id/children"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/author"
+        android:layout_marginLeft="10dp"
+        style="@style/CardView"
+        />
 
 </RelativeLayout>
-    </LinearLayout>

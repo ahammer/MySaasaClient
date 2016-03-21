@@ -2,12 +2,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.mysaasa.ui.ActivityMain">
 
-    <item android:id="@+id/action_switch_layout"
-        android:title="Switch Layout"
-        android:icon="@drawable/ic_view_stream_black_24dp"
-        android:showAsAction="always"
-        />
-
     <item android:id="@+id/action_comment"
         android:title="Comment"
         android:icon="@drawable/ic_comment_black_24dp"

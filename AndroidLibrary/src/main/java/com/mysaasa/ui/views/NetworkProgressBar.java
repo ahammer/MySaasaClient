@@ -25,16 +25,23 @@ public class NetworkProgressBar extends ProgressBar {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (MySaasaApplication.getService() != null)
+
+        try {
             MySaasaApplication.getService().bus.register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         handleVisibility();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (MySaasaApplication.getService() != null)
+        try {
             MySaasaApplication.getService().bus.unregister(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe

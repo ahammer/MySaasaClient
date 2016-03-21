@@ -1,11 +1,11 @@
 package com.mysaasa.ui;
 
-import android.app.Activity;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -34,9 +34,12 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     private State state = new State();
     TextView body;
+    ViewGroup commentContainer;
     ViewGroup bodyContainer;
-    BlogCommentsViewer viewer;
+    BlogCommentsViewer blogCommentsViewer;
+    FloatingActionButton floatingActionButtonComments;
     long selected_comment_id = 0;
+    private ValueAnimator animator;
 
     public static void startActivity(Context ctx, BlogPost post, Category c) {
         Intent intent = new Intent(ctx, ActivityBlogPost.class);
@@ -48,10 +51,6 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
     enum States {BlogOnly, CommentsOnly, Both}
     States currentState = States.Both;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +65,53 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         }
 
         if (selected_comment_id != 0) currentState = States.CommentsOnly;
+        commentContainer = (ViewGroup) findViewById(R.id.comment_container);
         bodyContainer = (ViewGroup) findViewById(R.id.body_container);
         body = (TextView) findViewById(R.id.body);
-        handleVisibility();
+        floatingActionButtonComments = (FloatingActionButton) findViewById(R.id.comments_fab);
+        floatingActionButtonComments.setOnClickListener(view -> {
+            toggleComments();
+        });
+        refreshAll();
+    }
+
+    private void toggleComments() {
+        if (animator == null || !animator.isRunning()) {
+            if (commentContainer.getVisibility() == View.GONE) {
+                animateCommentDrawer(0, 1);
+            } else {
+                animateCommentDrawer(1, 0);
+            }
+        }
+    }
+
+    private void animateCommentDrawer(int start, int finish) {
+        animator = ValueAnimator.ofFloat((float) start, (float) finish);
+        final float width =  findViewById(android.R.id.content).getWidth();
+        final float height = findViewById(android.R.id.content).getHeight();
+
+        ViewGroup.LayoutParams lpa = blogCommentsViewer.getView().getLayoutParams();
+        lpa.width= (int) ((width));
+        lpa.height= (int) ((height)/2);
+        blogCommentsViewer.getView().setLayoutParams(lpa);
+
+        animator.addUpdateListener(animation -> {
+            Float f = (Float) animation.getAnimatedValue();
+            ViewGroup.LayoutParams lp = commentContainer.getLayoutParams();
+            lp.width= (int) ((width));
+            lp.height= (int) ((height)*f*.5);
+            commentContainer.setLayoutParams(lp);
+            if (f == 0) {
+                commentContainer.setVisibility(View.GONE);
+            } else {
+                commentContainer.setVisibility(View.VISIBLE);
+            }
+            ViewGroup.LayoutParams lpBody = bodyContainer.getLayoutParams();
+            lpBody.height = (int) (height - lp.height - 50);
+            bodyContainer.setLayoutParams(lpBody);
+        });
+
+        animator.start();
     }
 
     @Override
@@ -81,15 +124,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200202 && resultCode == Activity.RESULT_OK) {
-            //viewer.refresh();
-            if (data != null && data.hasExtra("post")) {
-                state.post = (BlogPost) data.getSerializableExtra("post");
-                handleVisibility();
-            } else {
-
-            }
-        }
+        refreshAll();
     }
 
 
@@ -104,35 +139,12 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
         }
         if (def.commentsAllowed) {
 
-            menu.findItem(R.id.action_comment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    ActivityPostComment.postComment(ActivityBlogPost.this, state.post, null);
-                    return true;
-                }
-            });
-            menu.findItem(R.id.action_switch_layout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    switch (currentState) {
-                        case BlogOnly:
-                            currentState = States.CommentsOnly;
-                            break;
-                        case CommentsOnly:
-                            currentState = States.Both;
-                            break;
-                        case Both:
-                            currentState=States.BlogOnly;
-                            break;
-                    }
-                    handleVisibility();
-                    return true;
-                }
+            menu.findItem(R.id.action_comment).setOnMenuItemClickListener(menuItem -> {
+                ActivityPostComment.postComment(ActivityBlogPost.this, state.post, null);
+                return true;
             });
 
-            //User u = MySaasaApplication.getService().get().user;
             User u = null;
-
             MenuItem delete = menu.findItem(R.id.action_delete);
             MenuItem edit = menu.findItem(R.id.action_edit);
             if (u == null || u.id != state.post.author.id) {
@@ -140,42 +152,30 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
                 edit.setVisible(false);
             } else {
                 delete.setVisible(true);
-                delete.setOnMenuItemClickListener( new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        new AlertDialog.Builder(ActivityBlogPost.this)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setTitle("Delete Post")
-                                .setMessage("Are you sure you want to delete?")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        finish();
-                                    }
-
-                                })
-                                .setNegativeButton("No", null)
-                                .show();
-                        Crouton.makeText(ActivityBlogPost.this, "Delete post", Style.INFO).show();
-                        return true;
-                    }
+                delete.setOnMenuItemClickListener(menuItem -> {
+                    new AlertDialog.Builder(ActivityBlogPost.this)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setTitle("Delete Post")
+                            .setMessage("Are you sure you want to delete?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                finish();
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                    Crouton.makeText(ActivityBlogPost.this, "Delete post", Style.INFO).show();
+                    return true;
                 });
 
                 edit.setVisible(true);
-                edit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        ActivityPostToBlog.editComment(ActivityBlogPost.this, state.post);
-                        return true;
-                    }
+                edit.setOnMenuItemClickListener(menuItem -> {
+                    ActivityPostToBlog.editComment(ActivityBlogPost.this, state.post);
+                    return true;
                 });
             }
 
 
         } else {
             menu.findItem(R.id.action_comment).setVisible(false);
-            menu.findItem(R.id.action_switch_layout).setVisible(false);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -183,7 +183,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
 
 
-    private void handleVisibility() {
+    private void refreshAll() {
         if (state.post == null) return;
 
         if (state.post != null && state.post.body != null) {
@@ -194,31 +194,9 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
         body.setMovementMethod(LinkMovementMethod.getInstance());
         setTitle(state.post.title);
-        viewer = (BlogCommentsViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
-        viewer.setSelected_comment_id(selected_comment_id);
-        viewer.setPost(state.post);
-
-        ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef((Category) getIntent().getSerializableExtra("category"));
-        if (def.commentsAllowed) {
-            switch (currentState) {
-                case BlogOnly:
-                    bodyContainer.setVisibility(View.VISIBLE);
-                    viewer.getView().setVisibility(View.GONE);
-                    break;
-                case CommentsOnly:
-                    bodyContainer.setVisibility(View.GONE);
-                    viewer.getView().setVisibility(View.VISIBLE);
-                    break;
-                case Both:
-                    bodyContainer.setVisibility(View.VISIBLE);
-                    viewer.getView().setVisibility(View.VISIBLE);
-                    break;
-            }
-
-        } else {
-            viewer.getView().setVisibility(View.GONE);
-        }
-
+        blogCommentsViewer = (BlogCommentsViewer) getFragmentManager().findFragmentById(R.id.blog_comments);
+        blogCommentsViewer.setselectedCommentId(selected_comment_id);
+        blogCommentsViewer.setPost(state.post);
     }
 
     static class State implements Serializable {

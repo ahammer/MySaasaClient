@@ -57,7 +57,7 @@ public class GettingStartedTests {
     }
 
     @Test
-    public void smokeTestClient() throws Exception {
+    public void testBlogPost() throws Exception {
         clickOnTheFirstArticle();
         clickOnTheCommentButton();
         authenticateIfNecessary();
@@ -68,7 +68,8 @@ public class GettingStartedTests {
 
     @Test
     public void jumpToComments() throws Exception {
-        clickOnTheFirstArticle();
+        onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(2).perform(click());
+
         Thread.sleep(50000);
     }
 

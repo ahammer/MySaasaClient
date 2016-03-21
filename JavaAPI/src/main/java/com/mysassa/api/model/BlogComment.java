@@ -36,23 +36,6 @@ public class BlogComment implements Serializable{
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BlogComment that = (BlogComment) o;
-
-        if (id != that.id) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
     public long getId() {
         return id;
     }
@@ -99,5 +82,35 @@ public class BlogComment implements Serializable{
 
     public List<BlogComment> getChildren(CommentManager manager) {
         return manager.getChildren(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BlogComment that = (BlogComment) o;
+
+        if (id != that.id) return false;
+        if (parent_id != that.parent_id) return false;
+        if (score != that.score) return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
+        if (author != null ? !author.equals(that.author) : that.author != null) return false;
+        if (dateCreated != null ? !dateCreated.equals(that.dateCreated) : that.dateCreated != null)
+            return false;
+        return !(visible != null ? !visible.equals(that.visible) : that.visible != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (parent_id ^ (parent_id >>> 32));
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
+        result = 31 * result + score;
+        result = 31 * result + (visible != null ? visible.hashCode() : 0);
+        return result;
     }
 }

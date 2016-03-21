@@ -42,19 +42,7 @@ public class BlogCommentsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        BlogCommentView bcv = new BlogCommentView(viewGroup.getContext()) {
-
-
-            @Override
-            protected BlogPost getBlogPost() {
-                return post;
-            }
-
-            @Override
-            protected void notifyChildVisibilityChanged() {
-
-            }
-        };
+        BlogCommentView bcv = new BlogCommentView(viewGroup.getContext(), post, list.get(i));
 
         bcv.setComment(list.get(i));
         if (list.get(i).getId() == selected_comment_id) {

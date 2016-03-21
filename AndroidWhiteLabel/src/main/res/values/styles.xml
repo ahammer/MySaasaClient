@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SimpleTheme" parent ="android:style/Theme.Material"/>
+    <style name="SimpleTheme" parent ="@style/Theme.AppCompat"/>
 
     <style name="simple_news_list"/>
     <style name="simple_news_list_item"/>
@@ -8,5 +8,5 @@
         <item name="android:background">#333</item>
     </style>
 
-    <style name="SimpleThemeDialog" parent="android:style/Theme.Material.Dialog"></style>
+    <style name="SimpleThemeDialog" parent="@style/Theme.AppCompat.Dialog"></style>
 </resources>

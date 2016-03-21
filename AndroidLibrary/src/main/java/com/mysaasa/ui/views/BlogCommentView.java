@@ -3,10 +3,7 @@ package com.mysaasa.ui.views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.CommentManager;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.User;
@@ -28,42 +24,33 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by Adam on 1/6/2015.
  */
-public abstract class BlogCommentView extends CardView {
-    public static final String TREE_CLOSE = "-";
-    public static final String TREE_OPEN = "+";
-    public static final String TREE_NO_CHILDREN = "";
+public class BlogCommentView extends FrameLayout {
     BlogComment comment;
-    private LinearLayout info;
+    BlogPost post;
     private TextView body;
     private TextView author;
-    private TextView showChildren;
-
-    private ImageView remove, vote, reply;
-
-    private BlogDepthView depth;
-    private ImageView edit;
+    private ImageView remove, vote, reply, edit;
+    private LinearLayout children;
 
 
-    public BlogCommentView(Context context) {
+
+    public BlogCommentView(Context context, BlogPost post, BlogComment comment) {
         super(context);
         init();
+        this.post = post;
+        setComment(comment);
     }
 
-    public BlogCommentView(Context context, AttributeSet attrs) {
-        super(context);
-        init();
-    }
 
     private void init() {
         inflate(getContext(),R.layout.listitem_blogcomment,this);
         author = (TextView)findViewById(R.id.author);
         body = (TextView)findViewById(R.id.content);
-        depth = (BlogDepthView) findViewById(R.id.depth);
         remove = (ImageView) findViewById(R.id.remove);
         vote = (ImageView) findViewById(R.id.vote);
         reply = (ImageView) findViewById(R.id.reply);
         edit = (ImageView) findViewById(R.id.edit);
-        showChildren = (TextView)findViewById(R.id.showChildren);
+        children = (LinearLayout) findViewById(R.id.children);
 
         User u = null;
         if (u == null) {
@@ -88,8 +75,6 @@ public abstract class BlogCommentView extends CardView {
         });
     }
 
-    protected abstract BlogPost getBlogPost();
-
     public void setComment(final BlogComment comment) {
         this.comment = comment;
         if (comment.getAuthor() !=null) {
@@ -99,17 +84,28 @@ public abstract class BlogCommentView extends CardView {
         }
 
         body.setText(comment.getContent());
-        depth.setDepth(comment.calculateDepth(MySaasaApplication.getService().getCommentManager()));
-        //TODO put Signed in user here
-        User u = null;
 
+        handleButtonVisibilities(comment);
+
+        List<BlogComment> blogComments = comment.getChildren(MySaasaApplication.getService().getCommentManager());
+        children.removeAllViews();
+        for (final BlogComment blogComment:blogComments) {
+            BlogCommentView bcv = new BlogCommentView(getContext(),post,blogComment);
+            children.addView(bcv);
+        }
+
+    }
+
+    private void handleButtonVisibilities(BlogComment comment) {
+
+        User u = MySaasaApplication.getService().getLoginManager().getAuthenticatedUser();
         if (comment.getAuthor() == null) {                       //Only Deleted comments have null author
             remove.setVisibility(View.GONE);
             vote.setVisibility(View.GONE);
             reply.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
         } else if (u!=null && u.id == comment.getAuthor().id){   //You are the author
-            remove.setVisibility(View.VISIBLE);
+            //remove.setVisibility(View.VISIBLE);
             vote.setVisibility(View.GONE);
             reply.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
@@ -124,44 +120,8 @@ public abstract class BlogCommentView extends CardView {
             remove.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
         }
-
-        List<BlogComment> children = comment.getChildren(MySaasaApplication.getService().getCommentManager());
-        if (children.size() == 0) {
-            showChildren.setText(TREE_NO_CHILDREN);
-            showChildren.setEnabled(false);
-        } else {
-            showChildren.setVisibility(View.VISIBLE);
-            showChildren.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (showChildren.getText().equals(TREE_CLOSE)) {
-                        hideChildren(comment);
-
-                    } else {
-                        for (BlogComment comment: BlogCommentView.this.comment.getChildren(MySaasaApplication.getService().getCommentManager())) {
-                            comment.client_visible = true;
-                        }
-                    }
-                    notifyChildVisibilityChanged();
-                }
-            });
-            if (comment.getChildren(MySaasaApplication.getService().getCommentManager()).get(0).client_visible) {
-                showChildren.setText(TREE_CLOSE);
-            } else {
-                showChildren.setText(TREE_OPEN);
-            }
-
-        }
     }
 
-    public void hideChildren(BlogComment comment) {
-        for (BlogComment comment1: comment.getChildren(MySaasaApplication.getService().getCommentManager())) {
-            comment1.client_visible = false;
-            hideChildren(comment1);
-        }
-    }
-
-    protected abstract void notifyChildVisibilityChanged();
 
     public void setHighlight(boolean b) {
 //        if (b == true) setBackgroundColor(Color.argb(25,255,255,255));
