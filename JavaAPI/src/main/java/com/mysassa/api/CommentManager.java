@@ -20,6 +20,8 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by Adam on 1/6/2015.
  */
@@ -28,6 +30,7 @@ public class CommentManager {
     public Map<Long, List<BlogComment>> comments = new HashMap<Long, List<BlogComment>>();
     public Map<Long, List<BlogComment>> toplevel_comments = new HashMap<Long, List<BlogComment>>();
     public Map<Long, BlogComment> id_lookup = new HashMap<Long, BlogComment>();
+    public Map<BlogComment, List<BlogComment>> child_lookup = new HashMap<BlogComment, List<BlogComment>>();
 
     public CommentManager(MySaasaClient mySaasaClient) {
         this.mySaasaClient = mySaasaClient;
@@ -36,6 +39,7 @@ public class CommentManager {
 
 
     public Observable<BlogComment> getBlogCommentsObservable(BlogPost post) {
+        checkNotNull(post);
         final BlogPost post1 = post;
         final MySaasaGateway gateway1 = mySaasaClient.gateway;
         Observable<BlogComment> observable = Observable.create(new Observable.OnSubscribe<BlogComment>() {
@@ -49,9 +53,36 @@ public class CommentManager {
                     try {
                         Response<GetBlogCommentsResponse> response = call.execute();
 
+                        //Register ID's
                         for (BlogComment bc : response.body().getData()) {
                             id_lookup.put(bc.getId(), bc);
-                            subscriber.onNext(bc);
+                        }
+
+                        //Lookup children and link
+                        for (BlogComment bc : response.body().getData()) {
+                            BlogComment parent;
+
+                            //If we have a parent
+                            if ((parent = bc.getParent(CommentManager.this)) != null) {
+                                //Get the ChildLookup array or initialize for this parent
+                                List<BlogComment> children = child_lookup.get(parent);
+                                if (children == null) {
+                                    children = new ArrayList<BlogComment>();
+                                    child_lookup.put(bc, children);
+                                }
+
+                                //Register this child in the list
+                                if (!children.contains(bc)) {
+                                    children.add(bc);
+                                }
+                            }
+                        }
+
+
+                        for (BlogComment bc : response.body().getData()) {
+                            if (bc.calculateDepth(CommentManager.this) == 0) {
+                                subscriber.onNext(bc);
+                            }
                         }
 
                         subscriber.onCompleted();
@@ -111,5 +142,10 @@ public class CommentManager {
 
     public BlogComment lookupCommentById(long parent_id) {
         return id_lookup.get(parent_id);
+    }
+
+    public List<BlogComment> getChildren(BlogComment blogComment) {
+        List<BlogComment> comments = child_lookup.get(blogComment);
+        return comments==null?Collections.EMPTY_LIST:comments;
     }
 }

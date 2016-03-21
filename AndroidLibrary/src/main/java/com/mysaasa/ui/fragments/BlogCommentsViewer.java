@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityPostComment;
-import com.mysaasa.ui.views.BlogCommentView;
+import com.mysaasa.ui.adapters.BlogCommentsAdapter;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by Adam on 1/5/2015.
@@ -58,7 +56,6 @@ public class BlogCommentsViewer extends Fragment {
             subscription.unsubscribe();
             subscription = null;
         }
-
     }
 
     public BlogPost getPost() {
@@ -68,6 +65,7 @@ public class BlogCommentsViewer extends Fragment {
     public void setPost(BlogPost post) {
         if (post == null) return;
         this.post = post;
+
 
         subscription = MySaasaApplication
                 .getService()
@@ -80,24 +78,29 @@ public class BlogCommentsViewer extends Fragment {
     }
 
     private void setBlogComments(final List<BlogComment> list) {
-        getActivity().runOnUiThread(() -> {
-            if (post == null) return;
-            if (getActivity() == null) return;
-            if (list.size() == 0) {
-                setupEmptyList();
-            } else {
-                setupListAndScan(list);
-            }
-        });
+        if (post == null) return;
+        if (getActivity() == null) return;
+        if (list.size() == 0) {
+            setupEmptyList();
+        } else {
+            setupCommentAdapter(list);
+        }
     }
 
-    private void setupListAndScan(List<BlogComment> list) {
-        comments.setAdapter(new MyBlogCommentsAdapter(list));
+    private void setupCommentAdapter(List<BlogComment> list) {
+        comments.setAdapter(new BlogCommentsAdapter(list, selected_comment_id, post));
+        findCurrentSelection();
+    }
+
+    private void findCurrentSelection() {
+
         if (selected_comment_id != 0) {
-            for (int i=0;i<list.size();i++) {
-                if (list.get(i).getId() == selected_comment_id) {
-                    comments.setSelection(i);
-                    break;
+            for (int i=0;i<comments.getAdapter().getCount();i++) {
+                if (comments.getAdapter().getItem(i) instanceof BlogComment) {
+                    if (((BlogComment) comments.getAdapter().getItem(i)).getId() == selected_comment_id) {
+                        comments.setSelection(i);
+                        break;
+                    }
                 }
             };
         }
@@ -117,51 +120,4 @@ public class BlogCommentsViewer extends Fragment {
         });
     }
 
-    private class MyBlogCommentsAdapter extends BaseAdapter {
-        private final List<BlogComment> list;
-
-        public MyBlogCommentsAdapter(List<BlogComment> list) {
-            this.list = list;
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-
-        @Override
-        public Object getItem(int i) {
-            return list.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return list.get(i).getId();
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            BlogCommentView bcv = new BlogCommentView(getActivity()) {
-                @Override
-                protected BlogPost getBlogPost() {
-                    return post;
-                }
-
-                @Override
-                protected void notifyChildVisibilityChanged() {
-                    setBlogComments(null);
-                }
-            };
-
-            bcv.setComment(list.get(i));
-            if (list.get(i).getId() == selected_comment_id) {
-                bcv.setHighlight(true);
-            } else {
-                bcv.setHighlight(false);
-            }
-
-            return bcv;
-        }
-    }
 }

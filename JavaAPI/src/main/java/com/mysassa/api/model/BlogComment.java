@@ -22,7 +22,6 @@ public class BlogComment implements Serializable{
 
     private Boolean visible = true;
     public Boolean client_visible = true;
-    private List<BlogComment> children = new ArrayList();
 
     @Override
     public String toString() {
@@ -34,14 +33,7 @@ public class BlogComment implements Serializable{
                 ", dateCreated=" + dateCreated +
                 ", score=" + score +
                 ", visible=" + visible +
-                ", children=" + children +
                 '}';
-    }
-
-    public void registerChild(BlogComment comment) {
-        if (!children.contains(comment)) {
-            children.add(comment);
-        }
     }
 
     @Override
@@ -89,16 +81,13 @@ public class BlogComment implements Serializable{
         return visible;
     }
 
-    public List<BlogComment> getChildren() {
-        return children;
-    }
-
     public BlogComment getParent(CommentManager commentManager) {
         if (parent_id == 0) return null;
         BlogComment parent = commentManager.lookupCommentById(parent_id);
         return parent;
     }
-    public int calculateDepth(BlogComment comment, CommentManager commentManager) {
+
+    public int calculateDepth(CommentManager commentManager) {
         int depth = 0;
         BlogComment parent = getParent(commentManager);
         while (parent != null) {
@@ -106,5 +95,9 @@ public class BlogComment implements Serializable{
             parent = parent.getParent(commentManager);
         }
         return depth;
+    }
+
+    public List<BlogComment> getChildren(CommentManager manager) {
+        return manager.getChildren(this);
     }
 }
