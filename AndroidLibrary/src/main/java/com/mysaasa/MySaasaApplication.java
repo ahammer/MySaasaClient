@@ -13,6 +13,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.common.eventbus.EventBus;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.responses.LoginUserResponse;
 import com.splunk.mint.Mint;
 
 import java.io.IOException;
@@ -68,8 +69,18 @@ public class MySaasaApplication extends Application {
 
     private void autoLogin() {
         SharedPreferences sp = getSharedPreferences("autologin",0);
-        if (sp.contains("identifier") && sp.contains("password"))
-            mySaasaClient.getLoginManager().login(sp.getString("identifier", null), sp.getString("password", null));
+        if (sp.contains("identifier") && sp.contains("password")) {
+            String identifier = sp.getString("identifier", null);
+            mySaasaClient.getLoginManager().login(identifier, sp.getString("password", null))
+            .doOnError(e->{
+                Toast.makeText(MySaasaApplication.this, "There was an error with auto-login", Toast.LENGTH_SHORT).show();
+            })
+            .subscribe((LoginUserResponse response) ->{
+                if (response.isSuccess()) {
+                    Toast.makeText(MySaasaApplication.this, identifier +" Logged in",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public ApplicationSectionsManager getAndroidCategoryManager() {

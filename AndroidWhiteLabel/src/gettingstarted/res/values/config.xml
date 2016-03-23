@@ -2,7 +2,7 @@
 <resources>
     <!-- Debug Settings -->
     <string name="scheme">http</string>
-    <string name="domain">adamhammer.metalrain.ca</string>
+    <string name="domain">www.adamhammer.ca</string>
     <string name="gcm_key"></string>
-    <integer name="port">8080</integer>
+    <integer name="port">80</integer>
 </resources>

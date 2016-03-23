@@ -32,9 +32,8 @@ public class LoginManager {
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        lastLoginResponseObservable = Observable.create(loginSubscription = new LoginObservable(username, password));
-        lastLoginResponseObservable.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe();
-        return lastLoginResponseObservable;
+        return Observable.create(loginSubscription = new LoginObservable(username, password))
+                .subscribeOn(Schedulers.io());
     }
 
     public void signOut() {
