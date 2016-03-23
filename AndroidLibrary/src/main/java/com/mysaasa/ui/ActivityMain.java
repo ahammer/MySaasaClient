@@ -105,7 +105,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     public void setPosts(List<BlogPost> posts) {
         newsList.setAdapter(new BlogAdapter(posts));
     }
-    
+
     @Override
     protected void onPause() {
         subscription.unsubscribe();
