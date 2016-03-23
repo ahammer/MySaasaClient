@@ -9,8 +9,6 @@ import java.io.IOException;
 import retrofit2.Call;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -35,13 +33,7 @@ public class LoginManager {
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
         lastLoginResponseObservable = Observable.create(loginSubscription = new LoginObservable(username, password));
-        lastLoginResponseObservable = lastLoginResponseObservable.subscribeOn(Schedulers.io());
-        lastLoginResponseObservable.doOnError(new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-
-            }
-        }).subscribe();
+        lastLoginResponseObservable.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe();
         return lastLoginResponseObservable;
     }
 
@@ -89,7 +81,7 @@ public class LoginManager {
 
                     subscriber.onNext(lastResponse);
                     subscriber.onCompleted();
-                } catch (Exception e) {
+                } catch (IOException e) {
                     subscriber.onError(e);
                 } finally {
                     mySaasa.stopNetwork();

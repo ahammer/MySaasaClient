@@ -119,21 +119,24 @@ public class CommentManager {
                 Call<GetBlogCommentsResponse> call = gateway.getBlogComments(post.id, 100);
                 try {
                     Response<GetBlogCommentsResponse> response = call.execute();
+
                     //Register ID's
+
                     commentManager.registerComments(response.body().getData());
                     commentManager.scanForParents();
+
 
                     for (BlogComment bc : response.body().getData()) {
                         if (bc.calculateDepth(commentManager) == 0) {
                             subscriber.onNext(bc);
                         }
                     }
+
                     subscriber.onCompleted();
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }
             }
-
         }
     }
 

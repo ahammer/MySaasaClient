@@ -75,6 +75,7 @@ public class BlogCommentsViewer extends Fragment {
                 .getBlogCommentsObservable(post)
                 .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(e-> Crouton.makeText(getActivity(), e.getMessage(), Style.ALERT).show())
                 .toList()
                 .subscribe(this::setBlogComments,this::handleException);
     }
