@@ -27,6 +27,8 @@ import com.mysaasa.ui.fragments.EmptyListAdapter;
 
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,13 +65,10 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
         fragmentFrame = (FrameLayout) findViewById(R.id.fragment_frame);
         newsList = (ListView) findViewById(R.id.content_frame);
-        newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Object o = adapterView.getAdapter().getItem(i);
-                if (o instanceof BlogPost) {
-                    ActivityBlogPost.startActivity(ActivityMain.this, (BlogPost) o, selectedCategory);
-                }
+        newsList.setOnItemClickListener((adapterView, view, i, l) -> {
+            Object o = adapterView.getAdapter().getItem(i);
+            if (o instanceof BlogPost) {
+                ActivityBlogPost.startActivity(ActivityMain.this, (BlogPost) o, selectedCategory);
             }
         });
 
@@ -94,30 +93,19 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                 .getBlogPostsObservable(getSelectedCategory())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
-                    @Override
-                    public Integer call(BlogPost blogPost, BlogPost blogPost2) {
-                        return Integer.valueOf((int) (blogPost2.id - blogPost.id));
-                    }
-                }).subscribe(new Subscriber<List<BlogPost>>() {
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(List<BlogPost> blogPosts) {
-                newsList.setAdapter(new BlogAdapter(blogPosts));
-            }
-        });
+                .toSortedList((blogPost, blogPost2) -> {
+                    return Integer.valueOf((int) (blogPost2.id - blogPost.id));
+                }).subscribe(this::setPosts, this::handleError);
     }
 
+    private void handleError(Throwable throwable) {
+        Crouton.makeText(this, throwable.getMessage(), Style.ALERT).show();
+    }
+
+    public void setPosts(List<BlogPost> posts) {
+        newsList.setAdapter(new BlogAdapter(posts));
+    }
+    
     @Override
     protected void onPause() {
         subscription.unsubscribe();

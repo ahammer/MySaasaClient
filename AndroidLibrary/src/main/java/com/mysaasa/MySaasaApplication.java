@@ -17,6 +17,11 @@ import com.splunk.mint.Mint;
 
 import java.io.IOException;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.plugins.RxJavaErrorHandler;
+import rx.plugins.RxJavaPlugins;
+
 /**
  * Created by administrator on 2014-06-30.
  */
@@ -44,6 +49,8 @@ public class MySaasaApplication extends Application {
     public void onCreate() {
         Mint.initAndStartSession(this, "a8d16bad");
         super.onCreate();
+
+
         instance = this;
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
@@ -69,7 +76,11 @@ public class MySaasaApplication extends Application {
     private void autoLogin() {
         SharedPreferences sp = getSharedPreferences("autologin",0);
         if (sp.contains("identifier") && sp.contains("password"))
-            mySaasaClient.getLoginManager().login(sp.getString("identifier", null), sp.getString("password", null));
+            mySaasaClient.getLoginManager().login(sp.getString("identifier", null), sp.getString("password", null))
+            .subscribeOn(AndroidSchedulers.mainThread()).subscribe(response->{},error->{
+                Toast.makeText(MySaasaApplication.this, "Error with auto-login: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+
     }
 
     public ApplicationSectionsManager getAndroidCategoryManager() {
@@ -168,7 +179,6 @@ public class MySaasaApplication extends Application {
                         // exponential back-off.
                     }
                     return msg;
-
                 }
             }.execute(null, null, null);
         } catch (SecurityException e) {

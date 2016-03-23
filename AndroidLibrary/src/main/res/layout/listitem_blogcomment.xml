@@ -12,7 +12,6 @@
     style="@style/CardView"
     >
 
-
     <LinearLayout
         android:id="@+id/buttons"
         android:layout_gravity="right"
@@ -47,35 +46,36 @@
 
     </LinearLayout>
 
-    <TextView
-                style="@style/mysaasa_blogcomment"
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_toLeftOf="@id/buttons"
-                android:layout_alignParentLeft="true"
-                android:text="Content"
-                 />
 
-            <TextView
-                android:id="@+id/author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_padding"
-                android:layout_below="@id/content"
-                android:layout_toLeftOf="@id/buttons"
-                android:layout_alignParentLeft="true"
-                android:text="Posted By: Author on Date"
-                 />
-    <LinearLayout
-        android:id="@+id/children"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/author"
-        android:layout_marginLeft="10dp"
-        />
+        <TextView
+            style="@style/mysaasa_blogcomment"
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_toLeftOf="@id/buttons"
+            android:layout_alignParentLeft="true"
+            android:text="Content"
+            />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding"
+            android:layout_below="@id/content"
+            android:layout_toLeftOf="@id/buttons"
+            android:layout_alignParentLeft="true"
+            android:text="Posted By: Author on Date"
+            />
+        <LinearLayout
+            android:id="@+id/children"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author"
+            android:layout_marginLeft="10dp"
+            />
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>

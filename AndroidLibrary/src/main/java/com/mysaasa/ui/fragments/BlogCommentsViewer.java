@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityPostComment;
@@ -16,6 +17,8 @@ import com.mysassa.api.model.BlogPost;
 
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -73,9 +76,14 @@ public class BlogCommentsViewer extends Fragment {
                 .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()
-                .subscribe(this::setBlogComments);
+                .subscribe(this::setBlogComments,this::handleException);
     }
 
+    private void handleException(Throwable t) {
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+        });
+    }
     private void setBlogComments(final List<BlogComment> list) {
         if (post == null) return;
         if (getActivity() == null) return;

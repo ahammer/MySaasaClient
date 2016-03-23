@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
@@ -73,6 +75,7 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
             toggleComments();
         });
         refreshAll();
+        drawTransition(0f);
     }
 
     private void toggleComments() {
@@ -97,21 +100,33 @@ public class ActivityBlogPost extends SideNavigationCompatibleActivity {
 
         animator.addUpdateListener(animation -> {
             Float f = (Float) animation.getAnimatedValue();
-            ViewGroup.LayoutParams lp = commentContainer.getLayoutParams();
-            lp.width= (int) ((width));
-            lp.height= (int) ((height)*f*.5);
-            commentContainer.setLayoutParams(lp);
-            if (f == 0) {
-                commentContainer.setVisibility(View.GONE);
-            } else {
-                commentContainer.setVisibility(View.VISIBLE);
-            }
-            ViewGroup.LayoutParams lpBody = bodyContainer.getLayoutParams();
-            lpBody.height = (int) (height - lp.height - 50);
-            bodyContainer.setLayoutParams(lpBody);
+            drawTransition(f);
         });
 
+
         animator.start();
+    }
+
+    private void drawTransition(Float f) {
+        final float width =  findViewById(android.R.id.content).getWidth();
+        final float height = findViewById(android.R.id.content).getHeight();
+
+        ViewGroup.LayoutParams lp = commentContainer.getLayoutParams();
+        lp.width= (int) ((width));
+        lp.height= (int) ((height)*f*.5);
+        commentContainer.setLayoutParams(lp);
+        if (f == 0) {
+            commentContainer.setVisibility(View.GONE);
+        } else {
+            commentContainer.setVisibility(View.VISIBLE);
+        }
+        ViewGroup.LayoutParams lpBody = bodyContainer.getLayoutParams();
+        lpBody.height = (int) (height - lp.height - 50);
+        bodyContainer.setLayoutParams(lpBody);
+
+        FrameLayout.LayoutParams lpFab = (FrameLayout.LayoutParams) floatingActionButtonComments.getLayoutParams();
+        lpFab.bottomMargin = lp.height;
+        floatingActionButtonComments.setLayoutParams(lpFab);
     }
 
     @Override
