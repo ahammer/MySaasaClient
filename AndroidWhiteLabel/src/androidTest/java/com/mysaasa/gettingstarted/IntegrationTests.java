@@ -33,13 +33,16 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * These tests verify the Getting Started app, assuming that you can login with admin/test123
+ * These tests verify the Getting Started app
  *
- * I run a local server and point to it on DNS for the purpose of the tests.
+ * They are meant to be running on the default http://gettingstarted.test:8080
+ *
+ * The tests will verify that the app is working in conjuction with the server
+ *
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class GettingStartedTests {
+public class IntegrationTests {
     private ActivityMain mActivity;
     private MySaasaApplication application;
     private MySaasaClient client;
@@ -47,13 +50,19 @@ public class GettingStartedTests {
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(ActivityMain.class);
 
-    public GettingStartedTests() {}
+    public IntegrationTests() {}
 
     @Before
     public void setUp() throws Exception {
         mActivity = (ActivityMain) mActivityRule.getActivity();
         application = (MySaasaApplication) mActivity.getApplication();
         client = application.getMySaasaClient();
+    }
+
+    @Test
+    public void testNewsPost() throws Exception {
+        onData(withText("News")).perform(click());
+        Thread.sleep(50000);
     }
 
     @Test

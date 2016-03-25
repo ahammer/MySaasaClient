@@ -51,29 +51,19 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
         createAccount = (Button) findViewById(R.id.button_create_account);
         rememberMe = (CheckBox) findViewById(R.id.rememberMe);
 
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getService().getLoginManager().login(username.getText().toString(), password.getText().toString())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.newThread())
-                        .subscribe(new Action1<LoginUserResponse>() {
-                    @Override
-                    public void call(LoginUserResponse loginUserResponse) {
-                        if (loginUserResponse.isSuccess()) {
-                            if (rememberMe.isChecked()) {
-                                MySaasaApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
-                            }
-                            setResult(RESULT_OK);
-                            finish();
-                        } else {
-                            Crouton.makeText(ActivitySignin.this, "Got a result: "+loginUserResponse.getMessage(), Style.ALERT).show();
+        signin.setOnClickListener(view -> getService().getLoginManager().login(username.getText().toString(), password.getText().toString())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(loginUserResponse -> {
+                    if (loginUserResponse.isSuccess()) {
+                        if (rememberMe.isChecked()) {
+                            MySaasaApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
                         }
-
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        Crouton.makeText(ActivitySignin.this, "Got a result: "+loginUserResponse.getMessage(), Style.ALERT).show();
                     }
-                });
-            }
-        });
+                }, e->Crouton.makeText(ActivitySignin.this, "Error signing in "+e.getMessage(),Style.ALERT).show()));
 
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override

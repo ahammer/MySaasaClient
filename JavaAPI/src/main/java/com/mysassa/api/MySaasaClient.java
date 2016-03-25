@@ -37,7 +37,7 @@ public class MySaasaClient {
     public final EventBus bus = new EventBus();
 
     private final BlogManager blogManager;
-    private final LoginManager loginManager;
+    private final AuthenticationManager loginManager;
     private final MessageManager messagesManager;
     private final CategoryManager categoryManager;
     private int callDepth = 0;
@@ -81,7 +81,7 @@ public class MySaasaClient {
 
         categoryManager = new CategoryManager(this);
         blogManager = new BlogManager(this);
-        loginManager = new LoginManager(this);
+        loginManager = new AuthenticationManager(this);
         messagesManager = new MessageManager(this);
         commentManager = new CommentManager(this);
     }
@@ -90,7 +90,7 @@ public class MySaasaClient {
         return blogManager;
     }
 
-    public LoginManager getLoginManager() {
+    public AuthenticationManager getLoginManager() {
         return loginManager;
     }
 

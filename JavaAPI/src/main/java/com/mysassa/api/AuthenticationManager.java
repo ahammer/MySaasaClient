@@ -14,14 +14,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Adam on 3/3/2016.
  */
-public class LoginManager {
+public class AuthenticationManager {
     private final MySaasaClient mySaasa;
 
     private LoginObservable loginSubscription;
     private Observable<LoginUserResponse> lastLoginResponseObservable;
 
 
-    public LoginManager(MySaasaClient mySaasaClient) {
+    public AuthenticationManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
     }
 
@@ -33,8 +33,7 @@ public class LoginManager {
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
         lastLoginResponseObservable = Observable.create(loginSubscription = new LoginObservable(username, password));
-        lastLoginResponseObservable.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe();
-        return lastLoginResponseObservable;
+        return lastLoginResponseObservable.subscribeOn(Schedulers.io());
     }
 
     public void signOut() {
