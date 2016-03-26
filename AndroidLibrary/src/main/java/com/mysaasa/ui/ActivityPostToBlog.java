@@ -20,7 +20,7 @@ import java.io.Serializable;
  * Created by administrator on 2014-06-30.
  */
 public class ActivityPostToBlog extends Activity {
-    public static final int REQUEST_CODE = 200202;
+    public static final int REQUEST_CODE = 502;
     State state = new State();
     EditText title;
     EditText postTitle;

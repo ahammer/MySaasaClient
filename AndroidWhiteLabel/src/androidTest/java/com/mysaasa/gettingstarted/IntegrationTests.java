@@ -17,6 +17,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Date;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,9 +38,10 @@ import static org.junit.Assert.assertTrue;
  * These tests verify the Getting Started app
  *
  * They are meant to be running on the default http://gettingstarted.test:8080
- *
  * The tests will verify that the app is working in conjuction with the server
  *
+ * They should run successfully given that you don't make big changes to the getting started website
+ * and it's data.
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -46,6 +49,9 @@ public class IntegrationTests {
     private ActivityMain mActivity;
     private MySaasaApplication application;
     private MySaasaClient client;
+
+    static final String TEST_USERNAME = "TESTUSER"+(new Date()).getTime();
+    static final String TEST_PASSWORD = "testuser";
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(ActivityMain.class);
@@ -61,9 +67,14 @@ public class IntegrationTests {
 
     @Test
     public void testNewsPost() throws Exception {
-        onData(withText("News")).perform(click());
+        onView(withContentDescription("Navigate up")).perform(click());
+        onView(withText("News")).perform(click());
+        onView(withId(R.id.action_post)).perform(click());
+        authenticateIfNecessary();
         Thread.sleep(50000);
     }
+
+
 
     @Test
     public void testBlogPost() throws Exception {
@@ -82,11 +93,12 @@ public class IntegrationTests {
         Thread.sleep(50000);
     }
 
-    private void authenticateIfNecessary() {
+    private void authenticateIfNecessary() throws Exception {
         if (client.getLoginManager().getAuthenticatedUser() == null) {
-            onView(withId(R.id.username)).perform(click()).perform(typeText("admin"));
-            onView(withId(R.id.password)).perform(click()).perform(typeText("test123"));
-            onView(withId(R.id.button_login)).perform(click());
+            onView(withId(R.id.username)).perform(click()).perform(typeText(TEST_USERNAME));
+            onView(withId(R.id.password)).perform(click()).perform(typeText(TEST_PASSWORD));
+            onView(withId(R.id.password_repeat)).perform(click()).perform(typeText(TEST_PASSWORD));
+            onView(withId(R.id.button_create_account)).perform(click());
             assertTrue(client.getLoginManager().getAuthenticatedUser() != null);
         }
     }

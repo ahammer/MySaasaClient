@@ -99,6 +99,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
     private void handleError(Throwable throwable) {
+        throwable.printStackTrace();
         Crouton.makeText(this, throwable.getMessage(), Style.ALERT).show();
     }
 

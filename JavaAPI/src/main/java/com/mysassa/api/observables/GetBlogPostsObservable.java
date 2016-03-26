@@ -38,12 +38,12 @@ public class GetBlogPostsObservable implements Observable.OnSubscribe<BlogPost> 
                 }
 
                 if (!this.response.isSuccess()) {
-                    subscriber.onError(new RuntimeException(response.getMessage()));
+                    subscriber.onError(new MySaasaServerException(response.getMessage()));
                 }
                 for (BlogPost bp : response.getData()) {
                     subscriber.onNext(bp);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 client.stopNetwork();
