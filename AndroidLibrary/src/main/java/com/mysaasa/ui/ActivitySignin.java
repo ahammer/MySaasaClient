@@ -9,14 +9,12 @@ import android.widget.EditText;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.responses.LoginUserResponse;
 import com.mysassa.api.model.Category;
+import com.mysassa.api.responses.LoginUserResponse;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by administrator on 2014-06-30.
@@ -51,34 +49,43 @@ public class ActivitySignin extends SideNavigationCompatibleActivity {
         createAccount = (Button) findViewById(R.id.button_create_account);
         rememberMe = (CheckBox) findViewById(R.id.rememberMe);
 
-        signin.setOnClickListener(view -> getService().getLoginManager().login(username.getText().toString(), password.getText().toString())
+        signin.setOnClickListener(view -> getService().getAuthenticationManager().login(username.getText().toString(), password.getText().toString())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(loginUserResponse -> {
-                    if (loginUserResponse.isSuccess()) {
-                        if (rememberMe.isChecked()) {
-                            MySaasaApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
-                        }
-                        setResult(RESULT_OK);
-                        finish();
-                    } else {
-                        Crouton.makeText(ActivitySignin.this, "Got a result: "+loginUserResponse.getMessage(), Style.ALERT).show();
-                    }
-                }, e->Crouton.makeText(ActivitySignin.this, "Error signing in "+e.getMessage(),Style.ALERT).show()));
+                .subscribe(this::handleResponse
+                ,this::onError));
 
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (crouton != null) Crouton.hide(crouton);
-                if (password.getText().toString().equals(password_repeat.getText().toString())) {
-                    crouton = Crouton.makeText(ActivitySignin.this, "Creating account", Style.INFO);
-                    crouton.show();
-
-                } else {
-                    crouton = Crouton.makeText(ActivitySignin.this, "Passwords do not match " + password_repeat.getText().toString() + " " + password.getText().toString(), Style.ALERT);
-                    crouton.show();
-                }
+        createAccount.setOnClickListener(view -> {
+            if (crouton != null) Crouton.hide(crouton);
+            if (password.getText().toString().equals(password_repeat.getText().toString())) {
+                crouton = Crouton.makeText(ActivitySignin.this, "Creating account", Style.INFO);
+                crouton.show();
+                MySaasaApplication.getService().getAuthenticationManager().createAccount(username.getText().toString(), password.getText().toString())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        ActivitySignin.this::handleResponse,
+                        ActivitySignin.this::onError
+                );
+            } else {
+                crouton = Crouton.makeText(ActivitySignin.this, "Passwords do not match " + password_repeat.getText().toString() + " " + password.getText().toString(), Style.ALERT);
+                crouton.show();
             }
         });
+    }
+
+    private void onError(Throwable throwable) {
+        Crouton.makeText(ActivitySignin.this, "Error signing in "+throwable.getMessage(),Style.ALERT).show();
+    }
+
+    private void handleResponse(LoginUserResponse loginUserResponse) {
+        if (loginUserResponse.isSuccess()) {
+            if (rememberMe.isChecked()) {
+                MySaasaApplication.getInstance().saveCredentials(username.getText().toString(), password.getText().toString());
+            }
+            setResult(RESULT_OK);
+            finish();
+        } else {
+            Crouton.makeText(ActivitySignin.this, "Got a result: "+loginUserResponse.getMessage(), Style.ALERT).show();
+        }
     }
 
     @Override

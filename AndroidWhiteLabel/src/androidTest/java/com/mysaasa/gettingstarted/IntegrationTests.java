@@ -1,10 +1,8 @@
 package com.mysaasa.gettingstarted;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.mysaasa.MySaasaApplication;
@@ -94,12 +92,12 @@ public class IntegrationTests {
     }
 
     private void authenticateIfNecessary() throws Exception {
-        if (client.getLoginManager().getAuthenticatedUser() == null) {
+        if (client.getAuthenticationManager().getAuthenticatedUser() == null) {
             onView(withId(R.id.username)).perform(click()).perform(typeText(TEST_USERNAME));
             onView(withId(R.id.password)).perform(click()).perform(typeText(TEST_PASSWORD));
             onView(withId(R.id.password_repeat)).perform(click()).perform(typeText(TEST_PASSWORD));
             onView(withId(R.id.button_create_account)).perform(click());
-            assertTrue(client.getLoginManager().getAuthenticatedUser() != null);
+            assertTrue(client.getAuthenticationManager().getAuthenticatedUser() != null);
         }
     }
 

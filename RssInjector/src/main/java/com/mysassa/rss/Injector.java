@@ -34,7 +34,7 @@ public class Injector {
     private static void updateNews(String site, int port, String scheme) throws IOException, FeedException {
         MySaasaClient mySaasaClient = new MySaasaClient(site,port,scheme);
 
-        mySaasaClient.getLoginManager()
+        mySaasaClient.getAuthenticationManager()
                 .login("adam", "adam")
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.newThread())

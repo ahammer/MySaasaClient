@@ -143,7 +143,7 @@ public class ActivityPostToBlog extends Activity {
     }
 
     private void authenticateUserIfNecessary() {
-        if (MySaasaApplication.getService().getLoginManager().getAuthenticatedUser() == null) {
+        if (MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser() == null) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }

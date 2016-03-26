@@ -50,7 +50,7 @@ public class AuthenticationView extends FrameLayout {
         signout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MySaasaApplication.getService().getLoginManager().signOut();
+                MySaasaApplication.getService().getAuthenticationManager().signOut();
 
             }
         });
@@ -69,7 +69,7 @@ public class AuthenticationView extends FrameLayout {
 
     private void setVisibilities() {
         if (MySaasaApplication.getInstance()!=null) {
-            User u = MySaasaApplication.getService().getLoginManager().getAuthenticatedUser();
+            User u = MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser();
             boolean auth = u != null;
             username.setVisibility(u != null?VISIBLE:GONE);
             if (auth) {

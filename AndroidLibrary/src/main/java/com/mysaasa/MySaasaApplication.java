@@ -17,10 +17,7 @@ import com.splunk.mint.Mint;
 
 import java.io.IOException;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.plugins.RxJavaErrorHandler;
-import rx.plugins.RxJavaPlugins;
 
 /**
  * Created by administrator on 2014-06-30.
@@ -76,7 +73,7 @@ public class MySaasaApplication extends Application {
     private void autoLogin() {
         SharedPreferences sp = getSharedPreferences("autologin",0);
         if (sp.contains("identifier") && sp.contains("password"))
-            mySaasaClient.getLoginManager().login(sp.getString("identifier", null), sp.getString("password", null))
+            mySaasaClient.getAuthenticationManager().login(sp.getString("identifier", null), sp.getString("password", null))
             .subscribeOn(AndroidSchedulers.mainThread()).subscribe(response->{},error->{
                 Toast.makeText(MySaasaApplication.this, "Error with auto-login: "+error.getMessage(), Toast.LENGTH_SHORT).show();
             });

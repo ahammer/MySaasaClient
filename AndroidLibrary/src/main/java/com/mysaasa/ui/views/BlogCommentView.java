@@ -3,7 +3,6 @@ package com.mysaasa.ui.views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -101,7 +100,7 @@ public class BlogCommentView extends FrameLayout {
 
     private void handleButtonVisibilities(BlogComment comment) {
 
-        User u = MySaasaApplication.getService().getLoginManager().getAuthenticatedUser();
+        User u = MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser();
         if (comment.getAuthor() == null) {                       //Only Deleted comments have null author
             remove.setVisibility(View.GONE);
             vote.setVisibility(View.GONE);
