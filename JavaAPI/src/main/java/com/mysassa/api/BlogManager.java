@@ -4,10 +4,13 @@ import com.mysassa.api.model.BlogComment;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.api.observables.GetBlogPostsObservable;
+import com.mysassa.api.observables.StandardMySaasaObservable;
+import com.mysassa.api.responses.PostToBlogResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -32,14 +35,37 @@ public class BlogManager {
      * @return
      */
     public Observable<BlogPost> getBlogPostsObservable(final Category c) {
-        //If in cache, return cache version
-        if (mBlogPostCache.containsKey(c)) { return mBlogPostCache.get(c); }
-        //Otherwise create one, registerComment it in the cache and return it.
         Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa));
-        mBlogPostCache.put(c,observable);
-        return observable.subscribeOn(Schedulers.io());
+
+        return observable.subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 
 
+    public Observable<PostToBlogResponse> postToBlog(final String title, final String subtitle, final String summary, final String body, final String category) {
+        return Observable.create(new PostToBlogObservableBase(mySaasa, title, subtitle, summary, body, category))
+                .subscribeOn(Schedulers.io());
+    }
 
+    private static class PostToBlogObservableBase extends StandardMySaasaObservable<PostToBlogResponse> {
+        private final String title;
+        private final String subtitle;
+        private final String summary;
+        private final String body;
+        private final String category;
+
+        public PostToBlogObservableBase(MySaasaClient client, String title, String subtitle, String summary, String body, String category) {
+            super(client);
+            this.title = title;
+            this.subtitle = subtitle;
+            this.summary = summary;
+            this.body = body;
+            this.category = category;
+        }
+
+        @Override
+        protected Call<PostToBlogResponse> getNetworkCall() {
+
+            return getMySaasa().getGateway().postToBlog(title, subtitle, summary, body, category);
+        }
+    }
 }

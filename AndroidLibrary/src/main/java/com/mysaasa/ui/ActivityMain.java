@@ -150,12 +150,8 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ActivityPostToBlog.REQUEST_CODE && RESULT_OK == resultCode) {
-            Adapter a = newsList.getAdapter();
-            if (a instanceof BlogAdapter) {
-                BlogAdapter ba = (BlogAdapter) a;
-
-            }
+        if (RESULT_OK == resultCode) {
+            updateBlogPostSubscription();
         }
     }
 

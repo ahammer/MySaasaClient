@@ -21,6 +21,8 @@ public abstract class  StandardMySaasaObservable<T extends SimpleResponse> imple
         this.mySaasa = mySaasa;
     }
 
+
+
     @Override
     public void call(Subscriber<? super T> subscriber) {
         if (!subscriber.isUnsubscribed()) {

@@ -33,10 +33,12 @@
 
         <activity android:name="com.mysaasa.ui.ActivityPostComment"
             android:theme="@style/SimpleThemeDialog"
-
             android:label="Post Comment"/>
+
         <activity android:name="com.mysaasa.ui.ActivityPostToBlog"
+            android:theme="@style/SimpleThemeDialog"
             android:label="Post to Blog"/>
+
         <activity android:name="com.mysaasa.ui.ActivityMessages"
             android:label="Read Messages"/>
         <activity android:name="com.mysaasa.ui.ActivityMessage"

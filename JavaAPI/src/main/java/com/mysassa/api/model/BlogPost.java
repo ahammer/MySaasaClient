@@ -60,6 +60,7 @@ public class BlogPost implements Serializable {
         this.subtitle = subtitle;
     }
 
+
     @Override
     public String toString() {
         return "BlogPost{" +

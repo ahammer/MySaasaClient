@@ -73,10 +73,12 @@ public class IntegrationTests {
         openSideNav();
         onView(withText("News")).perform(click());
         onView(withId(R.id.action_post)).perform(click());
-
         authenticateIfNecessary();
         writePostAndSubmit();
-        assertTrue(true);
+        onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(0).perform(click());
+        Thread.sleep(5000);
+        //onData
+
     }
 
     private void writePostAndSubmit() throws InterruptedException {

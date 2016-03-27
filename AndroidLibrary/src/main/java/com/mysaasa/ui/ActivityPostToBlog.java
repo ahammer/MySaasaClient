@@ -16,6 +16,10 @@ import com.mysassa.api.model.Category;
 
 import java.io.Serializable;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+import rx.android.schedulers.AndroidSchedulers;
+
 /**
  * Created by administrator on 2014-06-30.
  */
@@ -120,10 +124,22 @@ public class ActivityPostToBlog extends Activity {
 
             } else {
 
+                MySaasaApplication.getService().getBlogManager().postToBlog(title.getText().toString(),
+                        subtitle.getText().toString(),
+                        summary.getText().toString(),
+                        body.getText().toString(),
+                        state.category.name)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(response->{
+                            setResult(RESULT_OK);
+                            finish();
+                        }, ActivityPostToBlog.this::handleError);
             }
-            setResult(Activity.RESULT_OK);
-            finish();
         });
+    }
+
+    private void handleError(Throwable throwable) {
+        Crouton.makeText(this, throwable.toString(), Style.ALERT).show();
     }
 
     private void setupAndRestoreState(Bundle savedInstanceState) {
