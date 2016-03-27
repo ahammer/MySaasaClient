@@ -40,7 +40,7 @@ public class CommentManager {
         final BlogPost post1 = post;
         final MySaasaGateway gateway1 = mySaasaClient.gateway;
         Observable<BlogComment> observable = Observable.create(new BlogCommentsObservable(this, post1));
-        return observable.subscribeOn(Schedulers.io());
+        return observable.subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 
     public Observable<PostCommentResponse> postBlogComment(final BlogPost post, final String text) {
