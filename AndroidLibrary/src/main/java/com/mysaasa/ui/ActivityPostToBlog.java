@@ -103,29 +103,26 @@ public class ActivityPostToBlog extends Activity {
             postButton.setText("Save post");
         }
 
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (state.editMode) {
-                    BlogPost updatedPost = new BlogPost(
-                            state.post,
-                            title.getText().toString(),
-                            subtitle.getText().toString(),
-                            summary.getText().toString(),
-                            body.getText().toString());
-                    Intent i = new Intent();
+        postButton.setOnClickListener(view -> {
+            if (state.editMode) {
+                BlogPost updatedPost = new BlogPost(
+                        state.post,
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        summary.getText().toString(),
+                        body.getText().toString());
+                Intent i = new Intent();
 
-                    i.putExtra("post", updatedPost);
-                    setResult(Activity.RESULT_OK, i);
-                    finish();
-                    return;
-
-                } else {
-
-                }
-                setResult(Activity.RESULT_OK);
+                i.putExtra("post", updatedPost);
+                setResult(Activity.RESULT_OK, i);
                 finish();
+                return;
+
+            } else {
+
             }
+            setResult(Activity.RESULT_OK);
+            finish();
         });
     }
 

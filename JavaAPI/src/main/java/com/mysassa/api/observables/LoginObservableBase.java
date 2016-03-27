@@ -2,7 +2,6 @@ package com.mysassa.api.observables;
 
 import com.mysassa.api.AuthenticationManager;
 import com.mysassa.api.messages.LoginStateChanged;
-import com.mysassa.api.responses.CreateUserResponse;
 import com.mysassa.api.responses.LoginUserResponse;
 
 import java.io.IOException;
@@ -14,25 +13,27 @@ import rx.Subscriber;
 /**
  * Created by Adam on 3/26/2016.
  */
-public class CreateAccountObservable extends StandardMySaasaObservable<CreateUserResponse> {
+public class LoginObservableBase extends StandardMySaasaObservable<LoginUserResponse> {
     private AuthenticationManager authenticationManager;
-    private final String username;
-    private final String password;
 
-    public CreateAccountObservable(AuthenticationManager authenticationManager, String username, String password) {
+    final String username;
+    final String password;
+
+    public LoginObservableBase(AuthenticationManager authenticationManager, String username, String password) {
         super(authenticationManager.mySaasa);
         this.authenticationManager = authenticationManager;
         this.username = username;
         this.password = password;
     }
 
-    protected Call<CreateUserResponse> getNetworkCall() {
-        return this.getMySaasa().getGateway().createUser(this.username, this.password);
+    @Override
+    protected Call<LoginUserResponse> getNetworkCall() {
+        return getMySaasa().getGateway().loginUser(username,password);
     }
 
     @Override
-    protected void onSuccess(CreateUserResponse response) {
+    protected void onSuccess(LoginUserResponse response) {
         super.onSuccess(response);
-        this.getMySaasa().bus.post(new LoginStateChanged());
+        getMySaasa().bus.post(new LoginStateChanged());
     }
 }

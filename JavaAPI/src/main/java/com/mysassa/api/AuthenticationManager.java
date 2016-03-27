@@ -2,8 +2,8 @@ package com.mysassa.api;
 
 import com.mysassa.api.messages.LoginStateChanged;
 import com.mysassa.api.model.User;
-import com.mysassa.api.observables.CreateAccountObservable;
-import com.mysassa.api.observables.LoginSubscriber;
+import com.mysassa.api.observables.CreateAccountObservableBase;
+import com.mysassa.api.observables.LoginObservableBase;
 import com.mysassa.api.responses.CreateUserResponse;
 import com.mysassa.api.responses.LoginUserResponse;
 
@@ -11,14 +11,16 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
+ * This file handles authentication for the server.
+ * You can login/create accounts and see if there is a authenticated user
+ *
  * Created by Adam on 3/3/2016.
  */
 public class AuthenticationManager {
     public final MySaasaClient mySaasa;
 
-    private LoginSubscriber loginObservable;
-    private CreateAccountObservable createObservable;
-
+    private LoginObservableBase loginObservableBase;
+    private CreateAccountObservableBase createAccountObservableBase;
 
     public AuthenticationManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
@@ -31,22 +33,31 @@ public class AuthenticationManager {
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        return Observable.create(loginObservable = new LoginSubscriber(this, username, password));
+        return Observable.create(loginObservableBase = new LoginObservableBase(this, username, password));
     }
 
     public Observable<CreateUserResponse> createAccount(final String username, final String password) {
-        return Observable.create(createObservable = new CreateAccountObservable(this, username, password)).subscribeOn(Schedulers.io());
+        return Observable.create(createAccountObservableBase = new CreateAccountObservableBase(this, username, password)).subscribeOn(Schedulers.io());
     }
 
     public void signOut() {
-        loginObservable = null;
-        createObservable = null;
+        loginObservableBase = null;
+        createAccountObservableBase = null;
         mySaasa.bus.post(new LoginStateChanged());
     }
 
     public User getAuthenticatedUser() {
-        if (createObservable != null) return createObservable.getResponse().getData();
-        if (loginObservable != null) return loginObservable.getResponse().getData();
+        try {
+
+            if (createAccountObservableBase != null)
+                return createAccountObservableBase.getResponse().getData();
+
+            if (loginObservableBase != null)
+                return loginObservableBase.getResponse().getData();
+
+        } catch (Exception e) {
+            //Do Nothing
+        }
         return null;
     }
 

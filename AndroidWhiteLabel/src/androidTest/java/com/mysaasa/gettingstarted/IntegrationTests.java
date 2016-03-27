@@ -22,6 +22,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
@@ -47,9 +48,13 @@ public class IntegrationTests {
     private ActivityMain mActivity;
     private MySaasaApplication application;
     private MySaasaClient client;
-
-    static final String TEST_USERNAME = "TESTUSER"+(new Date()).getTime();
-    static final String TEST_PASSWORD = "testuser";
+    static final String TEST_UNIQUE = "_"+(int) ((new Date()).getTime()/1000);
+    static final String TEST_USERNAME = "TESTUSER"+TEST_UNIQUE;
+    static final String TEST_PASSWORD = "testuser"+TEST_UNIQUE;
+    static final String TEST_POST_TITLE = "TestPost"+TEST_UNIQUE;
+    static final String TEST_POST_SUBTITLE = "Sub Title"+TEST_UNIQUE;
+    static final String TEST_POST_SUMMARY = "Summary"+TEST_UNIQUE;
+    static final String TEST_POST_BODY = "Body"+TEST_UNIQUE;
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(ActivityMain.class);
@@ -64,14 +69,30 @@ public class IntegrationTests {
     }
 
     @Test
-    public void testNewsPost() throws Exception {
-        onView(withContentDescription("Navigate up")).perform(click());
+    public void testCreateNewsPost() throws Exception {
+        openSideNav();
         onView(withText("News")).perform(click());
         onView(withId(R.id.action_post)).perform(click());
+
         authenticateIfNecessary();
-        Thread.sleep(50000);
+        writePostAndSubmit();
+        assertTrue(true);
     }
 
+    private void writePostAndSubmit() throws InterruptedException {
+        onView(withId(R.id.title)).perform(typeText(TEST_POST_TITLE));
+        onView(withId(R.id.subtitle)).perform(typeText(TEST_POST_SUBTITLE));
+        onView(withId(R.id.summary)).perform(typeText(TEST_POST_SUMMARY));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.body)).perform(typeText(TEST_POST_BODY));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.post)).perform(click());
+
+    }
+
+    private void openSideNav() {
+        onView(withContentDescription("Navigate up")).perform(click());
+    }
 
 
     @Test

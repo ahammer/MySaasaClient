@@ -76,6 +76,7 @@ public class MySaasaApplication extends Application {
             mySaasaClient.getAuthenticationManager().login(sp.getString("identifier", null), sp.getString("password", null))
             .subscribeOn(AndroidSchedulers.mainThread()).subscribe(response->{},error->{
                 Toast.makeText(MySaasaApplication.this, "Error with auto-login: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                sp.edit().remove("password").remove("identifier").commit();
             });
 
     }
