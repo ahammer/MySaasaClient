@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityMain;
 import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Date;
+import java.util.List;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -25,7 +27,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -75,10 +81,23 @@ public class IntegrationTests {
         onView(withId(R.id.action_post)).perform(click());
         authenticateIfNecessary();
         writePostAndSubmit();
-        onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(0).perform(click());
+        clickOnNewBlogPost();
+        onView(withId(R.id.comments_fab)).perform(click());
+        onView(withId(R.id.action_comment)).perform(click());
+        onView(withId(R.id.comment)).perform(typeText(TEST_POST_BODY));
+        onView(withId(R.id.post)).perform(click());
+        
+
         Thread.sleep(5000);
         //onData
+    }
 
+    private void clickOnNewBlogPost() {
+        for (BlogPost bp:mActivity.getPosts()) {
+            if (bp.title.equals(TEST_POST_TITLE)) {
+                onData(allOf(is(instanceOf(BlogPost.class)), is(bp))).inAdapterView(withId(R.id.content_frame)).perform(click());
+            }
+        }
     }
 
     private void writePostAndSubmit() throws InterruptedException {

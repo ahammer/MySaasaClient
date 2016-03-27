@@ -51,6 +51,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     private FrameLayout fragmentFrame;
     private MenuItem cart;
     private Subscription subscription;
+    private List<BlogPost> posts;
 
 
     @Override
@@ -104,6 +105,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
     public void setPosts(List<BlogPost> posts) {
+        this.posts = posts;
         newsList.setAdapter(new BlogAdapter(posts));
     }
 
@@ -223,4 +225,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
 
+    public List<BlogPost> getPosts() {
+        return posts;
+    }
 }
