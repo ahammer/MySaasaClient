@@ -1,15 +1,15 @@
 package com.adamhammer;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
-
-import com.mysassa.SimpleApplication;
+import com.mysaasa.MySaasaApplication;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.whitelabel.R;
@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Adam on 1/12/2015.
  */
-public class AdamsSplash extends Activity {
+public class AdamsSplash extends Fragment {
     @Bind(R.id.background_image)
     ZoomingSpaceImageView backgroundImage;
 
@@ -45,46 +45,38 @@ public class AdamsSplash extends Activity {
     private List<BlogPost> blogPosts;
     private Subscription subscription;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.adam_splash);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.adam_splash,null);
+        ButterKnife.bind(this, vg);
         backgroundImage.setCurrentTransition(0);
         myList.setDivider(null);
         myList.setDividerHeight(0);
         updateList();
+        return vg;
     }
 
-
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         loadDataFromNetwork();
         startAnimationThread();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onStop(){
+        super.onStop();
         stopAnimtationThread();
     }
 
     private void startAnimationThread() {
         executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        backgroundImage.setCurrentTransition(myList.getScrollYPercentage());
-                        updateListImages();
-                    }
-                });
-            }
-        }, 0, (int) (1 / 60f * 1000), TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate((Runnable) () -> getActivity().runOnUiThread(() -> {
+
+            backgroundImage.setCurrentTransition(myList.getScrollYPercentage());
+            updateListImages();
+        }), 0, (int) (1 / 60f * 1000), TimeUnit.MILLISECONDS);
     }
 
     private void updateListImages() {
@@ -103,7 +95,7 @@ public class AdamsSplash extends Activity {
 
     private void loadDataFromNetwork() {
         Category category = new Category("Resume");
-        subscription = SimpleApplication.getService().getBlogPostsObservable(category)
+        subscription = MySaasaApplication.getService().getBlogManager().getBlogPostsObservable(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()

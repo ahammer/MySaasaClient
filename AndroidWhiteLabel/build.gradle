@@ -36,7 +36,7 @@ android {
     productFlavors {
         blank { applicationId "com.mysassa.whitelabel" }
         gettingstarted { applicationId "com.mysassa.gettingstarted" }
- //       adamhammer { applicationId "com.mysassa.adamhammer"}
+        adamhammer { applicationId "com.mysassa.adamhammer"}
     }
 
     compileOptions {

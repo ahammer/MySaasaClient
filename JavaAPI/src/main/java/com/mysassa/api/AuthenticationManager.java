@@ -33,7 +33,7 @@ public class AuthenticationManager {
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        return Observable.create(loginObservableBase = new LoginObservableBase(this, username, password));
+        return Observable.create(loginObservableBase = new LoginObservableBase(this, username, password)).subscribeOn(Schedulers.io());
     }
 
     public Observable<CreateUserResponse> createAccount(final String username, final String password) {

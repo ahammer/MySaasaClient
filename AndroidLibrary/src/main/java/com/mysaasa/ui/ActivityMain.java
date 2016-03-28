@@ -82,9 +82,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         updateBlogPostSubscription();
-
     }
 
     private void updateBlogPostSubscription() {

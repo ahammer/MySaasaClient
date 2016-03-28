@@ -38,7 +38,7 @@ public abstract class  StandardMySaasaObservable<T extends SimpleResponse> imple
                 mySaasa.startNetwork();
                 response = call.execute().body();
                 handleResponse(subscriber);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 onError(e);
                 subscriber.onError(e);
             } finally {

@@ -39,28 +39,14 @@ public class AuthenticationView extends FrameLayout {
         signout = (Button) findViewById(R.id.logout);
         messages = (Button) findViewById(R.id.message);
 
-        signin.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), ActivitySignin.class);
-                getContext().startActivity(i);
-            }
+        signin.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(), ActivitySignin.class);
+            getContext().startActivity(i);
         });
 
-        signout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MySaasaApplication.getService().getAuthenticationManager().signOut();
+        signout.setOnClickListener(view -> MySaasaApplication.getService().getAuthenticationManager().signOut());
 
-            }
-        });
-
-        messages.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityMessages.showMessages(AuthenticationView.this.getContext());
-            }
-        });
+        messages.setOnClickListener(view -> ActivityMessages.showMessages(AuthenticationView.this.getContext()));
 
 
         setVisibilities();
