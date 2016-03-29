@@ -37,12 +37,12 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
     }
 
     public static final int REQUEST_CODE_SIGNIN = 10001;
-    public Category selectedCategory;
     protected DrawerLayout mDrawerLayout;
     protected ActionBarDrawerToggle mDrawerToggle;
-
     protected LeftNavigationFrameLayout sidenav;
-    private BroadcastReceiver receiver;
+    private BroadcastReceiver connectivityChangedReceiver;
+    public Category selectedCategory;
+
 
     protected boolean isSidenavOpen() {
         return mDrawerLayout.isDrawerOpen(sidenav);
@@ -75,7 +75,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(receiver = new BroadcastReceiver() {
+        registerReceiver(connectivityChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 checkNetworkState();
@@ -89,7 +89,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
+        unregisterReceiver(connectivityChangedReceiver);
         FOREGROUND_REF_COUNT--;
         MySaasaApplication.getService().bus.unregister(this);
     }

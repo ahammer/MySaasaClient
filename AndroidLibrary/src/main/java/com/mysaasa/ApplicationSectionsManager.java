@@ -17,6 +17,8 @@ import java.util.List;
  * Created by Adam on 1/3/2015.
  */
 public class ApplicationSectionsManager {
+    private final List<CategoryDef> items = new ArrayList<CategoryDef>();
+
     public ApplicationSectionsManager(Context ctx) {
         XmlResourceParser xml = ctx.getResources().getXml(R.xml.blog_category_defs);
 
@@ -58,7 +60,7 @@ public class ApplicationSectionsManager {
                 }
                 eventType = xml.next();
             }
-            if (currentItem != null && currentItem.title!=null) items.add(currentItem);
+            if (currentItem != null && currentItem.title != null) items.add(currentItem);
 
         } catch (XmlPullParserException e) {
             e.printStackTrace();
@@ -69,6 +71,19 @@ public class ApplicationSectionsManager {
 
     public void addDef(CategoryDef def) {
 
+    }
+
+    public CategoryDef getCategoryDef(Category selectedCategory) {
+        for (CategoryDef cd : items) {
+            if (cd.toCategory().equals(selectedCategory)) {
+                return cd;
+            }
+        }
+        return new CategoryDef(selectedCategory);
+    }
+
+    public List<CategoryDef> getItems() {
+        return items;
     }
 
     public static class CategoryDef {
@@ -92,7 +107,8 @@ public class ApplicationSectionsManager {
             fragment = null;
         }
 
-        public CategoryDef() {}
+        public CategoryDef() {
+        }
 
         @Override
         public String toString() {
@@ -104,25 +120,9 @@ public class ApplicationSectionsManager {
                     ", pagesize=" + pagesize +
                     '}';
         }
+
         public Category toCategory() {
             return new Category(title);
         }
-    }
-
-    private final List<CategoryDef> items = new ArrayList<CategoryDef>();
-
-    public CategoryDef getCategoryDef(Category selectedCategory) {
-        for (CategoryDef cd:items) {
-            if (cd.toCategory().equals(selectedCategory)) {
-                return cd;
-            }
-        }
-        return new CategoryDef(selectedCategory);
-    }
-
-
-
-    public List<CategoryDef> getItems() {
-        return items;
     }
 }

@@ -23,7 +23,6 @@ import rx.schedulers.Schedulers;
  * Created by adam on 15-02-13.
  */
 public class ReceivePush extends BroadcastReceiver {
-    enum Types {MessageCreatedPushMessage,MessageThreadUpdated}
     @Override
     public void onReceive(Context context, Intent intent) {
         //We get a push, that means update messages for now
@@ -64,6 +63,7 @@ public class ReceivePush extends BroadcastReceiver {
             });
         }
 
+
         if (!SideNavigationCompatibleActivity.isInForeground()) {
             Notification.Builder mBuilder =
                     new Notification.Builder(context)
@@ -86,9 +86,9 @@ public class ReceivePush extends BroadcastReceiver {
 // mId allows you to update the notification later on.
             mNotificationManager.notify(5005, mBuilder.build());
 
-        } else {
-
         }
     }
+
+    enum Types {MessageCreatedPushMessage,MessageThreadUpdated}
 
 }

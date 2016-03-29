@@ -34,22 +34,15 @@ public class ActivityPostToBlog extends Activity {
     Button postButton;
     private TextView categoryTitle;
 
-    static class State implements Serializable{
-        Category category;
-        ApplicationSectionsManager.CategoryDef categoryDef;
-        BlogPost post;
-        boolean editMode = false;
-    }
-
-
     public static void postComment(Activity ctx, Category c) {
         Intent i = new Intent(ctx, ActivityPostToBlog.class);
-        i.putExtra("category",c);
+        i.putExtra("category", c);
         ctx.startActivityForResult(i, REQUEST_CODE);
     }
+
     public static void editComment(Activity ctx, BlogPost post) {
         Intent i = new Intent(ctx, ActivityPostToBlog.class);
-        i.putExtra("post",post);
+        i.putExtra("post", post);
         ctx.startActivityForResult(i, REQUEST_CODE);
     }
 
@@ -79,27 +72,31 @@ public class ActivityPostToBlog extends Activity {
         }
     }
 
+    private void setupAndRestoreState(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
+            state = (State) savedInstanceState.getSerializable("state");
+        } else {
+            state.category = (Category) getIntent().getSerializableExtra("category");
+            if (state.category != null) {
+                state.categoryDef = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
+            }
+            state.post = (BlogPost) getIntent().getSerializableExtra("post");
+            state.editMode = state.post != null;
+        }
+    }
+
     private void bindViews() {
         categoryTitle = (TextView) findViewById(R.id.category);
         title = (EditText) findViewById(R.id.title);
-        subtitle= (EditText) findViewById(R.id.subtitle);
+        subtitle = (EditText) findViewById(R.id.subtitle);
         summary = (EditText) findViewById(R.id.summary);
         body = (EditText) findViewById(R.id.body);
         postButton = (Button) findViewById(R.id.post);
     }
 
-    private void initializeFieldsForEditMode(Bundle savedInstanceState) {
-        if (state.editMode && savedInstanceState == null) {
-            title.setText(state.post.title);
-            subtitle.setText(state.post.subtitle);
-            body.setText(state.post.body);
-            summary.setText(state.post.summary);
-        }
-    }
-
     private void configureControls() {
         //Setup category title
-        if (state.categoryDef!=null) categoryTitle.setText(state.categoryDef.title);
+        if (state.categoryDef != null) categoryTitle.setText(state.categoryDef.title);
         else categoryTitle.setVisibility(View.GONE);
 
         //Setup edit mode
@@ -130,7 +127,7 @@ public class ActivityPostToBlog extends Activity {
                         body.getText().toString(),
                         state.category.name)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(response->{
+                        .subscribe(response -> {
                             setResult(RESULT_OK);
                             finish();
                         }, ActivityPostToBlog.this::handleError);
@@ -138,28 +135,31 @@ public class ActivityPostToBlog extends Activity {
         });
     }
 
-    private void handleError(Throwable throwable) {
-        Crouton.makeText(this, throwable.toString(), Style.ALERT).show();
-    }
-
-    private void setupAndRestoreState(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
-            state = (State) savedInstanceState.getSerializable("state");
-        } else {
-            state.category = (Category) getIntent().getSerializableExtra("category");
-            if (state.category != null) {
-                state.categoryDef = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(state.category);
-            }
-            state.post = (BlogPost) getIntent().getSerializableExtra("post");
-            state.editMode = state.post!=null;
-        }
-    }
-
     private void authenticateUserIfNecessary() {
         if (MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser() == null) {
             Intent i = new Intent(this, ActivitySignin.class);
             startActivityForResult(i, 10010);
         }
+    }
+
+    private void initializeFieldsForEditMode(Bundle savedInstanceState) {
+        if (state.editMode && savedInstanceState == null) {
+            title.setText(state.post.title);
+            subtitle.setText(state.post.subtitle);
+            body.setText(state.post.body);
+            summary.setText(state.post.summary);
+        }
+    }
+
+    private void handleError(Throwable throwable) {
+        Crouton.makeText(this, throwable.toString(), Style.ALERT).show();
+    }
+
+    static class State implements Serializable {
+        Category category;
+        ApplicationSectionsManager.CategoryDef categoryDef;
+        BlogPost post;
+        boolean editMode = false;
     }
 
 }

@@ -79,33 +79,19 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("category", selectedCategory);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        updateBlogPostSubscription();
+        //updateBlogPostSubscription();
     }
 
-    private void updateBlogPostSubscription() {
-        if (subscription != null) subscription.unsubscribe();
-        subscription = MySaasaApplication.getService()
-                .getBlogManager()
-                .getBlogPostsObservable(getSelectedCategory())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .toSortedList((blogPost, blogPost2) -> {
-                    return Integer.valueOf((int) (blogPost2.id - blogPost.id));
-                }).subscribe(this::setPosts, this::handleError);
-    }
-
-    private void handleError(Throwable throwable) {
-        throwable.printStackTrace();
-        Crouton.makeText(this, throwable.getMessage(), Style.ALERT).show();
-    }
-
-    public void setPosts(List<BlogPost> posts) {
-        this.posts = posts;
-        newsList.setAdapter(new BlogAdapter(posts));
-    }
 
     @Override
     protected void onPause() {
@@ -113,11 +99,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("category", selectedCategory);
-    }
 
     @Override
     protected void categoryChanged(Category c) {
@@ -175,6 +156,32 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             mDrawerLayout.openDrawer(sidenav);
         }
     }
+    private void updateBlogPostSubscription() {
+        if (subscription != null) subscription.unsubscribe();
+        ApplicationSectionsManager.CategoryDef categoryDef = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
+
+        subscription = MySaasaApplication.getService()
+                .getBlogManager()
+                .getBlogPostsObservable(getSelectedCategory())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toSortedList((blogPost, blogPost2) -> {
+                    return Integer.valueOf((int) (blogPost2.id - blogPost.id));
+                }).subscribe(this::setPosts, this::handleError);
+    }
+
+    private void handleError(Throwable throwable) {
+        throwable.printStackTrace();
+        Crouton.makeText(this, throwable.getMessage(), Style.ALERT).show();
+    }
+
+    public void setPosts(List<BlogPost> posts) {
+        this.posts = posts;
+        newsList.setAdapter(new BlogAdapter(posts));
+    }
+
+
+
 
     protected void updateBlogList() {
         ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
