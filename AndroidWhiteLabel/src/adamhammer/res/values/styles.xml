@@ -91,5 +91,10 @@
     <style name="simple_reply_box">
         <item name="android:background">@drawable/comment_box</item>
     </style>
+    <style name="headerText">
+        <item name="android:background">@drawable/dark_panel</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
 
 </resources>

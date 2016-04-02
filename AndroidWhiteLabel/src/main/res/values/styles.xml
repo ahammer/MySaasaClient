@@ -9,4 +9,6 @@
     </style>
 
     <style name="SimpleThemeDialog" parent="@style/Theme.AppCompat.Dialog"></style>
+
+
 </resources>

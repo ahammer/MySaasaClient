@@ -95,7 +95,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
     @Override
     protected void onPause() {
-        subscription.unsubscribe();
+        if (subscription != null) subscription.unsubscribe();
         super.onPause();
     }
 

@@ -2,8 +2,8 @@
 <resources>
     <!-- Debug Settings -->
     <string name="scheme">http</string>
-    <string name="defaultSection">Welcome</string>
-    <string name="domain">www.adamhammer.ca</string>
+    <string name="defaultSection">Blog</string>
+    <string name="domain">gettingstarted.test</string>
     <string name="gcm_key"></string>
     <integer name="port">80</integer>
 </resources>
