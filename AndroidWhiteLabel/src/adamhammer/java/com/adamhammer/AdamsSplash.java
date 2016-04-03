@@ -118,8 +118,7 @@ public class AdamsSplash extends Fragment {
         loadingProgressbar.setVisibility(blogPosts==null?View.VISIBLE:View.GONE);
         if (blogPosts == null || blogPosts.size() == 0) return;
         myList.setAdapter(new JoiningAdapter(new MyPhotosAdapter(), new MyBlogPostsAdapter(blogPosts)));
-        myList.addHeaderView(
-                ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.header,null));
+        myList.addHeaderView(new HeaderView(getActivity()));
     }
 
     public static float dpToPx(Context context, float dp) {

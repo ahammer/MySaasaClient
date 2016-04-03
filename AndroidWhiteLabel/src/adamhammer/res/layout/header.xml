@@ -62,7 +62,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="(604) 339-2620"
-                android:id="@+id/textView6"
+                android:id="@+id/phone"
+                android:autoLink="phone"
 
                 android:layout_gravity="center_vertical"/>
 
@@ -73,7 +74,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="adam@metalrain.ca"
-                android:id="@+id/textView5"
+                android:id="@+id/email"
+                android:autoLink="email"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
