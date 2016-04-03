@@ -43,7 +43,7 @@
         android:layout_weight="1"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/message"
+        android:id="@+id/body"
         android:hint="Body"/>
     <Button
         android:layout_width="match_parent"

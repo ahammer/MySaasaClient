@@ -25,7 +25,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
- * This is the base activity, it just will do some basic stuff like grab a reference to the service, etc. Bind callbacks for over-riding
+ * This is the base activity, it just will do some basic stuff like grab a reference to the service, etc. Bind ContactViewCallbacks for over-riding
  * <p/>
  * Created by administrator on 2014-06-30.
  */

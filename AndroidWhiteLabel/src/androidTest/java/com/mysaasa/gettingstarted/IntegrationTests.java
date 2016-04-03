@@ -124,6 +124,28 @@ public class IntegrationTests {
         onView(withId(R.id.logout)).check(matches(isDisplayed()));
    }
 
+    @Test
+    public void contact() throws Exception {
+        openSideNav();
+        if (client.getAuthenticationManager().getAuthenticatedUser() != null) {
+            onView(withId(R.id.logout)).perform(click());
+        }
+        onView(withId(R.id.signin)).perform(click());
+        authenticateIfNecessary();
+
+        onView(withText("Contact")).perform(click());
+        onView(withId(R.id.name)).perform(typeText(testState.TEST_USERNAME));
+        onView(withId(R.id.email)).perform(typeText("adamhammer2@gmail.com"));
+        onView(withId(R.id.phone)).perform(typeText("5551234455"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.body)).perform(typeText(testState.TEST_POST_BODY));
+
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.send)).perform(click());
+        Thread.sleep(2000);
+
+    }
+
     private void clickOnNewBlogPost() {
         for (BlogPost bp:mActivity.getPosts()) {
             if (bp.title.equals(testState.TEST_POST_TITLE)) {

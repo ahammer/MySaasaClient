@@ -37,6 +37,7 @@ public class MySaasaApplication extends Application {
     public static MySaasaApplication getInstance() {
         return instance;
     }
+
     public static MySaasaClient getService() {
         if (instance == null) throw new RuntimeException("Application not initialized");
         return instance.mySaasaClient;
@@ -71,13 +72,17 @@ public class MySaasaApplication extends Application {
     }
 
     private void autoLogin() {
-        SharedPreferences sp = getSharedPreferences("autologin",0);
+        SharedPreferences sp = getSharedPreferences("autologin", 0);
         if (sp.contains("identifier") && sp.contains("password"))
             mySaasaClient.getAuthenticationManager().login(sp.getString("identifier", null), sp.getString("password", null))
-            .subscribeOn(AndroidSchedulers.mainThread()).subscribe(response->{},error->{
-                Toast.makeText(MySaasaApplication.this, "Error with auto-login: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                sp.edit().remove("password").remove("identifier").commit();
-            });
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            response -> {
+                            },
+                            error -> {
+                                Toast.makeText(MySaasaApplication.this, "Error with auto-login: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                sp.edit().remove("password").remove("identifier").commit();
+                            });
 
     }
 
@@ -86,12 +91,13 @@ public class MySaasaApplication extends Application {
     }
 
     public void saveCredentials(String username, String password) {
-        SharedPreferences sp = getSharedPreferences("autologin",0);
+        SharedPreferences sp = getSharedPreferences("autologin", 0);
         sp.edit().putString("identifier", username).commit();
         sp.edit().putString("password", password).commit();
     }
+
     public void clearCredentials() {
-        SharedPreferences sp = getSharedPreferences("autologin",0);
+        SharedPreferences sp = getSharedPreferences("autologin", 0);
         sp.edit().remove("identifier").commit();
         sp.edit().remove("password").commit();
     }
@@ -110,7 +116,7 @@ public class MySaasaApplication extends Application {
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
-     *         registration ID.
+     * registration ID.
      */
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGCMPreferences(context);
@@ -137,7 +143,7 @@ public class MySaasaApplication extends Application {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
-        return getSharedPreferences(MySaasaApplication.class.getSimpleName()+"GCM",
+        return getSharedPreferences(MySaasaApplication.class.getSimpleName() + "GCM",
                 Context.MODE_PRIVATE);
     }
 

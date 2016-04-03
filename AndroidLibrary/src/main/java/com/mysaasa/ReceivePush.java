@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.ActivityMessages;
@@ -14,6 +15,7 @@ import com.mysaasa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.ThreadUpdatedPushMessage;
+import com.mysassa.api.responses.GetMessageCountResponse;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -55,12 +57,9 @@ public class ReceivePush extends BroadcastReceiver {
             s.getMessagesManager().getMessageCount()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
-                    .subscribe(new Action1<Integer>() {
-                @Override
-                public void call(Integer integer) {
-
-                }
-            });
+                    .subscribe(getMessageCountResponse -> {
+                        Toast.makeText(MySaasaApplication.getInstance(), "blah", Toast.LENGTH_SHORT).show();
+                    });
         }
 
 

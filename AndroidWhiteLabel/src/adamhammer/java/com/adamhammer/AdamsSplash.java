@@ -7,9 +7,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.mysaasa.MySaasaApplication;
+import com.mysaasa.ui.fragments.ContactView;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.whitelabel.R;
@@ -119,6 +119,11 @@ public class AdamsSplash extends Fragment {
         if (blogPosts == null || blogPosts.size() == 0) return;
         myList.setAdapter(new JoiningAdapter(new MyPhotosAdapter(), new MyBlogPostsAdapter(blogPosts)));
         myList.addHeaderView(new HeaderView(getActivity()));
+        ContactView contactView;
+        myList.addFooterView(contactView = new ContactView(getActivity()));
+        contactView.setBackgroundResource(R.drawable.dark_panel);
+        contactView.setToUser("admin");
+
     }
 
     public static float dpToPx(Context context, float dp) {

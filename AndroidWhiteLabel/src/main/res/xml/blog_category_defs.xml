@@ -29,5 +29,4 @@
         <category>Contact</category>
         <fragment>com.mysaasa.ui.fragments.ContactsFragment</fragment>
     </item>
-
 </whitelist>
