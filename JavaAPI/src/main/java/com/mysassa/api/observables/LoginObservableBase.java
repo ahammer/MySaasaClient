@@ -35,5 +35,9 @@ public class LoginObservableBase extends StandardMySaasaObservable<LoginUserResp
     protected void onSuccess(LoginUserResponse response) {
         super.onSuccess(response);
         getMySaasa().bus.post(new LoginStateChanged());
+        PushIdGenerator generator = authenticationManager.pushIdGenerator;
+        if (generator != null) {
+            String pushId = generator.getPushId();
+        }
     }
 }

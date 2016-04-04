@@ -3,6 +3,6 @@
     <!-- Debug Settings -->
     <string name="scheme">http</string>
     <string name="domain">gettingstarted.test</string>
-    <string name="gcm_key"></string>
+    <string name="gcm_key">AIzaSyCk4fQ_QcvE_U8jufRl5uqmp9WWOjkTdeM</string>
     <integer name="port">8080</integer>
 </resources>

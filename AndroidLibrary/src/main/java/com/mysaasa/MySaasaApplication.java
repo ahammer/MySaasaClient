@@ -10,9 +10,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.common.eventbus.EventBus;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
+import com.mysassa.api.observables.PushIdGenerator;
 import com.splunk.mint.Mint;
 
 import java.io.IOException;
@@ -52,9 +54,21 @@ public class MySaasaApplication extends Application {
         instance = this;
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
+        mySaasaClient.getAuthenticationManager().setPushIdGenerator(() -> {
+            InstanceID instanceID = InstanceID.getInstance(MySaasaApplication.this);
+            try {
+                String gcmKey = getString(R.string.gcm_key);
+                String token = instanceID.getToken(gcmKey, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                return token;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        });
 
 
-        autoLogin();
+                autoLogin();
     }
 
     private void registerGoogleCloudMessaging() {

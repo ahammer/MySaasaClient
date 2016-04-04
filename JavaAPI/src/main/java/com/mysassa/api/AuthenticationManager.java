@@ -4,6 +4,7 @@ import com.mysassa.api.messages.LoginStateChanged;
 import com.mysassa.api.model.User;
 import com.mysassa.api.observables.CreateAccountObservableBase;
 import com.mysassa.api.observables.LoginObservableBase;
+import com.mysassa.api.observables.PushIdGenerator;
 import com.mysassa.api.responses.CreateUserResponse;
 import com.mysassa.api.responses.LoginUserResponse;
 
@@ -21,6 +22,7 @@ public class AuthenticationManager {
 
     private LoginObservableBase loginObservableBase;
     private CreateAccountObservableBase createAccountObservableBase;
+    public PushIdGenerator pushIdGenerator;
 
     public AuthenticationManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
@@ -61,4 +63,8 @@ public class AuthenticationManager {
         return null;
     }
 
+
+    public void setPushIdGenerator(PushIdGenerator pushIdGenerator) {
+        this.pushIdGenerator = pushIdGenerator;
+    }
 }
