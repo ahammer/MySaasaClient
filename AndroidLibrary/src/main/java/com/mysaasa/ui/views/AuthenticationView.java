@@ -11,11 +11,13 @@ import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
+import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.ActivitySignin;
+import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
 import com.mysassa.api.messages.LoginStateChanged;
+import com.mysassa.api.model.Category;
 import com.mysassa.api.model.User;
-import com.mysaasa.ui.ActivityMessages;
 
 /**
  * Created by Adam on 1/4/2015.
@@ -45,8 +47,7 @@ public class AuthenticationView extends FrameLayout {
         });
 
         signout.setOnClickListener(view -> MySaasaApplication.getService().getAuthenticationManager().signOut());
-
-        messages.setOnClickListener(view -> ActivityMessages.showMessages(AuthenticationView.this.getContext()));
+        messages.setOnClickListener(view -> ActivityMain.startFreshTop(getContext(), new Category("Messages")));
 
 
         setVisibilities();
@@ -92,12 +93,7 @@ public class AuthenticationView extends FrameLayout {
     public void onLogin(LoginStateChanged message) {
         if (getContext() instanceof Activity) {
             Activity a = (Activity) getContext();
-            a.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setVisibilities();
-                }
-            });
+            a.runOnUiThread(() -> setVisibilities());
         }
 
     }

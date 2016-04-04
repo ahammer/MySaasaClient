@@ -29,4 +29,9 @@
         <category>Contact</category>
         <fragment>com.mysaasa.ui.fragments.ContactsFragment</fragment>
     </item>
+    <item>
+        <title>Messages</title>
+        <category>Messages</category>
+        <fragment>com.mysaasa.ui.fragments.MessagesFragment</fragment>
+    </item>
 </whitelist>

@@ -52,7 +52,8 @@ public class MySaasaApplication extends Application {
         instance = this;
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
-        registerGoogleCloudMessaging();
+
+
         autoLogin();
     }
 
@@ -78,6 +79,7 @@ public class MySaasaApplication extends Application {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             response -> {
+                                registerGoogleCloudMessaging();
                             },
                             error -> {
                                 Toast.makeText(MySaasaApplication.this, "Error with auto-login: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -148,26 +150,41 @@ public class MySaasaApplication extends Application {
     }
 
     private void registerInBackground() {
+        if (gcm == null) {
+            gcm = GoogleCloudMessaging.getInstance(MySaasaApplication.this);
+        }
+        String key = getString(R.string.gcm_key);
         try {
-            new AsyncTask() {
+            regid = gcm.register(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
-                @Override
-                protected Object doInBackground(Object[] objects) {
-                    String msg = "";
+        String msg = "Device registered, registration ID=" + regid;
+        Log.i(TAG, msg);
+
+        // You should send the registration ID to your server over HTTP,
+        // so it can use GCM/HTTP or CCS to send messages to your app.
+        // The request to your server should be authenticated if your app
+        // is using accounts.
+
+        mySaasaClient.getMessagesManager().registerGcmKey(regid);
+/*
                     try {
                         if (gcm == null) {
                             gcm = GoogleCloudMessaging.getInstance(MySaasaApplication.this);
                         }
                         String key = getString(R.string.gcm_key);
                         regid = gcm.register(key);
-                        msg = "Device registered, registration ID=" + regid;
+                        String msg = "Device registered, registration ID=" + regid;
                         Log.i(TAG, msg);
 
                         // You should send the registration ID to your server over HTTP,
                         // so it can use GCM/HTTP or CCS to send messages to your app.
                         // The request to your server should be authenticated if your app
                         // is using accounts.
-                        //mySaasaClient.registerGcmSenderId(regid);
+                        mySaasaClient.getGateway().registerGcmKey(regid);
                         //sendRegistrationIdToBackend();
 
                         // For this demo: we don't need to send it because the device
@@ -177,26 +194,13 @@ public class MySaasaApplication extends Application {
                         // Persist the registration ID - no need to register again.
                         storeRegistrationId(MySaasaApplication.this, regid);
                     } catch (IOException ex) {
-                        msg = "Error :" + ex.getMessage();
+                        throw new RuntimeException("Error :" + ex.getMessage());
                         // If there is an error, don't just keep trying to register.
                         // Require the user to click a button again, or perform
                         // exponential back-off.
                     }
                     return msg;
-                }
-            }.execute(null, null, null);
-        } catch (SecurityException e) {
-            Toast.makeText(this, "Can not register on GCM", Toast.LENGTH_SHORT).show();
-        }
+                }*/
 
-    }
-
-    private void storeRegistrationId(MySaasaApplication simpleApplication, String regid) {
-
-    }
-
-
-    public EventBus getBus() {
-        return bus;
     }
 }

@@ -3,6 +3,7 @@ package com.mysaasa;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 
+import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
 import com.mysassa.api.model.Category;
 
@@ -67,6 +68,8 @@ public class ApplicationSectionsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        CategoryDef categoryDef = new CategoryDef();
     }
 
     public void addDef(CategoryDef def) {
@@ -95,6 +98,7 @@ public class ApplicationSectionsManager {
         public int pagesize;
         public boolean commentsAllowed;
         public boolean postsAllowed;
+        public boolean visible = true;
 
         public CategoryDef(Category selectedCategory) {
             title = selectedCategory.name;

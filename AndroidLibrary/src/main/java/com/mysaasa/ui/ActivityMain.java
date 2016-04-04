@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
+import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
@@ -63,6 +64,12 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
         if (getIntent().getSerializableExtra("category") != null) {
             selectedCategory = (Category) getIntent().getSerializableExtra("category");
         }
+        if (savedInstanceState != null && savedInstanceState.get("category") != null) {
+            selectedCategory = (Category) savedInstanceState.getSerializable("category");
+        }
+
+
+
 
         fragmentFrame = (FrameLayout) findViewById(R.id.fragment_frame);
         newsList = (ListView) findViewById(R.id.content_frame);
@@ -73,9 +80,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             }
         });
 
-        if (savedInstanceState != null && savedInstanceState.get("category") != null) {
-            selectedCategory = (Category) savedInstanceState.getSerializable("category");
-        }
     }
 
 
@@ -228,7 +232,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
         ctx.startActivity(i);
 
     }
-
 
     public List<BlogPost> getPosts() {
         return posts;

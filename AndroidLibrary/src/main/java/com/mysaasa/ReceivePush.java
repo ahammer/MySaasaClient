@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.mysaasa.ui.ActivityMain;
-import com.mysaasa.ui.ActivityMessages;
+
 import com.mysaasa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
@@ -69,6 +69,9 @@ public class ReceivePush extends BroadcastReceiver {
                             .setSmallIcon(R.drawable.ic_app)
                             .setContentTitle(context.getString(R.string.app_name)+": New Message")
                             .setContentText("Click to goto your inbox.");
+
+            //Switch to goto Application
+            /*
             Intent resultIntent = new Intent(context, ActivityMessages.class);
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -85,6 +88,7 @@ public class ReceivePush extends BroadcastReceiver {
 // mId allows you to update the notification later on.
             mNotificationManager.notify(5005, mBuilder.build());
 
+*/
         }
     }
 

@@ -1,8 +1,11 @@
 package com.mysassa.api;
 
 import com.mysassa.api.model.Message;
+import com.mysassa.api.observables.ModelMySaasaObservable;
 import com.mysassa.api.observables.StandardMySaasaObservable;
 import com.mysassa.api.responses.GetMessageCountResponse;
+import com.mysassa.api.responses.GetMessagesResponse;
+import com.mysassa.api.responses.RegisterGcmKeyResponse;
 import com.mysassa.api.responses.SendMessageResponse;
 
 import java.io.IOException;
@@ -53,5 +56,30 @@ public class MessageManager {
                 return mySaasa.gateway.sendMessage(to_user, title, body, name, email, phone);
             }
         }).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<RegisterGcmKeyResponse> registerGcmKey(final String regid) {
+        return Observable.create(new StandardMySaasaObservable<RegisterGcmKeyResponse>(mySaasa) {
+            @Override
+            protected Call<RegisterGcmKeyResponse> getNetworkCall() {
+                return mySaasa.gateway.registerGcmKey(regid);
+            }
+        });
+
+    }
+
+    public Observable<Message> getMessages() {
+        return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa) {
+            @Override
+            protected Call<GetMessagesResponse> getNetworkCall() {
+                return mySaasa.gateway.getMessages(0,100,"timeSent","ASC");
+            }
+
+            @Override
+            public void processItems(GetMessagesResponse response, Subscriber<? super Message> subscriber) {
+                for (Message m:response.data) subscriber.onNext(m);
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 }

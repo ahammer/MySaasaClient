@@ -20,6 +20,8 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by Adam on 1/12/2015.
  */
 public class ContactView extends FrameLayout {
+    //For testing, to force a particular Contact User
+    public static String GLOBAL_CONTACT_USER_OVERRIDE = null;
     EditText name, email, phone, body;
     Button send;
     ContactViewCallbacks callbacks;
@@ -60,10 +62,11 @@ public class ContactView extends FrameLayout {
                     phone.setEnabled(false);
                     body.setEnabled(false);
                     send.setEnabled(false);
+                    String to = GLOBAL_CONTACT_USER_OVERRIDE!=null?GLOBAL_CONTACT_USER_OVERRIDE:toUser;
                     MySaasaApplication
                             .getService()
                             .getMessagesManager()
-                            .sendMessage(toUser,
+                            .sendMessage(to,
                                     "App Feedback",
                                     body.getText().toString(),
                                     name.getText().toString(),

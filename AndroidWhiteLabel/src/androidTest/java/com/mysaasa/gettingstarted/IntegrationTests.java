@@ -9,6 +9,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityMain;
+import com.mysaasa.ui.views.ContactView;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
@@ -83,6 +84,7 @@ public class IntegrationTests {
         application = (MySaasaApplication) mActivity.getApplication();
         client = application.getMySaasaClient();
         testState = new TestState();
+        ContactView.GLOBAL_CONTACT_USER_OVERRIDE = testState.TEST_USERNAME;
     }
 
 
@@ -142,7 +144,9 @@ public class IntegrationTests {
 
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
-        Thread.sleep(2000);
+        openSideNav();
+        onView(withId(R.id.message)).perform(click());
+        Thread.sleep(5000);
 
     }
 

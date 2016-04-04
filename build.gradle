@@ -1,10 +1,11 @@
 ext {
+
     supportAnnotations = 'com.android.support:support-annotations:23.+'
     supportLibraryV13 = 'com.android.support:support-v13:23.+'
     supportLibraryV4 = 'com.android.support:support-v4:23.+'
     supportCardView = 'com.android.support:cardview-v7:23.+'
     supportDesign = 'com.android.support:design:23.1.+'
-    googleMessaging = "com.google.android.gms:play-services:3.1.+"
+    googleMessaging = "com.google.android.gms:play-services-gcm:8.4.0"
     testRunner =  'com.android.support.test:runner:0.4.1'
     espresso = 'com.android.support.test.espresso:espresso-core:2.2.1'
     rules = 'com.android.support.test:rules:0.4'
