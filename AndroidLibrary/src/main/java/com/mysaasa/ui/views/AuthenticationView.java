@@ -26,7 +26,6 @@ public class AuthenticationView extends FrameLayout {
     private TextView username;
     private Button signout;
     private Button signin;
-    private Button messages;
 
     public AuthenticationView(Context context) {
         super(context);
@@ -39,7 +38,6 @@ public class AuthenticationView extends FrameLayout {
         username = (TextView) findViewById(R.id.user);
         signin = (Button) findViewById(R.id.signin);
         signout = (Button) findViewById(R.id.logout);
-        messages = (Button) findViewById(R.id.message);
 
         signin.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), ActivitySignin.class);
@@ -47,9 +45,6 @@ public class AuthenticationView extends FrameLayout {
         });
 
         signout.setOnClickListener(view -> MySaasaApplication.getService().getAuthenticationManager().signOut());
-        messages.setOnClickListener(view -> ActivityMain.startFreshTop(getContext(), new Category("Messages")));
-
-
         setVisibilities();
     }
 
@@ -63,7 +58,6 @@ public class AuthenticationView extends FrameLayout {
                 username.setText(u.identifier);
             }
             signin.setVisibility(auth?View.GONE:View.VISIBLE);
-            messages.setVisibility(auth?View.VISIBLE:View.GONE);
             signout.setVisibility(auth?View.VISIBLE:View.GONE);
         }
     }

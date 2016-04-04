@@ -8,7 +8,10 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- * Created by Adam on 4/3/2016.
+ * This is used to create observables that emit a Model item, but is 2 way generic
+ * you start by defining the type you want to emit, and the type of the network response
+ * you implement a function that returns the network call, and another function that
+ * parses the response and emits items to the subscriber.
  */
 public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> implements Observable.OnSubscribe<T> {
     private final MySaasaClient mySaasa;

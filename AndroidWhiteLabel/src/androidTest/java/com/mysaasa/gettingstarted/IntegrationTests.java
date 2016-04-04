@@ -145,9 +145,8 @@ public class IntegrationTests {
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
         openSideNav();
-        onView(withId(R.id.message)).perform(click());
-        Thread.sleep(5000);
-
+        onView(withText("Messages")).perform(click());
+        onView(withText("App Feedback")).check(matches(isDisplayed()));
     }
 
     private void clickOnNewBlogPost() {
