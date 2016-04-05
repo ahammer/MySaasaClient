@@ -3,12 +3,10 @@ package com.mysassa.api.observables;
 import com.mysassa.api.AuthenticationManager;
 import com.mysassa.api.messages.LoginStateChanged;
 import com.mysassa.api.responses.LoginUserResponse;
-
-import java.io.IOException;
+import com.mysassa.api.responses.RegisterGcmKeyResponse;
 
 import retrofit2.Call;
-import rx.Observable;
-import rx.Subscriber;
+import retrofit2.Response;
 
 /**
  * Created by Adam on 3/26/2016.
@@ -32,12 +30,20 @@ public class LoginObservableBase extends StandardMySaasaObservable<LoginUserResp
     }
 
     @Override
-    protected void onSuccess(LoginUserResponse response) {
-        super.onSuccess(response);
+    public boolean postResponse(LoginUserResponse response) {
         getMySaasa().bus.post(new LoginStateChanged());
         PushIdGenerator generator = authenticationManager.pushIdGenerator;
         if (generator != null) {
             String pushId = generator.getPushId();
+            System.out.println(pushId);
+            if (pushId != null) {
+                Call<RegisterGcmKeyResponse> call = authenticationManager.mySaasa.getGateway().registerGcmKey(pushId);
+                try {
+                    Response<RegisterGcmKeyResponse> registerResponse = call.execute();
+                    return registerResponse.isSuccess();
+                } catch (Exception e) {/*Do Nothing*/}
+            }
         }
+        return true;
     }
 }

@@ -63,6 +63,11 @@ public class BlogManager {
         }
 
         @Override
+        public boolean postResponse(PostToBlogResponse response) {
+            return true;
+        }
+
+        @Override
         protected Call<PostToBlogResponse> getNetworkCall() {
 
             return getMySaasa().getGateway().postToBlog(title, subtitle, summary, body, category);

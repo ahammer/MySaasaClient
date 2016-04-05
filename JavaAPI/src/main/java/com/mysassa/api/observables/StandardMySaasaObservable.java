@@ -3,8 +3,6 @@ package com.mysassa.api.observables;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.responses.SimpleResponse;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import rx.Observable;
 import rx.Subscriber;
@@ -54,15 +52,15 @@ public abstract class  StandardMySaasaObservable<T extends SimpleResponse> imple
     private void handleResponse(Subscriber<? super T> subscriber) {
         if (response.isSuccess()) {
             subscriber.onNext(response);
-            onSuccess(response);
-            subscriber.onCompleted();
+            if (postResponse(response)) subscriber.onCompleted();
+            else subscriber.onError(new RuntimeException("postResponse returned false in "+this.getClass().getName()));
         } else {
             subscriber.onError(new RuntimeException(response.getMessage()));
         }
     }
 
-    protected void onSuccess(T response) {
-
+    public boolean postResponse(T response) {
+     return true;
     }
 
     protected abstract Call<T> getNetworkCall();

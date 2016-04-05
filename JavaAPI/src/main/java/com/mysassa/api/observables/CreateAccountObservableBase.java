@@ -3,13 +3,8 @@ package com.mysassa.api.observables;
 import com.mysassa.api.AuthenticationManager;
 import com.mysassa.api.messages.LoginStateChanged;
 import com.mysassa.api.responses.CreateUserResponse;
-import com.mysassa.api.responses.LoginUserResponse;
-
-import java.io.IOException;
 
 import retrofit2.Call;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by Adam on 3/26/2016.
@@ -31,8 +26,8 @@ public class CreateAccountObservableBase extends StandardMySaasaObservable<Creat
     }
 
     @Override
-    protected void onSuccess(CreateUserResponse response) {
-        super.onSuccess(response);
+    public boolean postResponse(CreateUserResponse response) {
         this.getMySaasa().bus.post(new LoginStateChanged());
+        return true;
     }
 }
