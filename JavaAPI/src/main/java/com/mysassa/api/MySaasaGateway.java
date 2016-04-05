@@ -34,6 +34,7 @@ import com.mysassa.api.responses.WebsiteTestResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -114,8 +115,8 @@ public interface MySaasaGateway {
     Call<GetMessagesResponse> getMessages(@Field("page")long page, @Field("page_size")long page_size, @Field("order")String order, @Field("direction")String direction);
 
 
-    @FormUrlEncoded
-    @POST("MessagingApiService/getMessageCount")
+
+    @GET("MessagingApiService/getMessageCount")
     Call<GetMessageCountResponse> getMessageCount();
 
 

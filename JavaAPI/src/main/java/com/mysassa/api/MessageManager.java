@@ -58,21 +58,11 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io());
     }
 
-    public Observable<RegisterGcmKeyResponse> registerGcmKey(final String regid) {
-        return Observable.create(new StandardMySaasaObservable<RegisterGcmKeyResponse>(mySaasa) {
-            @Override
-            protected Call<RegisterGcmKeyResponse> getNetworkCall() {
-                return mySaasa.gateway.registerGcmKey(regid);
-            }
-        });
-
-    }
-
     public Observable<Message> getMessages() {
         return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa) {
             @Override
             protected Call<GetMessagesResponse> getNetworkCall() {
-                return mySaasa.gateway.getMessages(0,100,"dateCreated","ASC");
+                return mySaasa.gateway.getMessages(0,100,"timeSent","ASC");
             }
 
             @Override

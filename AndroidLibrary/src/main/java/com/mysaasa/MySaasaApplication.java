@@ -66,20 +66,7 @@ public class MySaasaApplication extends Application {
             return null;
 
         });
-
-
-                autoLogin();
-    }
-
-    private void registerGoogleCloudMessaging() {
-        if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regid = getRegistrationId(this);
-
-            if (regid.isEmpty()) {
-                registerInBackground();
-            }
-        }
+        autoLogin();
     }
 
     public MySaasaClient getMySaasaClient() {
@@ -93,7 +80,7 @@ public class MySaasaApplication extends Application {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             response -> {
-                                registerGoogleCloudMessaging();
+
                             },
                             error -> {
                                 Toast.makeText(MySaasaApplication.this, "Error with auto-login: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -163,58 +150,4 @@ public class MySaasaApplication extends Application {
                 Context.MODE_PRIVATE);
     }
 
-    private void registerInBackground() {
-        if (gcm == null) {
-            gcm = GoogleCloudMessaging.getInstance(MySaasaApplication.this);
-        }
-        String key = getString(R.string.gcm_key);
-        try {
-            regid = gcm.register(key);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        String msg = "Device registered, registration ID=" + regid;
-        Log.i(TAG, msg);
-
-        // You should send the registration ID to your server over HTTP,
-        // so it can use GCM/HTTP or CCS to send messages to your app.
-        // The request to your server should be authenticated if your app
-        // is using accounts.
-
-        mySaasaClient.getMessagesManager().registerGcmKey(regid);
-/*
-                    try {
-                        if (gcm == null) {
-                            gcm = GoogleCloudMessaging.getInstance(MySaasaApplication.this);
-                        }
-                        String key = getString(R.string.gcm_key);
-                        regid = gcm.register(key);
-                        String msg = "Device registered, registration ID=" + regid;
-                        Log.i(TAG, msg);
-
-                        // You should send the registration ID to your server over HTTP,
-                        // so it can use GCM/HTTP or CCS to send messages to your app.
-                        // The request to your server should be authenticated if your app
-                        // is using accounts.
-                        mySaasaClient.getGateway().registerGcmKey(regid);
-                        //sendRegistrationIdToBackend();
-
-                        // For this demo: we don't need to send it because the device
-                        // will send upstream messages to a server that echo back the
-                        // message using the 'from' address in the message.
-
-                        // Persist the registration ID - no need to register again.
-                        storeRegistrationId(MySaasaApplication.this, regid);
-                    } catch (IOException ex) {
-                        throw new RuntimeException("Error :" + ex.getMessage());
-                        // If there is an error, don't just keep trying to register.
-                        // Require the user to click a button again, or perform
-                        // exponential back-off.
-                    }
-                    return msg;
-                }*/
-
-    }
 }

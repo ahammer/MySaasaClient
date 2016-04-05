@@ -2,12 +2,13 @@ package com.mysaasa.gettingstarted;
 
 import android.support.test.espresso.Espresso;
 
-import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
+import com.mysaasa.PushNotifiedNewMessage;
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.views.ContactView;
 import com.mysassa.api.MySaasaClient;
@@ -126,6 +127,10 @@ public class IntegrationTests {
         onView(withId(R.id.logout)).check(matches(isDisplayed()));
    }
 
+    /**
+     * Verifies contact form and push notifications!!
+     * @throws Exception
+     */
     @Test
     public void contact() throws Exception {
         openSideNav();
@@ -142,11 +147,29 @@ public class IntegrationTests {
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.body)).perform(typeText(testState.TEST_POST_BODY));
 
+        PushNotifiedNewMessageWaiter waiter = new PushNotifiedNewMessageWaiter();
+        MySaasaApplication.getService().bus.register(waiter);
+
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
         openSideNav();
         onView(withText("Messages")).perform(click());
         onView(withText("App Feedback")).check(matches(isDisplayed()));
+        assertTrue(waiter.getResult());
+
+    }
+
+    public static class PushNotifiedNewMessageWaiter {
+        private boolean result;
+
+        @Subscribe
+        public void event(PushNotifiedNewMessage event) {
+            result = true;
+        }
+
+        public boolean getResult() {
+            return result;
+        }
     }
 
     private void clickOnNewBlogPost() {

@@ -1,24 +1,17 @@
 package com.mysaasa;
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.mysaasa.ui.ActivityMain;
-
 import com.mysaasa.ui.SideNavigationCompatibleActivity;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.ThreadUpdatedPushMessage;
-import com.mysassa.api.responses.GetMessageCountResponse;
 
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,8 +51,10 @@ public class ReceivePush extends BroadcastReceiver {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(getMessageCountResponse -> {
-                        Toast.makeText(MySaasaApplication.getInstance(), "blah", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MySaasaApplication.getInstance(), "blah ", Toast.LENGTH_SHORT).show();
                     });
+
+            s.bus.post(new PushNotifiedNewMessage());
         }
 
 
