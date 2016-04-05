@@ -7,7 +7,6 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.SideNavigationCompatibleActivity;
@@ -15,9 +14,6 @@ import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
 import com.mysassa.api.messages.ThreadUpdatedPushMessage;
 import com.mysassa.api.model.Category;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by adam on 15-02-13.
@@ -52,7 +48,7 @@ public class ReceivePush extends BroadcastReceiver {
 
     private void HandleNewMessage(Context context, MySaasaClient s) {
         if (s!=null) {
-            s.bus.post(new PushNotifiedNewMessage());
+            s.bus.post(new PushNotifiedNewMessageEvent());
         }
 
 

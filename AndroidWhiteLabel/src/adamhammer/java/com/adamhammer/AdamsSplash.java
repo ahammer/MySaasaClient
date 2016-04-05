@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mysaasa.MySaasaApplication;
-import com.mysaasa.ui.fragments.ContactView;
+
+import com.mysaasa.ui.views.ContactView;
 import com.mysassa.api.model.BlogPost;
 import com.mysassa.api.model.Category;
 import com.mysassa.whitelabel.R;

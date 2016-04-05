@@ -8,7 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
-import com.mysaasa.PushNotifiedNewMessage;
+import com.mysaasa.PushNotifiedNewMessageEvent;
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.views.ContactView;
 import com.mysassa.api.MySaasaClient;
@@ -163,7 +163,7 @@ public class IntegrationTests {
         private boolean result;
 
         @Subscribe
-        public void event(PushNotifiedNewMessage event) {
+        public void event(PushNotifiedNewMessageEvent event) {
             result = true;
         }
 

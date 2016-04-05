@@ -68,9 +68,6 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
             selectedCategory = (Category) savedInstanceState.getSerializable("category");
         }
 
-
-
-
         fragmentFrame = (FrameLayout) findViewById(R.id.fragment_frame);
         newsList = (ListView) findViewById(R.id.content_frame);
         newsList.setOnItemClickListener((adapterView, view, i, l) -> {

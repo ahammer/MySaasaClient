@@ -4,5 +4,6 @@
     <string name="scheme">http</string>
     <string name="defaultSection">Welcome</string>
     <string name="domain">www.adamhammer.ca</string>
+    <string name="gcm_key">807702961233</string>
     <integer name="port">8080</integer>
 </resources>
