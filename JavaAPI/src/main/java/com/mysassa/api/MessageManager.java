@@ -5,7 +5,9 @@ import com.mysassa.api.observables.ModelMySaasaObservable;
 import com.mysassa.api.observables.StandardMySaasaObservable;
 import com.mysassa.api.responses.GetMessageCountResponse;
 import com.mysassa.api.responses.GetMessagesResponse;
+import com.mysassa.api.responses.GetThreadResponse;
 import com.mysassa.api.responses.RegisterGcmKeyResponse;
+import com.mysassa.api.responses.ReplyMessageResponse;
 import com.mysassa.api.responses.SendMessageResponse;
 
 import java.io.IOException;
@@ -58,6 +60,21 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io());
     }
 
+    public Observable<Message> getMessageThread(final Message m) {
+        return Observable.create(new ModelMySaasaObservable<Message, GetThreadResponse>(mySaasa) {
+            @Override
+            public void processItems(GetThreadResponse response, Subscriber<? super Message> subscriber) {
+                for (Message m:response.data) subscriber.onNext(m);
+                subscriber.onCompleted();
+            }
+
+            @Override
+            protected Call<GetThreadResponse> getNetworkCall() {
+                return mySaasa.gateway.getThread(m.id);
+            }
+        }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
+    }
+
     public Observable<Message> getMessages() {
         return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa) {
             @Override
@@ -71,5 +88,14 @@ public class MessageManager {
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
+    }
+
+    public Observable<ReplyMessageResponse> replyToMessage(final Message parent, final String s) {
+        return Observable.create(new StandardMySaasaObservable<ReplyMessageResponse>(mySaasa) {
+            @Override
+            protected Call<ReplyMessageResponse> getNetworkCall() {
+                return mySaasa.gateway.replyMessage(parent.id,s);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 }

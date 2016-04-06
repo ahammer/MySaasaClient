@@ -2,6 +2,7 @@ package com.mysaasa.gettingstarted;
 
 import android.support.test.espresso.Espresso;
 
+import android.support.test.espresso.ViewAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -154,7 +155,9 @@ public class IntegrationTests {
         onView(withId(R.id.send)).perform(click());
         openSideNav();
         onView(withText("Messages")).perform(click());
-        onView(withText("App Feedback")).check(matches(isDisplayed()));
+        onView(withText("App Feedback")).perform(click());
+        Thread.sleep(10000);
+
         assertTrue(waiter.getResult());
 
     }
