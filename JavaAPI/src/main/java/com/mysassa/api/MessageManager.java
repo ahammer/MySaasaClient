@@ -42,10 +42,6 @@ public class MessageManager {
         });
     }
 
-    public void requestMessageThread(Message rootMessage) {
-
-    }
-
     public Observable<SendMessageResponse> sendMessage(final String to_user,
                                                        final String title,
                                                        final String body,
@@ -96,6 +92,6 @@ public class MessageManager {
             protected Call<ReplyMessageResponse> getNetworkCall() {
                 return mySaasa.gateway.replyMessage(parent.id,s);
             }
-        }).subscribeOn(Schedulers.io());
+        }).subscribeOn(Schedulers.io() );
     }
 }

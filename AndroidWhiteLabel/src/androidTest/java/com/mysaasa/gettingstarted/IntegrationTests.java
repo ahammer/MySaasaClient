@@ -109,6 +109,7 @@ public class IntegrationTests {
         onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_COMMENT_BODY)).inAdapterView(withId(R.id.blog_comments)).onChildView(withId(R.id.reply)).perform(click());
         onView(withId(R.id.comment)).perform(typeText(testState.TEST_REPLY_BODY));
         onView(withId(R.id.post)).perform(click());
+        Thread.sleep(1000);
         onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_REPLY_BODY)).inAdapterView(withId(R.id.blog_comments)).check(matches(isDisplayed()));
     }
 

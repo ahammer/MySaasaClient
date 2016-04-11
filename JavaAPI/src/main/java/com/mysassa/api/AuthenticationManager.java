@@ -52,12 +52,13 @@ public class AuthenticationManager {
         try {
 
             if (createAccountObservableBase != null)
-                return createAccountObservableBase.getResponse().getData();
+                return createAccountObservableBase.getResponse().getData().getContext().getUser();
 
             if (loginObservableBase != null)
-                return loginObservableBase.getResponse().getData();
+                return loginObservableBase.getResponse().getData().getContext().getUser();
 
         } catch (Exception e) {
+            e.printStackTrace();
             //Do Nothing
         }
         return null;
