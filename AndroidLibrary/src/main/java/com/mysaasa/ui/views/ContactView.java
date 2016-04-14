@@ -14,6 +14,10 @@ import android.widget.Toast;
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -62,38 +66,51 @@ public class ContactView extends FrameLayout {
                     phone.setEnabled(false);
                     body.setEnabled(false);
                     send.setEnabled(false);
-                    String to = GLOBAL_CONTACT_USER_OVERRIDE!=null?GLOBAL_CONTACT_USER_OVERRIDE:toUser;
-                    MySaasaApplication
-                            .getService()
-                            .getMessagesManager()
-                            .sendMessage(to,
-                                    "App Feedback",
-                                    body.getText().toString(),
-                                    name.getText().toString(),
-                                    email.getText().toString(),
-                                    phone.getText().toString())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(response->{
-                                        if (callbacks != null) {
-                                            callbacks.success();
-                                        } else {
-                                            Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
-                                        }
-                                    },
-                                    e->{
-                                        if (callbacks != null) {
-                                            callbacks.fail(e);
-                                        } else {
-                                            Toast.makeText(getContext(), "Error sending message " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                            );
+                    if (MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser() == null) {
+                        SecureRandom random = new SecureRandom();
+                        String password = new BigInteger(130, random).toString(32);
+
+                        MySaasaApplication.getService().getAuthenticationManager()
+                                .createAccount(email.getText().toString(), password)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(success->sendMessage());
+                    } else {
+                        sendMessage();
+                    }
                 }
             }
         });
         return v;
     }
 
+    private void sendMessage() {
+        String to = GLOBAL_CONTACT_USER_OVERRIDE!=null?GLOBAL_CONTACT_USER_OVERRIDE:toUser;
+        MySaasaApplication
+                .getService()
+                .getMessagesManager()
+                .sendMessage(to,
+                        "App Feedback",
+                        body.getText().toString(),
+                        name.getText().toString(),
+                        email.getText().toString(),
+                        phone.getText().toString())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response->{
+                            if (callbacks != null) {
+                                callbacks.success();
+                            } else {
+                                Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        e->{
+                            if (callbacks != null) {
+                                callbacks.fail(e);
+                            } else {
+                                Toast.makeText(getContext(), "Error sending message " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
+    }
 
 
     private boolean validate() {

@@ -96,4 +96,24 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="MySaasa_ListItem_Message"></style>
+
+    <style name="MySaasa_ListItem_Message_Title">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">#5000</item>
+        <item name="android:layout_marginBottom">5dp</item>
+
+    </style>
+
+    <style name="MySaasa_ListItem_Message_Author">
+        <item name="android:textColor">#AFFF</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="MySaasa_ListItem_Message_Date">
+        <item name="android:textColor">#AFFF</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+
 </resources>

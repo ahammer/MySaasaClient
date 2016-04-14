@@ -83,6 +83,7 @@ public class BlogCommentsViewer extends Fragment {
             Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
         });
     }
+
     private void setBlogComments(final List<BlogComment> list) {
         if (post == null) return;
         if (getActivity() == null) return;

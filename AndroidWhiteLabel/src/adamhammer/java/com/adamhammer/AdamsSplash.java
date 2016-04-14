@@ -44,6 +44,8 @@ public class AdamsSplash extends Fragment {
 
     private List<BlogPost> blogPosts;
     private Subscription subscription;
+    private HeaderView headerView;
+    private ContactView contactView;
 
     @Nullable
     @Override
@@ -119,8 +121,10 @@ public class AdamsSplash extends Fragment {
         loadingProgressbar.setVisibility(blogPosts==null?View.VISIBLE:View.GONE);
         if (blogPosts == null || blogPosts.size() == 0) return;
         myList.setAdapter(new JoiningAdapter(new MyPhotosAdapter(), new MyBlogPostsAdapter(blogPosts)));
-        myList.addHeaderView(new HeaderView(getActivity()));
-        ContactView contactView;
+        if (headerView != null) myList.removeHeaderView(headerView);
+        myList.addHeaderView(headerView = new HeaderView(getActivity()));
+
+        if (contactView != null) myList.removeFooterView(contactView);
         myList.addFooterView(contactView = new ContactView(getActivity()));
         contactView.setBackgroundResource(R.drawable.dark_panel);
         contactView.setToUser("admin");

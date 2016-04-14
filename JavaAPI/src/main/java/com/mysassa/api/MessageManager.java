@@ -62,7 +62,7 @@ public class MessageManager {
         return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa) {
             @Override
             protected Call<GetMessagesResponse> getNetworkCall() {
-                return mySaasa.gateway.getMessages(0,100,"timeSent","ASC");
+                return mySaasa.gateway.getMessages(0,100,"timeSent","DESC");
             }
 
             @Override

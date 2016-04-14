@@ -67,4 +67,12 @@ of the system without affecting code.
         <item name="android:layout_margin">5dp</item>
 
     </style>
+
+    <style name="MySaasa_ListItem_Message"></style>
+
+    <style name="MySaasa_ListItem_Message_Title"></style>
+
+    <style name="MySaasa_ListItem_Message_Author"></style>
+
+    <style name="MySaasa_ListItem_Message_Date"></style>
 </resources>

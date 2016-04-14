@@ -9,6 +9,11 @@
         <fragment>com.adamhammer.AdamsSplash</fragment>
     </item>
     <item>
+        <title>Messages</title>
+        <category>Messages</category>
+        <fragment>com.mysaasa.ui.fragments.MessagesFragment</fragment>
+    </item>
+    <item>
         <title>Resume</title>
         <category>Resume</category>
         <sortColumn>priority</sortColumn>
@@ -27,28 +32,13 @@
         <commentsAllowed>true</commentsAllowed>
         <postsAllowed>false</postsAllowed>
     </item>
-
-    <item>
-        <title>News</title>
-        <category>SocialNewsGeneral</category>
-        <sortColumn>dateCreated</sortColumn>
-        <sortOrder>DESC</sortOrder>
-        <pagesize>100</pagesize>
-        <commentsAllowed>true</commentsAllowed>
-        <postsAllowed>true</postsAllowed>
-    </item>
-
     <item>
         <title>Contact</title>
         <category>Contact</category>
-        <fragment>com.mysaasa.ui.views.ContactView</fragment>
+        <fragment>com.mysaasa.ui.fragments.ContactsFragment</fragment>
     </item>
 
 
-    <item>
-        <title>Store</title>
-        <category>Store</category>
-        <fragment>com.mysassa.ui.fragments.ProductCategoryFragment</fragment>
-    </item>
+
 
 </whitelist>
