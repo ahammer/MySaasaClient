@@ -109,7 +109,7 @@ public class IntegrationTests {
         onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_COMMENT_BODY)).inAdapterView(withId(R.id.blog_comments)).onChildView(withId(R.id.reply)).perform(click());
         onView(withId(R.id.comment)).perform(typeText(testState.TEST_REPLY_BODY));
         onView(withId(R.id.post)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(1000); //Next step only shows up after a push and update, so small delay for the push
         onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_REPLY_BODY)).inAdapterView(withId(R.id.blog_comments)).check(matches(isDisplayed()));
     }
 
@@ -155,6 +155,7 @@ public class IntegrationTests {
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
         openSideNav();
+        Thread.sleep(10000);
         onView(withText("Messages")).perform(click());
         onView(withText("App Feedback")).perform(click());
         Thread.sleep(10000);
