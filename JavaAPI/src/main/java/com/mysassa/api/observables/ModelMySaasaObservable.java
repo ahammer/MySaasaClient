@@ -16,7 +16,6 @@ import rx.Subscriber;
 public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> implements Observable.OnSubscribe<T> {
     private final MySaasaClient mySaasa;
     private final boolean authenticate;
-    private V response;
 
 
     public ModelMySaasaObservable(MySaasaClient mySaasa, boolean authenticate) {
@@ -27,9 +26,12 @@ public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> imple
     @Override
     public void call(Subscriber<? super T> subscriber) {
         if (!subscriber.isUnsubscribed()) {
-
-            if (response != null) {
-                handleResponse(subscriber);
+            try {
+                if (authenticate) {     //If authentication required, clear cache
+                    mySaasa.getAuthenticationManager().refreshIfNecessary();
+                }
+            } catch (Exception e) {
+                subscriber.onError(e);
                 return;
             }
 
@@ -37,9 +39,8 @@ public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> imple
 
             try {
                 mySaasa.startNetwork();
-                if (authenticate) mySaasa.getAuthenticationManager().refreshIfNecessary();
-                response = call.execute().body();
-                handleResponse(subscriber);
+                V response = call.execute().body();
+                handleResponse(response, subscriber);
             } catch (Exception e) {
                 onError(e);
                 subscriber.onError(e);
@@ -53,7 +54,7 @@ public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> imple
         //Reserved for over-ride
     }
 
-    private void handleResponse(Subscriber<? super T> subscriber) {
+    private void handleResponse(V response, Subscriber<? super T> subscriber) {
         if (response.isSuccess()) {
             processItems(response, subscriber);
         } else {
@@ -71,7 +72,4 @@ public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> imple
         return mySaasa;
     }
 
-    public V getResponse() {
-        return response;
-    }
 }

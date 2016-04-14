@@ -8,8 +8,10 @@ import com.mysassa.api.observables.PushIdGenerator;
 import com.mysassa.api.responses.CreateUserResponse;
 import com.mysassa.api.responses.LoginUserResponse;
 
+import java.io.IOException;
 import java.util.Date;
 
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
@@ -64,6 +66,16 @@ public class AuthenticationManager {
         return null;
     }
 
+
+    private void setSessionSummary(LoginUserResponse.SessionSummary data) {
+        if (createAccountObservableBase != null)
+            createAccountObservableBase.getResponse().setData(data);
+
+        if (loginObservableBase != null)
+            loginObservableBase.getResponse().setData(data);
+
+    }
+
     public User getAuthenticatedUser() {
         try {
             return getSessionSummary().getContext().getUser();
@@ -87,22 +99,24 @@ public class AuthenticationManager {
             int seconds = sessionSummary.getLengthSeconds();
             final Date expiry = new Date(sessionSummary.getTimestamp().getTime() + (seconds * 1000));
             if (expiry.before(new Date())) {
+                String username = null;
+                String password = null;
                 if (createAccountObservableBase != null) {
-                    login(createAccountObservableBase.getUsername(), createAccountObservableBase.getPassword())
-                            .subscribeOn(Schedulers.immediate())
-                            .observeOn(Schedulers.immediate())
-                            .subscribe(result->{
-                                System.out.println("Success");
-                            });
+                    username = createAccountObservableBase.getUsername();
+                    password = createAccountObservableBase.getPassword();
                 } else if (loginObservableBase != null) {
-                    login(loginObservableBase.getUsername(), loginObservableBase.getPassword())
-                            .subscribeOn(Schedulers.immediate())
-                            .observeOn(Schedulers.immediate())
-                            .subscribe(result->{
-                                System.out.println("Success");
-                            });
+                    username = loginObservableBase.getUsername();
+                    password = loginObservableBase.getPassword();
                 }
 
+                if (username != null && password != null) {
+                    try {
+                        Response<LoginUserResponse> response = mySaasa.gateway.loginUser(username, password).execute();
+                        setSessionSummary(response.body().getData());
+                    } catch (IOException e) {
+                        throw new IllegalStateException("Could not log back in");
+                    }
+                }
             }
         }
     }

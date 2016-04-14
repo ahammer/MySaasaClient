@@ -17,7 +17,14 @@ public class LoginUserResponse extends SimpleResponse{
         return data;
     }
 
-
+    /**
+     * Set the current SessionSummary, sometimes we update this when we automatically
+     * log in
+     * @param data
+     */
+    public void setData(SessionSummary data) {
+        this.data = data;
+    }
 
 
     public static class SecurityContext {
