@@ -54,7 +54,7 @@ public class BlogManager {
         private final String category;
 
         public PostToBlogObservableBase(MySaasaClient client, String title, String subtitle, String summary, String body, String category) {
-            super(client);
+            super(client, true);
             this.title = title;
             this.subtitle = subtitle;
             this.summary = summary;

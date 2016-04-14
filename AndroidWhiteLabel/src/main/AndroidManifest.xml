@@ -36,13 +36,14 @@
             android:label="Post Comment"/>
 
         <activity android:name="com.mysaasa.ui.ActivityPostToBlog"
-            android:theme="@style/SimpleThemeDialog"
-            android:label="Post to Blog"/>
+                  android:theme="@style/SimpleThemeDialog"
+                  android:label="Post to Blog"/>
 
-        <activity android:name="com.mysaasa.ui.ActivityMessages"
-            android:label="Read Messages"/>
-        <activity android:name="com.mysaasa.ui.ActivityMessage"
-            android:label="Message"/>
+        <activity android:name="com.mysaasa.ui.ActivityChat"
+                  android:theme="@style/SimpleThemeDialog"
+                  android:label="Chat"/>
+
+
 
         <activity android:name="com.mysaasa.ui.ActivityAddress"
             android:label="Enter Address"
@@ -50,7 +51,7 @@
 
         
         <!-- GCM Additions -->
-        <service android:name=".MyInstanceIDService" android:exported="false">
+        <service android:name="com.mysaasa.gcm.MySaasaInstanceIDService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>

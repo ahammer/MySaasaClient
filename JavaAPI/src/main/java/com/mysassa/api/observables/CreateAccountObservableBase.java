@@ -17,10 +17,18 @@ public class CreateAccountObservableBase extends StandardMySaasaObservable<Creat
     private final String password;
 
     public CreateAccountObservableBase(AuthenticationManager authenticationManager, String username, String password) {
-        super(authenticationManager.mySaasa);
+        super(authenticationManager.mySaasa, false);
         this.authenticationManager = authenticationManager;
         this.username = username;
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     protected Call<CreateUserResponse> getNetworkCall() {

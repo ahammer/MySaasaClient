@@ -18,10 +18,18 @@ public class LoginObservableBase extends StandardMySaasaObservable<LoginUserResp
     final String password;
 
     public LoginObservableBase(AuthenticationManager authenticationManager, String username, String password) {
-        super(authenticationManager.mySaasa);
+        super(authenticationManager.mySaasa,false);
         this.authenticationManager = authenticationManager;
         this.username = username;
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override

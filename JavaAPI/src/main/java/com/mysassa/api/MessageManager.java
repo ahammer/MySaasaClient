@@ -5,7 +5,9 @@ import com.mysassa.api.observables.ModelMySaasaObservable;
 import com.mysassa.api.observables.StandardMySaasaObservable;
 import com.mysassa.api.responses.GetMessageCountResponse;
 import com.mysassa.api.responses.GetMessagesResponse;
+import com.mysassa.api.responses.GetThreadResponse;
 import com.mysassa.api.responses.RegisterGcmKeyResponse;
+import com.mysassa.api.responses.ReplyMessageResponse;
 import com.mysassa.api.responses.SendMessageResponse;
 
 import java.io.IOException;
@@ -28,20 +30,13 @@ public class MessageManager {
     }
 
 
-
-
-
     public Observable<GetMessageCountResponse> getMessageCount() {
-        return Observable.create(new StandardMySaasaObservable<GetMessageCountResponse>(mySaasa) {
+        return Observable.create(new StandardMySaasaObservable<GetMessageCountResponse>(mySaasa, true) {
             @Override
             protected Call<GetMessageCountResponse> getNetworkCall() {
                 return mySaasa.gateway.getMessageCount();
             }
         });
-    }
-
-    public void requestMessageThread(Message rootMessage) {
-
     }
 
     public Observable<SendMessageResponse> sendMessage(final String to_user,
@@ -50,7 +45,7 @@ public class MessageManager {
                                                        final String name,
                                                        final String email,
                                                        final String phone) {
-        return Observable.create(new StandardMySaasaObservable<SendMessageResponse>(mySaasa) {
+        return Observable.create(new StandardMySaasaObservable<SendMessageResponse>(mySaasa, true) {
             @Override
             protected Call<SendMessageResponse> getNetworkCall() {
                 return mySaasa.gateway.sendMessage(to_user, title, body, name, email, phone);
@@ -58,8 +53,23 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io());
     }
 
+    public Observable<Message> getMessageThread(final Message m) {
+        return Observable.create(new ModelMySaasaObservable<Message, GetThreadResponse>(mySaasa, true) {
+            @Override
+            public void processItems(GetThreadResponse response, Subscriber<? super Message> subscriber) {
+                for (Message m:response.data) subscriber.onNext(m);
+                subscriber.onCompleted();
+            }
+
+            @Override
+            protected Call<GetThreadResponse> getNetworkCall() {
+                return mySaasa.gateway.getThread(m.id);
+            }
+        }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
+    }
+
     public Observable<Message> getMessages() {
-        return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa) {
+        return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa, true) {
             @Override
             protected Call<GetMessagesResponse> getNetworkCall() {
                 return mySaasa.gateway.getMessages(0,100,"timeSent","DESC");
@@ -71,5 +81,14 @@ public class MessageManager {
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
+    }
+
+    public Observable<ReplyMessageResponse> replyToMessage(final Message parent, final String s) {
+        return Observable.create(new StandardMySaasaObservable<ReplyMessageResponse>(mySaasa, true ) {
+            @Override
+            protected Call<ReplyMessageResponse> getNetworkCall() {
+                return mySaasa.gateway.replyMessage(parent.id,s);
+            }
+        }).subscribeOn(Schedulers.io() );
     }
 }

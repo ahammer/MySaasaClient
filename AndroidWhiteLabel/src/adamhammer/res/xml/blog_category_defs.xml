@@ -33,12 +33,8 @@
         <postsAllowed>false</postsAllowed>
     </item>
     <item>
-        <title>Contact</title>
-        <category>Contact</category>
-        <fragment>com.mysaasa.ui.fragments.ContactsFragment</fragment>
+        <title>Messages</title>
+        <category>Messages</category>
+        <fragment>com.mysaasa.ui.fragments.MessagesFragment</fragment>
     </item>
-
-
-
-
 </whitelist>

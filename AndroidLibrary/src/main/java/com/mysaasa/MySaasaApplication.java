@@ -1,9 +1,10 @@
 package com.mysaasa;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,9 +13,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.google.common.eventbus.EventBus;
+import com.mysaasa.ui.data.MessagesDatabase;
 import com.mysassa.R;
 import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.observables.PushIdGenerator;
 import com.splunk.mint.Mint;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class MySaasaApplication extends Application {
     private ApplicationSectionsManager mSectionManager;
     private GoogleCloudMessaging gcm;
     private String regid;
+    private MessagesDatabase messagesDatabase;
 
     public static MySaasaApplication getInstance() {
         return instance;
@@ -49,7 +51,8 @@ public class MySaasaApplication extends Application {
     public void onCreate() {
         Mint.initAndStartSession(this, "a8d16bad");
         super.onCreate();
-
+        messagesDatabase = new MessagesDatabase();
+        messagesDatabase.start(this);
 
         instance = this;
         mSectionManager = new ApplicationSectionsManager(this);
@@ -69,6 +72,12 @@ public class MySaasaApplication extends Application {
         autoLogin();
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        messagesDatabase.close();
+    }
+
     public MySaasaClient getMySaasaClient() {
         return mySaasaClient;
     }
@@ -86,7 +95,6 @@ public class MySaasaApplication extends Application {
                                 Toast.makeText(MySaasaApplication.this, "Error with auto-login: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                                 sp.edit().remove("password").remove("identifier").commit();
                             });
-
     }
 
     public ApplicationSectionsManager getAndroidCategoryManager() {

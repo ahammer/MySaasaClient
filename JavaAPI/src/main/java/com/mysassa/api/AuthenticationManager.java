@@ -8,7 +8,10 @@ import com.mysassa.api.observables.PushIdGenerator;
 import com.mysassa.api.responses.CreateUserResponse;
 import com.mysassa.api.responses.LoginUserResponse;
 
+import java.util.Date;
+
 import rx.Observable;
+import rx.Subscription;
 import rx.schedulers.Schedulers;
 
 /**
@@ -48,16 +51,24 @@ public class AuthenticationManager {
         mySaasa.bus.post(new LoginStateChanged());
     }
 
-    public User getAuthenticatedUser() {
+    public LoginUserResponse.SessionSummary getSessionSummary() {
         try {
-
             if (createAccountObservableBase != null)
                 return createAccountObservableBase.getResponse().getData();
 
             if (loginObservableBase != null)
                 return loginObservableBase.getResponse().getData();
-
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User getAuthenticatedUser() {
+        try {
+            return getSessionSummary().getContext().getUser();
+        } catch (Exception e) {
+            e.printStackTrace();
             //Do Nothing
         }
         return null;
@@ -67,4 +78,35 @@ public class AuthenticationManager {
     public void setPushIdGenerator(PushIdGenerator pushIdGenerator) {
         this.pushIdGenerator = pushIdGenerator;
     }
+
+    //Blocking Call, call from another thread
+    //This signs in you in again, if the session is expired.
+    public void refreshIfNecessary() {
+        LoginUserResponse.SessionSummary sessionSummary = getSessionSummary();
+        if (sessionSummary != null) {
+            int seconds = sessionSummary.getLengthSeconds();
+            final Date expiry = new Date(sessionSummary.getTimestamp().getTime() + (seconds * 1000));
+            if (expiry.before(new Date())) {
+                if (createAccountObservableBase != null) {
+                    login(createAccountObservableBase.getUsername(), createAccountObservableBase.getPassword())
+                            .subscribeOn(Schedulers.immediate())
+                            .observeOn(Schedulers.immediate())
+                            .subscribe(result->{
+                                System.out.println("Success");
+                            });
+                } else if (loginObservableBase != null) {
+                    login(loginObservableBase.getUsername(), loginObservableBase.getPassword())
+                            .subscribeOn(Schedulers.immediate())
+                            .observeOn(Schedulers.immediate())
+                            .subscribe(result->{
+                                System.out.println("Success");
+                            });
+                }
+
+            }
+        }
+    }
+
+
+
 }

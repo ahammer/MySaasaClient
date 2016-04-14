@@ -12,11 +12,13 @@ import rx.Subscriber;
  */
 public abstract class  StandardMySaasaObservable<T extends SimpleResponse> implements Observable.OnSubscribe<T>{
     private final MySaasaClient mySaasa;
+    private final boolean authenticate;
     private T response;
 
 
-    protected StandardMySaasaObservable(MySaasaClient mySaasa) {
+    protected StandardMySaasaObservable(MySaasaClient mySaasa, boolean authenticate) {
         this.mySaasa = mySaasa;
+        this.authenticate = authenticate;
     }
 
 
@@ -34,6 +36,7 @@ public abstract class  StandardMySaasaObservable<T extends SimpleResponse> imple
 
             try {
                 mySaasa.startNetwork();
+                if (authenticate) mySaasa.getAuthenticationManager().refreshIfNecessary();
                 response = call.execute().body();
                 handleResponse(subscriber);
             } catch (Exception e) {
