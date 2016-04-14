@@ -17,6 +17,7 @@ import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.PushNotifiedNewMessageEvent;
 import com.mysassa.R;
+import com.mysassa.api.messages.NewMessage;
 import com.mysassa.api.model.Message;
 
 import java.util.List;
@@ -71,7 +72,7 @@ public class ActivityChat extends Activity {
     }
 
     @Subscribe
-    public void onNewMessageReceived(PushNotifiedNewMessageEvent event) {
+    public void onNewMessageReceived(NewMessage event) {
         refreshMessageThread();
     }
 

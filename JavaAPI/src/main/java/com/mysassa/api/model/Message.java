@@ -109,4 +109,35 @@ public class Message implements Serializable{
                 ", type=" + type +
                 '}';
     }
+
+    /**
+     * Shortcut to the Recipient ID
+     * Null if none
+     * @return the Recipient.id
+     */
+    public Long getRecipientId() {
+        if (recipient != null) return recipient.id;
+        return null;
+    }
+
+    /**
+     * Shortcut to the Sender ID
+     * Doesn't throw NPEs
+     * @return the sender ID, if any, null if not
+     */
+    public Long getSenderId() {
+        if (sender != null) return sender.id;
+        return null;
+    }
+
+    /**
+     * Shortcut to the senderContactInfo.id
+     * Does a null check to avoid NPE's
+     *
+     * @return the ID of the Contact Info
+     */
+    public Long getSenderContactInfoId() {
+        if (senderContactInfo != null) return senderContactInfo.id;
+        return null;
+    }
 }

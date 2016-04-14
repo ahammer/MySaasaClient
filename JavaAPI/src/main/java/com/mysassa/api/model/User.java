@@ -9,7 +9,7 @@ public class User implements Serializable {
     public final AccessLevel accessLevel;
     public final String nonce;
     public final String password_md5;
-    public final int id;
+    public final long id;
     public final String identifier;
 
     public final ContactInfo contactInfo;
@@ -54,5 +54,21 @@ public class User implements Serializable {
         return "User{" +
                 "identifier='" + identifier + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

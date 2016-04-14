@@ -31,11 +31,8 @@ public class MySaasaApplication extends Application {
     private static final String TAG = "MySaasa";
     private static final String PROPERTY_REG_ID = "ID";
     private static final String PROPERTY_APP_VERSION = "APP_VERSION";
-    private final EventBus bus = new EventBus();
     private MySaasaClient mySaasaClient;
     private ApplicationSectionsManager mSectionManager;
-    private GoogleCloudMessaging gcm;
-    private String regid;
     private MessagesDatabase messagesDatabase;
 
     public static MySaasaApplication getInstance() {
@@ -69,6 +66,7 @@ public class MySaasaApplication extends Application {
             return null;
 
         });
+
         autoLogin();
     }
 
@@ -113,49 +111,5 @@ public class MySaasaApplication extends Application {
         sp.edit().remove("password").commit();
     }
 
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Gets the current registration ID for application on GCM mySaasaClient.
-     * <p>
-     * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     * registration ID.
-     */
-    private String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getGCMPreferences(context);
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
-        if (registrationId.isEmpty()) {
-            Log.i(TAG, "Registration not found.");
-            return "";
-        }
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing registration ID is not guaranteed to work with
-        // the new app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = 1;
-        if (registeredVersion != currentVersion) {
-            Log.i(TAG, "App version changed.");
-            return "";
-        }
-        return registrationId;
-    }
-
-    /**
-     * @return Application's {@code SharedPreferences}.
-     */
-    private SharedPreferences getGCMPreferences(Context context) {
-        // This sample app persists the registration ID in shared preferences, but
-        // how you store the registration ID in your app is up to you.
-        return getSharedPreferences(MySaasaApplication.class.getSimpleName() + "GCM",
-                Context.MODE_PRIVATE);
-    }
 
 }

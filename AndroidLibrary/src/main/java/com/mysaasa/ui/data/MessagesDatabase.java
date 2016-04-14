@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import com.mysassa.api.MySaasaMessageStorage;
 import com.mysassa.api.model.Message;
 import com.mysassa.api.model.User;
 
 import java.util.List;
 
 /**
+ * This is not complete, I'm going to do a memory implementation for now
+ *
  * Created by Adam on 4/11/2016.
  */
 public class MessagesDatabase implements MySaasaMessageStorage {
@@ -27,8 +30,16 @@ public class MessagesDatabase implements MySaasaMessageStorage {
     public void close() {
         database.close();
     }
+
+
     @Override
-    public List<Message> getRootMessage(User user) {
+    public List<Message> getRootMessages(User user) {
+
+        return null;
+    }
+
+    @Override
+    public List<Message> getMessageThread(Message head) {
         return null;
     }
 
@@ -36,10 +47,22 @@ public class MessagesDatabase implements MySaasaMessageStorage {
     public void storeMessage(Message m) {
         checkDatabase();
         SQLiteDatabase db = database.getWritableDatabase();
-        //TODO, do a query, check for an update, load the Message if it's a update
         Message fromDatabase = getMessageById(m.id);
+        if (fromDatabase != null) {
+            ContentValues cv = MessageEntry.messageToContentValues(m);
+            db.update(MessageEntry.TABLE_NAME,
+                    cv,
+                    MessageEntry.COLUMN_NAME_MESSAGE_ID+"=?",
+                    new String[]{String.valueOf(m.id)});
+        }
+
         //db.insert(MessageEntry.TABLE_NAME, null, MessageEntry.messageToContentValues(m));
 
+    }
+
+    @Override
+    public void storeMessages(List<Message> data) {
+        for (Message m:data) storeMessage(m);
     }
 
     @Override
@@ -67,14 +90,14 @@ public class MessagesDatabase implements MySaasaMessageStorage {
         public static ContentValues messageToContentValues(Message message) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME_MESSAGE_ID, message.id);
-            values.put(COLUMN_NAME_RECIPIENT_ID, message.id);
-            values.put(COLUMN_NAME_SENDER_ID, message.id);
-            values.put(COLUMN_NAME_TITLE, message.id);
-            values.put(COLUMN_NAME_BODY, message.id);
-            values.put(COLUMN_NAME_DATA, message.id);
-            values.put(COLUMN_NAME_TIMESENT, message.id);
-            values.put(COLUMN_NAME_READ, message.id);
-            values.put(COLUMN_NAME_SENDER_CONTACT_INFO_ID, message.id);
+            values.put(COLUMN_NAME_RECIPIENT_ID, message.getRecipientId());
+            values.put(COLUMN_NAME_SENDER_ID, message.getSenderId());
+            values.put(COLUMN_NAME_TITLE, message.title);
+            values.put(COLUMN_NAME_BODY, message.body);
+            values.put(COLUMN_NAME_DATA, message.data);
+            values.put(COLUMN_NAME_TIMESENT, message.timeSent.getTime());
+            values.put(COLUMN_NAME_READ, message.read);
+            values.put(COLUMN_NAME_SENDER_CONTACT_INFO_ID, message.getSenderContactInfoId());
 
             return values;
         }

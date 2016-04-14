@@ -113,8 +113,13 @@ public class IntegrationTests {
         onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_REPLY_BODY)).inAdapterView(withId(R.id.blog_comments)).check(matches(isDisplayed()));
     }
 
+    /**
+     * This test creates an account, logs out, logs in again
+     * @throws Exception
+     */
     @Test
     public void testAccountBox() throws Exception {
+
         openSideNav();
         if (client.getAuthenticationManager().getAuthenticatedUser() != null) {
             onView(withId(R.id.logout)).perform(click());
@@ -130,7 +135,7 @@ public class IntegrationTests {
    }
 
     /**
-     * Verifies contact form and push notifications!!
+     * We log in, contact form, and then verify the push message is received.
      * @throws Exception
      */
     @Test
@@ -141,27 +146,20 @@ public class IntegrationTests {
         }
         onView(withId(R.id.signin)).perform(click());
         authenticateIfNecessary();
-
         onView(withText("Contact")).perform(click());
         onView(withId(R.id.name)).perform(typeText(testState.TEST_USERNAME));
         onView(withId(R.id.email)).perform(typeText("adamhammer2@gmail.com"));
         onView(withId(R.id.phone)).perform(typeText("5551234455"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.body)).perform(typeText(testState.TEST_POST_BODY));
-
         PushNotifiedNewMessageWaiter waiter = new PushNotifiedNewMessageWaiter();
         MySaasaApplication.getService().bus.register(waiter);
-
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
         openSideNav();
-        Thread.sleep(10000);
         onView(withText("Messages")).perform(click());
         onView(withText("App Feedback")).perform(click());
-        Thread.sleep(10000);
-
         assertTrue(waiter.getResult());
-
     }
 
     public static class PushNotifiedNewMessageWaiter {
@@ -171,7 +169,6 @@ public class IntegrationTests {
         public void event(PushNotifiedNewMessageEvent event) {
             result = true;
         }
-
         public boolean getResult() {
             return result;
         }
@@ -219,14 +216,5 @@ public class IntegrationTests {
             }
         }
     }
-
-    private void clickOnTheCommentButton() {
-        onView(withId(R.id.action_comment)).perform(click());
-    }
-
-    private void clickOnTheFirstArticle() {
-        onData(anything()).inAdapterView(withId(R.id.content_frame)).atPosition(0).perform(click());
-    }
-
 
 }

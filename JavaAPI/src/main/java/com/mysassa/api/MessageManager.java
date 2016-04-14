@@ -1,20 +1,16 @@
 package com.mysassa.api;
 
 import com.mysassa.api.model.Message;
+import com.mysassa.api.model.User;
 import com.mysassa.api.observables.ModelMySaasaObservable;
 import com.mysassa.api.observables.StandardMySaasaObservable;
 import com.mysassa.api.responses.GetMessageCountResponse;
 import com.mysassa.api.responses.GetMessagesResponse;
 import com.mysassa.api.responses.GetThreadResponse;
-import com.mysassa.api.responses.RegisterGcmKeyResponse;
 import com.mysassa.api.responses.ReplyMessageResponse;
 import com.mysassa.api.responses.SendMessageResponse;
 
-import java.io.IOException;
-
 import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.http.Field;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -24,9 +20,11 @@ import rx.schedulers.Schedulers;
  */
 public class MessageManager {
     private final MySaasaClient mySaasa;
+    private final MySaasaMessageStorage messageStore;
 
     public MessageManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
+        messageStore = new InMemoryMessageStorage(mySaasaClient);
     }
 
 
@@ -57,7 +55,10 @@ public class MessageManager {
         return Observable.create(new ModelMySaasaObservable<Message, GetThreadResponse>(mySaasa, true) {
             @Override
             public void processItems(GetThreadResponse response, Subscriber<? super Message> subscriber) {
-                for (Message m:response.data) subscriber.onNext(m);
+                for (Message m:response.data) messageStore.storeMessage(m);
+                for (Message message : messageStore.getMessageThread(m))
+                    subscriber.onNext(message);
+
                 subscriber.onCompleted();
             }
 
@@ -66,6 +67,19 @@ public class MessageManager {
                 return mySaasa.gateway.getThread(m.id);
             }
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
+    }
+
+    /**
+     * Checks the status of the message store and returns a error if there is.
+     * @param subscriber
+     * @return
+     */
+    private boolean doesMessageStoreExist(Subscriber<? super Message> subscriber) {
+        if (messageStore == null) {
+            subscriber.onError(new RuntimeException("Message Manager requires a MessageStore. Call setMessageStore() on authentication client" ));
+            return true;
+        }
+        return false;
     }
 
     public Observable<Message> getMessages() {
@@ -77,7 +91,18 @@ public class MessageManager {
 
             @Override
             public void processItems(GetMessagesResponse response, Subscriber<? super Message> subscriber) {
-                for (Message m:response.data) subscriber.onNext(m);
+                if (!doesMessageStoreExist(subscriber)) return;
+
+                User user = mySaasa
+                        .getAuthenticationManager()
+                        .getAuthenticatedUser();
+
+                messageStore.storeMessages(response.data);
+
+
+                for (Message m : messageStore.getRootMessages(user))
+                    subscriber.onNext(m);
+
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
@@ -91,4 +116,5 @@ public class MessageManager {
             }
         }).subscribeOn(Schedulers.io() );
     }
+
 }
