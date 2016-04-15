@@ -11,7 +11,7 @@ import rx.Subscriber;
  * Created by Adam on 3/26/2016.
  */
 public abstract class  StandardMySaasaObservable<T extends SimpleResponse> implements Observable.OnSubscribe<T>{
-    private final MySaasaClient mySaasa;
+    private final MySaasaClient mySaasa;  
     private final boolean authenticate;
     private T response;
 
@@ -26,12 +26,6 @@ public abstract class  StandardMySaasaObservable<T extends SimpleResponse> imple
     @Override
     public void call(Subscriber<? super T> subscriber) {
         if (!subscriber.isUnsubscribed()) {
-
-            if (response != null) {
-                handleResponse(subscriber);
-                return;
-            }
-
             Call<T> call = getNetworkCall();
 
             try {

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Contact"
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_gravity="center_horizontal" />
 
     <EditText

@@ -11,13 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
-import com.mysaasa.PushNotifiedNewMessageEvent;
 import com.mysassa.R;
-import com.mysassa.api.messages.NewMessage;
+import com.mysassa.api.messages.NewMessageInMemoryEvent;
 import com.mysassa.api.model.Message;
 
 import java.util.List;
@@ -72,7 +70,7 @@ public class ActivityChat extends Activity {
     }
 
     @Subscribe
-    public void onNewMessageReceived(NewMessage event) {
+    public void onNewMessageReceived(NewMessageInMemoryEvent event) {
         refreshMessageThread();
     }
 

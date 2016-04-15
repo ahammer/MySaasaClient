@@ -1,6 +1,6 @@
 package com.mysassa.api;
 
-import com.mysassa.api.messages.NewMessage;
+import com.mysassa.api.messages.NewMessageInMemoryEvent;
 import com.mysassa.api.model.Message;
 import com.mysassa.api.model.User;
 
@@ -87,7 +87,7 @@ public class InMemoryMessageStorage implements MySaasaMessageStorage{
 
     private void putInIdLookupMap(Message m) {
         if (!idLookupMap.containsKey(m)) {
-            client.bus.post(new NewMessage(m));
+            client.bus.post(new NewMessageInMemoryEvent(m));
         }
         idLookupMap.put(m.id, m);
     }

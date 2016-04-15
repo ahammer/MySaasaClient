@@ -41,6 +41,7 @@ public class ContactView extends FrameLayout {
         addView(onCreateView());
     }
 
+
     public ContactViewCallbacks getCallbacks() {
         return callbacks;
     }
@@ -57,15 +58,20 @@ public class ContactView extends FrameLayout {
         phone = (EditText) v.findViewById(R.id.phone);
         body = (EditText) v.findViewById(R.id.body);
         send = (Button) v.findViewById(R.id.send);
+
+        //Debug click listener
+        v.findViewById(R.id.title).setOnClickListener(v1 -> {
+                setFormEnabled(true);
+                body.setText("Random Body "+System.currentTimeMillis());
+                email.setText("Test"+System.currentTimeMillis()+"@blaaah12321.com");
+                name.setText("Mr Tester"+System.currentTimeMillis());
+                phone.setText("6041234322");
+        });
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validate()) {
-                    name.setEnabled(false);
-                    email.setEnabled(false);
-                    phone.setEnabled(false);
-                    body.setEnabled(false);
-                    send.setEnabled(false);
+                    setFormEnabled(false);
                     if (MySaasaApplication.getService().getAuthenticationManager().getAuthenticatedUser() == null) {
                         SecureRandom random = new SecureRandom();
                         String password = new BigInteger(130, random).toString(32);
@@ -81,6 +87,14 @@ public class ContactView extends FrameLayout {
             }
         });
         return v;
+    }
+
+    private void setFormEnabled(boolean enabled) {
+        name.setEnabled(enabled);
+        email.setEnabled(enabled);
+        phone.setEnabled(enabled);
+        body.setEnabled(enabled);
+        send.setEnabled(enabled);
     }
 
     private void sendMessage() {

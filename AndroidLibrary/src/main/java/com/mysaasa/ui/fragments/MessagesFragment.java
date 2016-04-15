@@ -20,6 +20,7 @@ import com.mysassa.api.model.Message;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
 
 /**
  * Created by Adam on 4/3/2016.
@@ -41,7 +42,9 @@ public class MessagesFragment extends Fragment {
         public void onStart() {
             super.onStart();
             MySaasaApplication.getService().getMessagesManager().getMessages()
-            .observeOn(AndroidSchedulers.mainThread()).toList().subscribe(
+            .observeOn(AndroidSchedulers.mainThread())
+                    .toSortedList((message, message2) -> message2.timeSent.compareTo(message.timeSent))
+                    .subscribe(
             list-> {
                 MessagesFragment.this.list.setAdapter(new BaseAdapter() {
                     @Override

@@ -33,8 +33,7 @@ public class MySaasaApplication extends Application {
     private static final String PROPERTY_APP_VERSION = "APP_VERSION";
     private MySaasaClient mySaasaClient;
     private ApplicationSectionsManager mSectionManager;
-    private MessagesDatabase messagesDatabase;
-
+    private MessageNotificationManager mMessageNotificationManager;
     public static MySaasaApplication getInstance() {
         return instance;
     }
@@ -48,10 +47,9 @@ public class MySaasaApplication extends Application {
     public void onCreate() {
         Mint.initAndStartSession(this, "a8d16bad");
         super.onCreate();
-        messagesDatabase = new MessagesDatabase();
-        messagesDatabase.start(this);
 
         instance = this;
+
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
         mySaasaClient.getAuthenticationManager().setPushIdGenerator(() -> {
@@ -66,14 +64,15 @@ public class MySaasaApplication extends Application {
             return null;
 
         });
-
+        mMessageNotificationManager = new MessageNotificationManager(this, mySaasaClient);
+        mMessageNotificationManager.start();
         autoLogin();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        messagesDatabase.close();
+        mMessageNotificationManager.stop();
     }
 
     public MySaasaClient getMySaasaClient() {

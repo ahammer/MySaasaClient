@@ -27,12 +27,16 @@ public abstract class ModelMySaasaObservable <T, V extends SimpleResponse> imple
     public void call(Subscriber<? super T> subscriber) {
         if (!subscriber.isUnsubscribed()) {
             try {
+                mySaasa.startNetwork();
                 if (authenticate) {     //If authentication required, clear cache
                     mySaasa.getAuthenticationManager().refreshIfNecessary();
                 }
             } catch (Exception e) {
                 subscriber.onError(e);
                 return;
+            } finally {
+                mySaasa.stopNetwork();
+
             }
 
             Call<V> call = getNetworkCall();

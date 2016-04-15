@@ -69,18 +69,6 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 
-    /**
-     * Checks the status of the message store and returns a error if there is.
-     * @param subscriber
-     * @return
-     */
-    private boolean doesMessageStoreExist(Subscriber<? super Message> subscriber) {
-        if (messageStore == null) {
-            subscriber.onError(new RuntimeException("Message Manager requires a MessageStore. Call setMessageStore() on authentication client" ));
-            return true;
-        }
-        return false;
-    }
 
     public Observable<Message> getMessages() {
         return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa, true) {
@@ -91,7 +79,6 @@ public class MessageManager {
 
             @Override
             public void processItems(GetMessagesResponse response, Subscriber<? super Message> subscriber) {
-                if (!doesMessageStoreExist(subscriber)) return;
 
                 User user = mySaasa
                         .getAuthenticationManager()
