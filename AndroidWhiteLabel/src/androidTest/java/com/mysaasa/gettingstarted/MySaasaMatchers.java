@@ -2,8 +2,8 @@ package com.mysaasa.gettingstarted;
 
 import android.support.test.espresso.matcher.BoundedMatcher;
 
-import com.mysassa.api.CommentManager;
-import com.mysassa.api.model.BlogComment;
+import com.mysaasa.api.CommentManager;
+import com.mysaasa.api.model.BlogComment;
 
 import org.hamcrest.Description;
 

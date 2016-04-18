@@ -3,9 +3,8 @@ package com.mysaasa;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 
-import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.Category;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

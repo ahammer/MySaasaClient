@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.mysaasa.ui.views.BlogCommentView;
-import com.mysassa.api.model.BlogComment;
-import com.mysassa.api.model.BlogPost;
+import com.mysaasa.api.model.BlogComment;
+import com.mysaasa.api.model.BlogPost;
 
 import java.util.List;
 

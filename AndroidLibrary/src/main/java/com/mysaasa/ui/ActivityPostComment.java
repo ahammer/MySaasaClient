@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogComment;
-import com.mysassa.api.model.BlogPost;
-import com.mysassa.api.responses.PostCommentResponse;
-import com.mysassa.api.responses.PostReplyResponse;
+import com.mysaasa.api.model.BlogComment;
+import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.api.responses.PostCommentResponse;
+import com.mysaasa.api.responses.PostReplyResponse;
 
 import java.io.Serializable;
 

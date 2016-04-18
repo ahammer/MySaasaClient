@@ -5,7 +5,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mysassa.R;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.Category;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

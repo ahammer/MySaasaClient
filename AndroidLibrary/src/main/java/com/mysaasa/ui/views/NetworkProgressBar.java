@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
-import com.mysassa.api.messages.NetworkStateChange;
+import com.mysaasa.api.messages.NetworkStateChange;
 
 /**
  * Created by Adam on 3/9/2016.

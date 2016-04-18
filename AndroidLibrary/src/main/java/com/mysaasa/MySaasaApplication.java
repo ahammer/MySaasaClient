@@ -1,22 +1,14 @@
 package com.mysaasa;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.google.common.eventbus.EventBus;
-import com.mysaasa.ui.data.MessagesDatabase;
+import com.mysaasa.api.MessageManager;
 import com.mysassa.R;
-import com.mysassa.api.MySaasaClient;
-import com.splunk.mint.Mint;
+import com.mysaasa.api.MySaasaClient;
 
 import java.io.IOException;
 
@@ -45,10 +37,9 @@ public class MySaasaApplication extends Application {
 
     @Override
     public void onCreate() {
-        Mint.initAndStartSession(this, "a8d16bad");
         super.onCreate();
-
         instance = this;
+
 
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));

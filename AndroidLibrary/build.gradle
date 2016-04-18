@@ -44,7 +44,6 @@ dependencies {
 
     compile(project(':JavaAPI'))
     compile files('libs/crouton-1.8.1.jar')
-    compile files('libs/splunk-mint-4.0.8.jar')
     compile 'io.reactivex:rxandroid:+'
     compile 'com.jakewharton:butterknife:+'
     compile 'com.squareup.picasso:picasso:2.3.4'

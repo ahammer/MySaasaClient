@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
@@ -21,9 +20,9 @@ import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysaasa.ui.fragments.BlogCommentsViewer;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogPost;
-import com.mysassa.api.model.Category;
-import com.mysassa.api.model.User;
+import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.api.model.Category;
+import com.mysaasa.api.model.User;
 
 import java.io.Serializable;
 

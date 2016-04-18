@@ -11,13 +11,10 @@ import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
-import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.ActivitySignin;
-import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
-import com.mysassa.api.messages.LoginStateChanged;
-import com.mysassa.api.model.Category;
-import com.mysassa.api.model.User;
+import com.mysaasa.api.messages.LoginStateChanged;
+import com.mysaasa.api.model.User;
 
 /**
  * Created by Adam on 1/4/2015.

@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import com.mysassa.api.MySaasaMessageStorage;
-import com.mysassa.api.model.Message;
-import com.mysassa.api.model.User;
+import com.mysaasa.api.MySaasaMessageStorage;
+import com.mysaasa.api.model.Message;
+import com.mysaasa.api.model.User;
 
 import java.util.List;
 

@@ -1,19 +1,11 @@
 package com.mysaasa;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.mysaasa.ui.ActivityMain;
-import com.mysaasa.ui.SideNavigationCompatibleActivity;
-import com.mysassa.R;
-import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.messages.ThreadUpdatedPushMessage;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.MySaasaClient;
+import com.mysaasa.api.messages.ThreadUpdatedPushMessage;
 
 /**
  * Created by adam on 15-02-13.
@@ -23,16 +15,16 @@ public class ReceiveGCMPush extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //We get a push, that means update messages for now
         MySaasaClient s = MySaasaApplication.getService();
-        Types type;
+        PushMessage type;
         try {
             String sType = intent.getExtras().getString("class");
-            type = Types.valueOf(sType);
+            type = PushMessage.valueOf(sType);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
 
-        //Toast.makeText(context, "Received a push: "+intent, Toast.LENGTH_LONG).show();
+        MySaasaApplication.getService().bus.post(type);
 
         switch (type) {
 
@@ -52,7 +44,7 @@ public class ReceiveGCMPush extends BroadcastReceiver {
         }
     }
 
-    enum Types {MessageCreatedPushMessage,MessageThreadUpdated}
+    public static enum PushMessage {MessageCreatedPushMessage,MessageThreadUpdated}
 
 }
 /**

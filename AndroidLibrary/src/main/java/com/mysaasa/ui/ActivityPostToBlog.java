@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.mysaasa.ApplicationSectionsManager;
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogPost;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.api.model.Category;
 
 import java.io.Serializable;
 

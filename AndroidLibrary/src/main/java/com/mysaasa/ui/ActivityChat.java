@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.messages.NewMessageInMemoryEvent;
-import com.mysassa.api.model.Message;
+import com.mysaasa.api.messages.NewMessageInMemoryEvent;
+import com.mysaasa.api.model.Message;
 
 import java.util.List;
 

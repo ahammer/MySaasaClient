@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogComment;
-import com.mysassa.api.model.BlogPost;
-import com.mysassa.api.model.User;
+import com.mysaasa.api.model.BlogComment;
+import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.api.model.User;
 import com.mysaasa.ui.ActivityPostComment;
 
 import java.util.List;

@@ -18,8 +18,8 @@ import com.mysaasa.ui.sidenav.LeftNavigationFrameLayout;
 import com.mysassa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
-import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.MySaasaClient;
+import com.mysaasa.api.model.Category;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;

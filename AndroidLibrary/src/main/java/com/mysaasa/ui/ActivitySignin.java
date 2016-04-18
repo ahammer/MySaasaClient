@@ -2,15 +2,14 @@ package com.mysaasa.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysassa.api.model.Category;
-import com.mysassa.api.responses.LoginUserResponse;
+import com.mysaasa.api.model.Category;
+import com.mysaasa.api.responses.LoginUserResponse;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;

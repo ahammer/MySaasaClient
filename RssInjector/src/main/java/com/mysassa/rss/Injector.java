@@ -1,7 +1,7 @@
 package com.mysassa.rss;
 
-import com.mysassa.api.responses.LoginUserResponse;
-import com.mysassa.api.MySaasaClient;
+import com.mysaasa.api.responses.LoginUserResponse;
+import com.mysaasa.api.MySaasaClient;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;

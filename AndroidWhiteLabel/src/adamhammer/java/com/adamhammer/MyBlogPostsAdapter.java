@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.mysassa.api.model.BlogPost;
+import com.mysaasa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
 
 import java.util.HashMap;

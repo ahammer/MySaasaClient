@@ -2,7 +2,6 @@ package com.mysaasa.gettingstarted;
 
 import android.support.test.espresso.Espresso;
 
-import android.support.test.espresso.ViewAction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -10,10 +9,11 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.PushNotifiedNewMessageEvent;
+import com.mysaasa.ReceiveGCMPush;
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.views.ContactView;
-import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.model.BlogPost;
+import com.mysaasa.api.MySaasaClient;
+import com.mysaasa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
 
 import org.junit.Before;
@@ -21,6 +21,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.sql.Types;
 import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -159,6 +160,7 @@ public class IntegrationTests {
         openSideNav();
         onView(withText("Messages")).perform(click());
         onView(withText("App Feedback")).perform(click());
+        Thread.sleep(1000);
         assertTrue(waiter.getResult());
     }
 
@@ -166,7 +168,7 @@ public class IntegrationTests {
         private boolean result;
 
         @Subscribe
-        public void event(PushNotifiedNewMessageEvent event) {
+        public void event(ReceiveGCMPush.PushMessage event) {
             result = true;
         }
         public boolean getResult() {

@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 
 import com.mysassa.R;
-import com.mysassa.api.model.ContactInfo;
+import com.mysaasa.api.model.ContactInfo;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

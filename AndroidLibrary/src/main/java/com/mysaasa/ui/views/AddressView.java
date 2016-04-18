@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mysassa.R;
-import com.mysassa.api.model.ContactInfo;
+import com.mysaasa.api.model.ContactInfo;
 
 /**
  * Created by Adam on 4/1/2015.

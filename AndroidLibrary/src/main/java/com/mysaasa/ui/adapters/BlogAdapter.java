@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mysaasa.ui.views.BlogPostListItem;
-import com.mysassa.api.model.BlogPost;
+import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.ui.views.EmptyListItem;
 
 import java.util.Collections;

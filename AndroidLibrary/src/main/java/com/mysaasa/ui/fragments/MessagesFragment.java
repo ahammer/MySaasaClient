@@ -9,18 +9,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityChat;
 import com.mysaasa.ui.views.StandardMessageView;
 import com.mysassa.R;
-import com.mysassa.api.model.Message;
+import com.mysaasa.api.model.Message;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
 
 /**
  * Created by Adam on 4/3/2016.

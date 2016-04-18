@@ -10,19 +10,15 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
-import com.mysaasa.ui.fragments.MessagesFragment;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogPost;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.api.model.Category;
 import com.mysaasa.ui.adapters.BlogAdapter;
 import com.mysaasa.ui.fragments.EmptyListAdapter;
 
@@ -30,10 +26,8 @@ import java.util.List;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**

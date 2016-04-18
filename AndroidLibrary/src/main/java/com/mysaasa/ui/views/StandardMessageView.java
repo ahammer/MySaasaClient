@@ -5,7 +5,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mysassa.R;
-import com.mysassa.api.model.Message;
+import com.mysaasa.api.model.Message;
 
 import java.text.DateFormat;
 import java.util.Locale;

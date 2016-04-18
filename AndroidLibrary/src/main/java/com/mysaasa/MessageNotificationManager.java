@@ -1,13 +1,13 @@
 package com.mysaasa;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
-import com.mysassa.api.MySaasaClient;
-import com.mysassa.api.messages.NewMessageInMemoryEvent;
+import com.mysaasa.api.MySaasaClient;
+import com.mysaasa.api.messages.NewMessageInMemoryEvent;
+import com.mysaasa.api.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +43,14 @@ public class MessageNotificationManager  {
 
     public void start() {
         client.bus.register(this);
+        final User user = client.getAuthenticationManager().getAuthenticatedUser();
+
         subscription = Observable.create(emitter = new emitEventToObservers())
                 .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .debounce(700, TimeUnit.MILLISECONDS)
+                .filter(event -> !event.getMessage().sender.equals(user))
                 .subscribe(this::handleMessage);
     }
 

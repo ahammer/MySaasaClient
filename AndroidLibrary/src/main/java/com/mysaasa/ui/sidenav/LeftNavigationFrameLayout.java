@@ -10,7 +10,7 @@ import android.widget.ListView;
 import com.mysassa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.Category;
 import com.mysaasa.ui.adapters.NavigationDrawerAdapter;
 
 import java.util.List;

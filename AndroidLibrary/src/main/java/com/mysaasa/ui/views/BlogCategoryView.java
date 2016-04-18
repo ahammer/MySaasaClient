@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mysassa.R;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.Category;
 
 /**
  * Created by Adam on 1/2/2015.

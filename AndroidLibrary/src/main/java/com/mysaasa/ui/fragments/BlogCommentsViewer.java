@@ -12,13 +12,11 @@ import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityPostComment;
 import com.mysaasa.ui.adapters.BlogCommentsAdapter;
 import com.mysassa.R;
-import com.mysassa.api.model.BlogComment;
-import com.mysassa.api.model.BlogPost;
+import com.mysaasa.api.model.BlogComment;
+import com.mysaasa.api.model.BlogPost;
 
 import java.util.List;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 

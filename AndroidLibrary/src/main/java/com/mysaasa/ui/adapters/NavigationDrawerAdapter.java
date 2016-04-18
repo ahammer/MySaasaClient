@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
-import com.mysassa.api.model.Category;
+import com.mysaasa.api.model.Category;
 import com.mysaasa.ui.views.BlogCategoryView;
 
 import java.util.Collections;
