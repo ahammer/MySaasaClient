@@ -16,6 +16,7 @@ import com.mysaasa.api.MySaasaClient;
 import com.mysaasa.api.model.BlogPost;
 import com.mysassa.whitelabel.R;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -87,9 +88,13 @@ public class IntegrationTests {
         application = (MySaasaApplication) mActivity.getApplication();
         client = application.getMySaasaClient();
         testState = new TestState();
-        ContactView.GLOBAL_CONTACT_USER_OVERRIDE = testState.TEST_USERNAME;
+
     }
 
+    @After
+    public void tearDown() throws Exception {
+        ContactView.GLOBAL_CONTACT_USER_OVERRIDE = null;
+    }
 
     /**
      * This smoke tests creating a blog post and a comment
@@ -141,6 +146,14 @@ public class IntegrationTests {
      */
     @Test
     public void contact() throws Exception {
+
+        performContact(true);
+    }
+
+    private void performContact(boolean override) throws Exception {
+        if (override) {
+            ContactView.GLOBAL_CONTACT_USER_OVERRIDE = testState.TEST_USERNAME;
+        }
         openSideNav();
         if (client.getAuthenticationManager().getAuthenticatedUser() != null) {
             onView(withId(R.id.logout)).perform(click());

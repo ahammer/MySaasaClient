@@ -44,12 +44,13 @@ public class ReceiveGCMPush extends BroadcastReceiver {
         }
     }
 
-    public static enum PushMessage {MessageCreatedPushMessage,MessageThreadUpdated}
+    public enum PushMessage {MessageCreatedPushMessage,MessageThreadUpdated}
 
 }
 /**
 
- if (!SideNavigationCompatibleActivity.isInForeground()) {
+
+ }if (!SideNavigationCompatibleActivity.isInForeground()) {
  Notification.Builder mBuilder =
  new Notification.Builder(context)
  .setSmallIcon(R.drawable.ic_app)
@@ -74,5 +75,4 @@ public class ReceiveGCMPush extends BroadcastReceiver {
  (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
  mNotificationManager.notify(5005, mBuilder.build());
 
- }
  **/

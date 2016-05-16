@@ -5,10 +5,10 @@ import com.mysaasa.api.model.Message;
 /**
  * Created by adamhammer2 on 2016-04-14.
  */
-public class NewMessageInMemoryEvent {
+public class NewMessageEvent {
     private final Message message;
 
-    public NewMessageInMemoryEvent(Message m) {
+    public NewMessageEvent(Message m) {
         this.message = m;
     }
 

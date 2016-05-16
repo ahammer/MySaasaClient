@@ -1,5 +1,7 @@
 package com.mysaasa.api;
 
+import com.mysaasa.api.messages.NewMessageEvent;
+import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.User;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.Map;
  */
 public class InMemoryMessageStorage implements MySaasaMessageStorage{
     final MySaasaClient client;
-    Map<User,    List<com.mysaasa.api.model.Message>> rootMessageMap   = new HashMap<>();
+    Map<User,    List<Message>> rootMessageMap   = new HashMap<>();
     Map<com.mysaasa.api.model.Message, List<com.mysaasa.api.model.Message>> threadMessageMap = new HashMap<>();
     Map<Long, com.mysaasa.api.model.Message>       idLookupMap      = new HashMap<>();
 
@@ -85,7 +87,7 @@ public class InMemoryMessageStorage implements MySaasaMessageStorage{
 
     private void putInIdLookupMap(com.mysaasa.api.model.Message m) {
         if (!idLookupMap.containsKey(m)) {
-            client.bus.post(new com.mysaasa.api.messages.NewMessageInMemoryEvent(m));
+            client.bus.post(new NewMessageEvent(m));
         }
         idLookupMap.put(m.id, m);
     }

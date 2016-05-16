@@ -15,13 +15,15 @@ import android.widget.TextView;
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysassa.R;
-import com.mysaasa.api.messages.NewMessageInMemoryEvent;
+import com.mysaasa.api.messages.NewMessageEvent;
 import com.mysaasa.api.model.Message;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -37,11 +39,16 @@ public class ActivityChat extends Activity {
     Button reply;
 
     private Message message;
+    private Subscription subscription;
 
     public static void StartChat(Context ctx, Message m) {
+        ctx.startActivity(getChatIntent(ctx,m));
+    }
+
+    public static Intent getChatIntent(Context ctx, Message m) {
         Intent intent = new Intent(ctx, ActivityChat.class);
         intent.putExtra(EXTRA_MESSAGE, m);
-        ctx.startActivity(intent);
+        return intent;
     }
 
     @Override
@@ -61,18 +68,24 @@ public class ActivityChat extends Activity {
         super.onResume();
         refreshMessageThread();
         MySaasaApplication.getService().bus.register(this);
+        subscription = MySaasaApplication.getService()
+                .getMessagesManager()
+                .getMessagesObservable()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe(event -> {
+                    refreshMessageThread();
+                });
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MySaasaApplication.getService().bus.unregister(this);
+        subscription.unsubscribe();
     }
 
-    @Subscribe
-    public void onNewMessageReceived(NewMessageInMemoryEvent event) {
-        refreshMessageThread();
-    }
+
 
     private void submitPost() {
         MySaasaApplication.getService().getMessagesManager()

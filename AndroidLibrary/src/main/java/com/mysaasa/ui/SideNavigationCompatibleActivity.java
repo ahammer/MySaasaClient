@@ -36,6 +36,12 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         return FOREGROUND_REF_COUNT > 0;
     }
 
+    public static Context foregroundContext = null;
+
+    public static Context getForegroundContext() {
+        return foregroundContext;
+    }
+
     public static final int REQUEST_CODE_SIGNIN = 10001;
     protected DrawerLayout mDrawerLayout;
     protected ActionBarDrawerToggle mDrawerToggle;
@@ -82,6 +88,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
             }
         },filter);
         FOREGROUND_REF_COUNT++;
+        foregroundContext = this;
         MySaasaApplication.getService().bus.register(this);
         setProgressBarIndeterminate(MySaasaApplication.getService().isNetworkBusy());
     }
@@ -89,6 +96,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        foregroundContext = null;
         unregisterReceiver(connectivityChangedReceiver);
         FOREGROUND_REF_COUNT--;
         MySaasaApplication.getService().bus.unregister(this);

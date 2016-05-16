@@ -1,11 +1,18 @@
 package com.mysaasa.api;
 
+import com.google.common.eventbus.Subscribe;
+import com.mysaasa.api.messages.NewMessageEvent;
+import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.User;
 import com.mysaasa.api.observables.ModelMySaasaObservable;
 import com.mysaasa.api.responses.GetMessageCountResponse;
 import com.mysaasa.api.responses.GetMessagesResponse;
+import com.mysaasa.api.responses.GetThreadResponse;
 import com.mysaasa.api.responses.ReplyMessageResponse;
 import com.mysaasa.api.responses.SendMessageResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import rx.Observable;
@@ -18,10 +25,20 @@ import rx.schedulers.Schedulers;
 public class MessageManager {
     private final MySaasaClient mySaasa;
     private final MySaasaMessageStorage messageStore;
+    private final MessageEventEmitter emitter;
+    private final Observable<NewMessageEvent> messageEventObservable = Observable.create(emitter = new MessageEventEmitter());
 
     public MessageManager(MySaasaClient mySaasaClient) {
         this.mySaasa = mySaasaClient;
         messageStore = new InMemoryMessageStorage(mySaasaClient);
+    }
+
+    public void start() {
+        mySaasa.bus.register(emitter);
+    }
+
+    public void stop() {
+        mySaasa.bus.unregister(emitter);
     }
 
 
@@ -48,12 +65,12 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io());
     }
 
-    public Observable<com.mysaasa.api.model.Message> getMessageThread(final com.mysaasa.api.model.Message m) {
-        return Observable.create(new ModelMySaasaObservable<com.mysaasa.api.model.Message, com.mysaasa.api.responses.GetThreadResponse>(mySaasa, true) {
+    public Observable<Message> getMessageThread(final Message m) {
+        return Observable.create(new ModelMySaasaObservable<Message, com.mysaasa.api.responses.GetThreadResponse>(mySaasa, true) {
             @Override
-            public void processItems(com.mysaasa.api.responses.GetThreadResponse response, Subscriber<? super com.mysaasa.api.model.Message> subscriber) {
-                for (com.mysaasa.api.model.Message m:response.data) messageStore.storeMessage(m);
-                for (com.mysaasa.api.model.Message message : response.data)
+            public void processItems(GetThreadResponse response, Subscriber<? super Message> subscriber) {
+                for (Message m:response.data) messageStore.storeMessage(m);
+                for (Message message : response.data)
                     subscriber.onNext(message);
 
                 subscriber.onCompleted();
@@ -67,15 +84,15 @@ public class MessageManager {
     }
 
 
-    public Observable<com.mysaasa.api.model.Message> getMessages() {
-        return Observable.create(new ModelMySaasaObservable<com.mysaasa.api.model.Message, GetMessagesResponse>(mySaasa, true) {
+    public Observable<Message> getMessages() {
+        return Observable.create(new ModelMySaasaObservable<Message, GetMessagesResponse>(mySaasa, true) {
             @Override
             protected Call<GetMessagesResponse> getNetworkCall() {
                 return mySaasa.gateway.getMessages(0,100,"timeSent","DESC");
             }
 
             @Override
-            public void processItems(GetMessagesResponse response, Subscriber<? super com.mysaasa.api.model.Message> subscriber) {
+            public void processItems(GetMessagesResponse response, Subscriber<? super Message> subscriber) {
 
                 User user = mySaasa
                         .getAuthenticationManager()
@@ -84,7 +101,7 @@ public class MessageManager {
                 messageStore.storeMessages(response.data);
 
 
-                for (com.mysaasa.api.model.Message m : messageStore.getRootMessages(user))
+                for (Message m : messageStore.getRootMessages(user))
                     subscriber.onNext(m);
 
                 subscriber.onCompleted();
@@ -92,7 +109,7 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 
-    public Observable<com.mysaasa.api.responses.ReplyMessageResponse> replyToMessage(final com.mysaasa.api.model.Message parent, final String s) {
+    public Observable<com.mysaasa.api.responses.ReplyMessageResponse> replyToMessage(final Message parent, final String s) {
         return Observable.create(new com.mysaasa.api.observables.StandardMySaasaObservable<ReplyMessageResponse>(mySaasa, true ) {
             @Override
             protected Call<com.mysaasa.api.responses.ReplyMessageResponse> getNetworkCall() {
@@ -101,4 +118,32 @@ public class MessageManager {
         }).subscribeOn(Schedulers.io() );
     }
 
+
+    public Observable<NewMessageEvent> getMessagesObservable() {
+        return messageEventObservable;
+    }
+
+
+
+    private static class MessageEventEmitter implements Observable.OnSubscribe<NewMessageEvent> {
+        List<Subscriber> subscriberList = new ArrayList<>();
+
+        @Override
+        public void call(Subscriber<? super NewMessageEvent> subscriber) {
+            subscriberList.add(subscriber);
+        }
+
+        @Subscribe
+        public void onNewMessage(NewMessageEvent event) {
+            for (int i=subscriberList.size()-1;i>=0;i--) {
+                if (subscriberList.get(i).isUnsubscribed()) {
+                    subscriberList.remove(i);
+                } else {
+                    subscriberList.get(i).onNext(event);
+                }
+            }
+        }
+
+
+    }
 }
