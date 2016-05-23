@@ -1,5 +1,7 @@
 package com.mysaasa;
 
+import com.google.gson.Gson;
+
 /**
  * An envelope for a push message
  *
@@ -13,15 +15,19 @@ package com.mysaasa;
  * 4) Check if read?
  * 5) If not, fallback behavior
  * @param <T> The type of the contents
+ * @param <V> the type of the Json data
  */
-public class Envelope<T> {
+public class Envelope<T, V> {
+    static final private Gson gson = new Gson();
     final T contents;
     private final String json;
+    private final Class jsonClass;
     boolean opened;
 
-    public Envelope(T contents, String json) {
+    public Envelope(T contents, String json, Class jsonClass) {
         this.contents = contents;
         this.json = json;
+        this.jsonClass = jsonClass;
     }
 
     public T open() {
@@ -29,8 +35,9 @@ public class Envelope<T> {
         return contents;
     }
 
-    public String getJson() {
-        return json;
+
+    public V getObject() {
+        return (V) gson.fromJson(json, jsonClass);
     }
 
     public boolean isOpened() {

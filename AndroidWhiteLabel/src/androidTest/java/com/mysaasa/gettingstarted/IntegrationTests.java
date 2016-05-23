@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.google.common.eventbus.Subscribe;
+import com.mysaasa.Envelope;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.PushNotifiedNewMessageEvent;
 import com.mysaasa.ReceiveGCMPush;
@@ -183,7 +184,7 @@ public class IntegrationTests {
         private boolean result;
 
         @Subscribe
-        public void event(ReceiveGCMPush.PushMessage event) {
+        public void event(Envelope event) {
             result = true;
         }
         public boolean getResult() {

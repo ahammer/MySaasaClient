@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.mysaasa.api.MySaasaClient;
+import com.mysaasa.api.model.Message;
 
 /**
  * Created by adam on 15-02-13.
@@ -29,7 +30,7 @@ public class ReceiveGCMPush extends BroadcastReceiver {
             return;
         }
 
-        Envelope envelope = new Envelope(type, json);
+        Envelope<PushMessage, Message> envelope = new Envelope(type, json, Message.class);
         MySaasaApplication.getService().bus.post(envelope);
         if (!envelope.isOpened()) {
             Toast.makeText(MySaasaApplication.getInstance(), "Message Received (No Foreground): "
