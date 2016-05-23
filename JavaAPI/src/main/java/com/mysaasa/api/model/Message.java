@@ -16,8 +16,8 @@ import java.util.Date;
 public class Message implements Serializable{
     public final long id;
 
-    public final com.mysaasa.api.model.User recipient;
-    public final com.mysaasa.api.model.User sender;
+    public final User recipient;
+    public final User sender;
     public final String title;
     public final String body;
     public final String data;
@@ -93,8 +93,13 @@ public class Message implements Serializable{
             return gson.fromJson(o, Message.class);
     }
 
+
     @Override
     public String toString() {
+        return title+"\n"+body;
+    }
+
+    public String toDebugString() {
         return "Message{" +
                 "id=" + id +
                 ", recipient=" + recipient +

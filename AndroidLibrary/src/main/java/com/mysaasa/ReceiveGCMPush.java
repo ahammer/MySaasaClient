@@ -1,5 +1,8 @@
 package com.mysaasa;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +10,9 @@ import android.widget.Toast;
 
 import com.mysaasa.api.MySaasaClient;
 import com.mysaasa.api.model.Message;
+import com.mysaasa.api.model.PushMessageModel;
+import com.mysaasa.ui.ActivityChat;
+import com.mysassa.R;
 
 /**
  * Created by adam on 15-02-13.
@@ -30,11 +36,17 @@ public class ReceiveGCMPush extends BroadcastReceiver {
             return;
         }
 
-        Envelope<PushMessage, Message> envelope = new Envelope(type, json, Message.class);
+        Envelope<PushMessage, PushMessageModel> envelope = new Envelope(type, json, PushMessageModel.class);
         MySaasaApplication.getService().bus.post(envelope);
         if (!envelope.isOpened()) {
-            Toast.makeText(MySaasaApplication.getInstance(), "Message Received (No Foreground): "
-                    + envelope.toString(), Toast.LENGTH_SHORT).show();
+            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification notification = new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_app)
+                    .setContentTitle("New Message Received")
+                    .setContentText(envelope.getObject().getMessage().toString())
+                    .setContentIntent(PendingIntent.getActivities(context, 0, new Intent[]{ActivityChat.getChatIntent(context, envelope.getObject().getMessage())}, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .build();
+            nm.notify(100, notification);
         }
     }
 
