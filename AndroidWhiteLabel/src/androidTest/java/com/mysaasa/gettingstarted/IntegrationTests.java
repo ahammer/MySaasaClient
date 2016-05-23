@@ -22,7 +22,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.sql.Types;
 import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -32,12 +31,10 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.anything;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertTrue;
@@ -112,11 +109,16 @@ public class IntegrationTests {
         onView(withId(R.id.action_comment)).perform(click());
         onView(withId(R.id.comment)).perform(typeText(testState.TEST_COMMENT_BODY));
         onView(withId(R.id.post)).perform(click());
-        onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_COMMENT_BODY)).inAdapterView(withId(R.id.blog_comments)).onChildView(withId(R.id.reply)).perform(click());
+        onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_COMMENT_BODY))
+                .inAdapterView(withId(R.id.blog_comments))
+                .onChildView(withId(R.id.reply)).perform(click());
+
         onView(withId(R.id.comment)).perform(typeText(testState.TEST_REPLY_BODY));
         onView(withId(R.id.post)).perform(click());
         Thread.sleep(1000); //Next step only shows up after a push and update, so small delay for the push
-        onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_REPLY_BODY)).inAdapterView(withId(R.id.blog_comments)).check(matches(isDisplayed()));
+        onData(MySaasaMatchers.withComment(client.getCommentManager(), testState.TEST_REPLY_BODY))
+                .inAdapterView(withId(R.id.blog_comments))
+                .check(matches(isDisplayed()));
     }
 
     /**
@@ -173,7 +175,7 @@ public class IntegrationTests {
         openSideNav();
         onView(withText("Messages")).perform(click());
         onView(withText("App Feedback")).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(10000);
         assertTrue(waiter.getResult());
     }
 

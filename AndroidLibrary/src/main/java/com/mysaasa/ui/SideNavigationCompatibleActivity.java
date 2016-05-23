@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.mysaasa.MySaasaApplication;
+import com.mysaasa.ui.push.JumpToMessageThreadBehavior;
 import com.mysaasa.ui.sidenav.LeftNavigationFrameLayout;
 import com.mysassa.R;
 import com.mysaasa.ApplicationSectionsManager;
@@ -37,18 +38,18 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
     }
 
     public static Context foregroundContext = null;
-
     public static Context getForegroundContext() {
         return foregroundContext;
     }
 
     public static final int REQUEST_CODE_SIGNIN = 10001;
+
     protected DrawerLayout mDrawerLayout;
     protected ActionBarDrawerToggle mDrawerToggle;
     protected LeftNavigationFrameLayout sidenav;
     private BroadcastReceiver connectivityChangedReceiver;
     public Category selectedCategory;
-
+    private JumpToMessageThreadBehavior pushBehavior = new JumpToMessageThreadBehavior(this);
 
     protected boolean isSidenavOpen() {
         return mDrawerLayout.isDrawerOpen(sidenav);
@@ -91,6 +92,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         foregroundContext = this;
         MySaasaApplication.getService().bus.register(this);
         setProgressBarIndeterminate(MySaasaApplication.getService().isNetworkBusy());
+        pushBehavior.start();
     }
 
     @Override
@@ -100,6 +102,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         unregisterReceiver(connectivityChangedReceiver);
         FOREGROUND_REF_COUNT--;
         MySaasaApplication.getService().bus.unregister(this);
+        pushBehavior.stop();
     }
 
     private void checkNetworkState() {

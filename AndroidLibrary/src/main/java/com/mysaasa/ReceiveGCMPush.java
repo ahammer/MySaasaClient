@@ -3,9 +3,11 @@ package com.mysaasa;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.mysaasa.api.MySaasaClient;
 import com.mysaasa.api.messages.ThreadUpdatedPushMessage;
+import com.mysaasa.ui.ActivityMain;
 
 /**
  * Created by adam on 15-02-13.
@@ -24,55 +26,36 @@ public class ReceiveGCMPush extends BroadcastReceiver {
             return;
         }
 
-        MySaasaApplication.getService().bus.post(type);
-
-        switch (type) {
-
-               case MessageCreatedPushMessage:
-                   HandleNewMessage(context, s);
-                   break;
-               case MessageThreadUpdated:
-                   s.bus.post(new ThreadUpdatedPushMessage());
-                   break;
-        }
-
-    }
-
-    private void HandleNewMessage(Context context, MySaasaClient s) {
-        if (s!=null) {
-            MySaasaApplication.getService().getMessagesManager().getMessages().subscribe();
+        PushEnvelope envelope = new PushEnvelope(type);
+        MySaasaApplication.getService().bus.post(envelope);
+        if (!envelope.isConsumed()) {
+            Toast.makeText(MySaasaApplication.getInstance(), "Message Received (No Foreground): "+type, Toast.LENGTH_SHORT).show();
         }
     }
 
+    //The types of messages we are expecting
     public enum PushMessage {MessageCreatedPushMessage,MessageThreadUpdated}
 
+    //An envelope for the message so we can see if it's been opened
+    public class PushEnvelope {
+        final PushMessage type;
+        boolean consumed;
+
+        public PushMessage getType() {
+            return type;
+        }
+
+        public boolean isConsumed() {
+            return consumed;
+        }
+
+        public void consume() {
+            this.consumed = true;
+        }
+
+        public PushEnvelope(PushMessage type) {
+            this.type = type;
+        }
+
+    }
 }
-/**
-
-
- }if (!SideNavigationCompatibleActivity.isInForeground()) {
- Notification.Builder mBuilder =
- new Notification.Builder(context)
- .setSmallIcon(R.drawable.ic_app)
- .setContentTitle(context.getString(R.string.app_name)+": New Message")
- .setContentText("Click to goto your inbox.");
-
- //Switch to goto Application
-
- Intent resultIntent = new Intent(context, ActivityMain.class);
- resultIntent.putExtra("category", new Category("Messages"));
-
- TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
- stackBuilder.addParentStack(ActivityMain.class);
- stackBuilder.addNextIntent(resultIntent);
- PendingIntent resultPendingIntent =
- stackBuilder.getPendingIntent(
- 0,
- PendingIntent.FLAG_UPDATE_CURRENT
- );
- mBuilder.setContentIntent(resultPendingIntent);
- NotificationManager mNotificationManager =
- (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
- mNotificationManager.notify(5005, mBuilder.build());
-
- **/
