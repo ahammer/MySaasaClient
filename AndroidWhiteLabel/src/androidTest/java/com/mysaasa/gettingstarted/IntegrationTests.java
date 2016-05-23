@@ -213,9 +213,6 @@ public class IntegrationTests {
         onView(withContentDescription("Navigate up")).perform(click());
     }
 
-
-
-
     private void authenticateIfNecessary() throws Exception {
         if (client.getAuthenticationManager().getAuthenticatedUser() == null) {
             if (!testState.createdUser) {

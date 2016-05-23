@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
+import com.mysaasa.Envelope;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ReceiveGCMPush;
 
@@ -18,7 +19,7 @@ public class JumpToMessageThreadBehavior {
     }
 
     @Subscribe
-    public void onNewMessageEvent(ReceiveGCMPush.Envelope<ReceiveGCMPush.PushMessage> message) {
+    public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage> message) {
         ReceiveGCMPush.PushMessage msg = message.open();
         activity.runOnUiThread(() -> {
            Toast.makeText(activity, "Message Received via Behavior: "+msg.toString(), Toast.LENGTH_SHORT).show();

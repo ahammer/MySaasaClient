@@ -36,8 +36,6 @@ public class MySaasaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-
         mSectionManager = new ApplicationSectionsManager(this);
         mySaasaClient = new MySaasaClient(getString(R.string.domain), getResources().getInteger(R.integer.port), getString(R.string.scheme));
         mySaasaClient.getAuthenticationManager().setPushIdGenerator(() -> {
