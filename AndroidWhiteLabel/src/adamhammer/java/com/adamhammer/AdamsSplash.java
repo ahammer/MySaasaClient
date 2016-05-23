@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,13 +30,13 @@ import rx.schedulers.Schedulers;
  * Created by Adam on 1/12/2015.
  */
 public class AdamsSplash extends Fragment {
-    @Bind(R.id.background_image)
+    @BindView(R.id.background_image)
     ZoomingSpaceImageView backgroundImage;
 
-    @Bind(R.id.my_list)
+    @BindView(R.id.my_list)
     ScrollSyncListView myList;
 
-    @Bind(R.id.loading_progressbar)
+    @BindView(R.id.loading_progressbar)
     IntroView loadingProgressbar;
 
     private ScheduledExecutorService executor;
