@@ -67,7 +67,7 @@ public class MessageNotificationManager  {
 
     private void showNotification(Application application, Message m) {
 
-        Context context = SideNavigationCompatibleActivity.getForegroundContext();
+        Context context = MySaasaApplication.getInstance();
         if (context == null) {
             Builder mBuilder =
                     new Builder(application)

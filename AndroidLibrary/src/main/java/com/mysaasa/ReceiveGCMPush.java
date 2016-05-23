@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.mysaasa.api.MySaasaClient;
-import com.mysaasa.api.messages.ThreadUpdatedPushMessage;
-import com.mysaasa.ui.ActivityMain;
 
 /**
  * Created by adam on 15-02-13.
@@ -26,9 +24,9 @@ public class ReceiveGCMPush extends BroadcastReceiver {
             return;
         }
 
-        PushEnvelope envelope = new PushEnvelope(type);
+        Envelope envelope = new Envelope(type);
         MySaasaApplication.getService().bus.post(envelope);
-        if (!envelope.isConsumed()) {
+        if (!envelope.isOpened()) {
             Toast.makeText(MySaasaApplication.getInstance(), "Message Received (No Foreground): "+type, Toast.LENGTH_SHORT).show();
         }
     }
@@ -37,24 +35,21 @@ public class ReceiveGCMPush extends BroadcastReceiver {
     public enum PushMessage {MessageCreatedPushMessage,MessageThreadUpdated}
 
     //An envelope for the message so we can see if it's been opened
-    public class PushEnvelope {
-        final PushMessage type;
-        boolean consumed;
+    public class Envelope<T> {
+        final T contents;
+        boolean opened;
 
-        public PushMessage getType() {
-            return type;
+        public Envelope(T contents) {
+            this.contents = contents;
         }
 
-        public boolean isConsumed() {
-            return consumed;
+        public T open() {
+            opened = true;
+            return contents;
         }
 
-        public void consume() {
-            this.consumed = true;
-        }
-
-        public PushEnvelope(PushMessage type) {
-            this.type = type;
+        public boolean isOpened() {
+            return opened;
         }
 
     }
