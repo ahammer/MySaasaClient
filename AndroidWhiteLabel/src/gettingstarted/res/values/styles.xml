@@ -27,6 +27,11 @@
         <item name="android:layout_marginBottom">3dp</item>
     </style>
 
+    <style name="crouton_new_message" parent="@style/CardView.Dark">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">#555</item>
+    </style>
+
     <style name="mysaasa_title_text">
     </style>
 

@@ -75,4 +75,6 @@ of the system without affecting code.
     <style name="MySaasa_ListItem_Message_Author"></style>
 
     <style name="MySaasa_ListItem_Message_Date"></style>
+
+    <style name="crouton_new_message"></style>
 </resources>
