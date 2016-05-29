@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
+import com.mysaasa.ui.push.RefreshThreadPushMessageBehavior;
 import com.mysassa.R;
 import com.mysaasa.api.messages.NewMessageEvent;
 import com.mysaasa.api.model.Message;
@@ -40,6 +41,7 @@ public class ActivityChat extends Activity {
 
     private Message message;
     private Subscription subscription;
+    private final RefreshThreadPushMessageBehavior refreshThreadPushMessageBehavior = new RefreshThreadPushMessageBehavior(this);
 
     public static void StartChat(Context ctx, Message m) {
         ctx.startActivity(getChatIntent(ctx,m));
@@ -66,6 +68,7 @@ public class ActivityChat extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshThreadPushMessageBehavior.start();
         refreshMessageThread();
         MySaasaApplication.getService().bus.register(this);
         subscription = MySaasaApplication.getService()
@@ -81,6 +84,7 @@ public class ActivityChat extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        refreshThreadPushMessageBehavior.stop();
         MySaasaApplication.getService().bus.unregister(this);
         subscription.unsubscribe();
     }
@@ -97,7 +101,7 @@ public class ActivityChat extends Activity {
         setOptionsEnabled(false);
     }
 
-    private void refreshMessageThread() {
+    public void refreshMessageThread() {
         MySaasaApplication
                 .getService()
                 .getMessagesManager()

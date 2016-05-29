@@ -18,10 +18,10 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
  * Created by Adam on 5/22/2016.
  */
-public class JumpToMessageThreadBehavior {
-    final Activity activity;
+public class RefreshThreadPushMessageBehavior {
+    final ActivityChat activity;
 
-    public JumpToMessageThreadBehavior(Activity activity) {
+    public RefreshThreadPushMessageBehavior(ActivityChat activity) {
         this.activity = activity;
     }
 
@@ -29,19 +29,8 @@ public class JumpToMessageThreadBehavior {
     public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage, PushMessageModel> message) {
         ReceiveGCMPush.PushMessage msg = message.open();
         ViewGroup v = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.crouton_new_message,null);
-
         Message data = message.getObject().getMessage();
-        TextView title = (TextView) v.findViewById(R.id.title);
-        TextView body = (TextView) v.findViewById(R.id.body);
-        title.setText(data.title);
-        body.setText(data.body);
-
-        v.setOnClickListener(v1 -> {
-            ActivityChat.StartChat(activity, data);
-        });
-
-        Crouton.make(activity, v).show();
-
+        activity.refreshMessageThread();
     }
 
     public final void start() {

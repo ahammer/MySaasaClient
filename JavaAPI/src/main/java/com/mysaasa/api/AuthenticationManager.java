@@ -2,6 +2,8 @@ package com.mysaasa.api;
 
 import com.mysaasa.api.messages.LoginStateChanged;
 import com.mysaasa.api.model.User;
+import com.mysaasa.api.observables.CreateAccountObservableBase;
+import com.mysaasa.api.observables.LoginObservableBase;
 import com.mysaasa.api.observables.PushIdGenerator;
 import com.mysaasa.api.responses.LoginUserResponse;
 
@@ -21,8 +23,8 @@ import rx.schedulers.Schedulers;
 public class AuthenticationManager {
     public final MySaasaClient mySaasa;
 
-    private com.mysaasa.api.observables.LoginObservableBase loginObservableBase;
-    private com.mysaasa.api.observables.CreateAccountObservableBase createAccountObservableBase;
+    private LoginObservableBase loginObservableBase;
+    private CreateAccountObservableBase createAccountObservableBase;
     public PushIdGenerator pushIdGenerator;
 
     public AuthenticationManager(MySaasaClient mySaasaClient) {
@@ -36,11 +38,11 @@ public class AuthenticationManager {
      * @param password
      */
     public Observable<LoginUserResponse> login(final String username, final String password) {
-        return Observable.create(loginObservableBase = new com.mysaasa.api.observables.LoginObservableBase(this, username, password)).subscribeOn(Schedulers.io());
+        return Observable.create(loginObservableBase = new LoginObservableBase(this, username, password)).subscribeOn(Schedulers.io());
     }
 
     public Observable<com.mysaasa.api.responses.CreateUserResponse> createAccount(final String username, final String password) {
-        return Observable.create(createAccountObservableBase = new com.mysaasa.api.observables.CreateAccountObservableBase(this, username, password)).subscribeOn(Schedulers.io());
+        return Observable.create(createAccountObservableBase = new CreateAccountObservableBase(this, username, password)).subscribeOn(Schedulers.io());
     }
 
     public void signOut() {
@@ -69,7 +71,6 @@ public class AuthenticationManager {
 
         if (loginObservableBase != null)
             loginObservableBase.getResponse().setData(data);
-
     }
 
     public User getAuthenticatedUser() {

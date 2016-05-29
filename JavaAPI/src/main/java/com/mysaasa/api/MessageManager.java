@@ -70,9 +70,7 @@ public class MessageManager {
             @Override
             public void processItems(GetThreadResponse response, Subscriber<? super Message> subscriber) {
                 for (Message m:response.data) messageStore.storeMessage(m);
-                for (Message message : response.data)
-                    subscriber.onNext(message);
-
+                for (Message message : response.data) subscriber.onNext(message);
                 subscriber.onCompleted();
             }
 

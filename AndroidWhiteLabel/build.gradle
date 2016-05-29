@@ -54,5 +54,7 @@ dependencies {
     androidTestCompile rootProject.espresso
     androidTestCompile rootProject.supportAnnotations
     androidTestCompile rootProject.rules
+    androidTestCompile group: 'com.jayway.awaitility', name: 'awaitility', version: '1.7.0'
+
     compile project(':AndroidLibrary')
 }

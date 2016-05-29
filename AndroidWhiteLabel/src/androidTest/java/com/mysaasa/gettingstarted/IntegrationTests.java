@@ -5,12 +5,12 @@ import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
+import com.jayway.awaitility.Awaitility;
 import com.mysaasa.Envelope;
 import com.mysaasa.MySaasaApplication;
-import com.mysaasa.PushNotifiedNewMessageEvent;
-import com.mysaasa.ReceiveGCMPush;
 import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.views.ContactView;
 import com.mysaasa.api.MySaasaClient;
@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -149,20 +150,26 @@ public class IntegrationTests {
      */
     @Test
     public void contact() throws Exception {
-
         performContact(true);
     }
 
     private void performContact(boolean override) throws Exception {
+        announce("Testing contact form");
         if (override) {
+            announce("Over-riding target user");
             ContactView.GLOBAL_CONTACT_USER_OVERRIDE = testState.TEST_USERNAME;
         }
+
         openSideNav();
         if (client.getAuthenticationManager().getAuthenticatedUser() != null) {
+            announce("Logging out");
             onView(withId(R.id.logout)).perform(click());
         }
+
         onView(withId(R.id.signin)).perform(click());
         authenticateIfNecessary();
+
+        announce("Trying to contact");
         onView(withText("Contact")).perform(click());
         onView(withId(R.id.name)).perform(typeText(testState.TEST_USERNAME));
         onView(withId(R.id.email)).perform(typeText("adamhammer2@gmail.com"));
@@ -173,11 +180,30 @@ public class IntegrationTests {
         MySaasaApplication.getService().bus.register(waiter);
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
-        openSideNav();
-        onView(withText("Messages")).perform(click());
-        onView(withText("App Feedback")).perform(click());
-        Thread.sleep(10000);
-        assertTrue(waiter.getResult());
+        if (override) {
+            openSideNav();
+            onView(withText("Messages")).perform(click());
+
+            //This is ambiguous view because it's displayed twice (once in notification, once in the messages list)
+            //onData(allOf(withText("App Feedback"), withParent(withId(R.id.list)))).perform(click());
+            Awaitility.await().atMost(10, TimeUnit.SECONDS).until(waiter::getResult);
+            assertTrue(waiter.getResult());
+        }
+    }
+
+    private void announce(String s) {
+        mActivity.runOnUiThread(new Runnable() {
+            public Toast toast;
+            @Override
+            public void run() {
+                if (toast != null) {
+                    toast.setText(s);
+                } else {
+                    toast = Toast.makeText(mActivity, s, Toast.LENGTH_SHORT);
+                }
+                toast.show();
+            }
+        });
     }
 
     public static class PushNotifiedNewMessageWaiter {
@@ -211,12 +237,14 @@ public class IntegrationTests {
     }
 
     private void openSideNav() {
+        announce("Opening side nav");
         onView(withContentDescription("Navigate up")).perform(click());
     }
 
     private void authenticateIfNecessary() throws Exception {
         if (client.getAuthenticationManager().getAuthenticatedUser() == null) {
             if (!testState.createdUser) {
+                announce("Creating User");
                 onView(withId(R.id.username)).perform(click()).perform(typeText(testState.TEST_USERNAME));
                 onView(withId(R.id.password)).perform(click()).perform(typeText(testState.TEST_PASSWORD));
                 onView(withId(R.id.password_repeat)).perform(click()).perform(typeText(testState.TEST_PASSWORD));
@@ -224,6 +252,7 @@ public class IntegrationTests {
                 assertTrue(client.getAuthenticationManager().getAuthenticatedUser() != null);
                 testState.createdUser = true;
             } else {
+                announce("Signing in");
                 onView(withId(R.id.username)).perform(click()).perform(typeText(testState.TEST_USERNAME));
                 onView(withId(R.id.password)).perform(click()).perform(typeText(testState.TEST_PASSWORD));
                 onView(withId(R.id.button_login)).perform(click());
