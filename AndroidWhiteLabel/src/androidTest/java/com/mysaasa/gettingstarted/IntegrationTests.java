@@ -181,11 +181,8 @@ public class IntegrationTests {
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.send)).perform(click());
         if (override) {
-            openSideNav();
-            onView(withText("Messages")).perform(click());
-
-            //This is ambiguous view because it's displayed twice (once in notification, once in the messages list)
-            //onData(allOf(withText("App Feedback"), withParent(withId(R.id.list)))).perform(click());
+            //We wait for message to come back in to ourself
+            //This is GCM 3rd party push, so if that fails or queus this test may fail
             Awaitility.await().atMost(10, TimeUnit.SECONDS).until(waiter::getResult);
             assertTrue(waiter.getResult());
         }
