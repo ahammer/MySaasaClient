@@ -71,12 +71,10 @@ public class MessagesFragment extends Fragment {
             e->{
                 Crouton.makeText(getActivity(), "Error loading messages: " + e.getMessage(), Style.ALERT).show();
             });
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Message message = (Message) parent.getAdapter().getItem(position);
-                    ActivityChat.StartChat(getActivity(), message);
-                }
+
+            list.setOnItemClickListener((parent, view, position, id) -> {
+                Message message = (Message) parent.getAdapter().getItem(position);
+                ActivityChat.StartChat(getActivity(), message);
             });
         }
 }

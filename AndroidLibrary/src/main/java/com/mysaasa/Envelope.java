@@ -15,19 +15,13 @@ import com.google.gson.Gson;
  * 4) Check if read?
  * 5) If not, fallback behavior
  * @param <T> The type of the contents
- * @param <V> the type of the Json data
  */
-public class Envelope<T, V> {
-    static final private Gson gson = new Gson();
+public class Envelope<T> {
     final T contents;
-    private final String json;
-    private final Class jsonClass;
     boolean opened;
 
-    public Envelope(T contents, String json, Class jsonClass) {
+    public Envelope(T contents) {
         this.contents = contents;
-        this.json = json;
-        this.jsonClass = jsonClass;
     }
 
     public T open() {
@@ -36,9 +30,6 @@ public class Envelope<T, V> {
     }
 
 
-    public V getObject() {
-        return (V) gson.fromJson(json, jsonClass);
-    }
 
     public boolean isOpened() {
         return opened;
@@ -48,7 +39,6 @@ public class Envelope<T, V> {
     public String toString() {
         return "Envelope{" +
                 "contents=" + contents +
-                ", json='" + json + '\'' +
                 ", opened=" + opened +
                 '}';
     }

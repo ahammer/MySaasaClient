@@ -3,6 +3,7 @@ package com.mysaasa.ui.push;
 import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.eventbus.Subscribe;
 import com.mysaasa.Envelope;
@@ -26,11 +27,12 @@ public class RefreshThreadPushMessageBehavior {
     }
 
     @Subscribe
-    public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage, PushMessageModel> message) {
-        ReceiveGCMPush.PushMessage msg = message.open();
-        ViewGroup v = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.crouton_new_message,null);
-        Message data = message.getObject().getMessage();
-        activity.refreshMessageThread();
+    public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage> message) {
+        activity.runOnUiThread(()->{
+            Toast.makeText(activity, "Should I refresh thread", Toast.LENGTH_SHORT).show();
+            ReceiveGCMPush.PushMessage msg = message.open();
+            activity.refreshMessageThread();
+        });
     }
 
     public final void start() {

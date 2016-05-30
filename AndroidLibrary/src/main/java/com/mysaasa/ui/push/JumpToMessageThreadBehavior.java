@@ -26,18 +26,19 @@ public class JumpToMessageThreadBehavior {
     }
 
     @Subscribe
-    public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage, PushMessageModel> message) {
+    public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage> message) {
         ReceiveGCMPush.PushMessage msg = message.open();
         ViewGroup v = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.crouton_new_message,null);
 
-        Message data = message.getObject().getMessage();
+
         TextView title = (TextView) v.findViewById(R.id.title);
         TextView body = (TextView) v.findViewById(R.id.body);
-        title.setText(data.title);
-        body.setText(data.body);
+
+        title.setText("New Message");
+        body.setText("Need to retrieve");
 
         v.setOnClickListener(v1 -> {
-            ActivityChat.StartChat(activity, data);
+            //ActivityChat.StartChat(activity, data);
         });
 
         Crouton.make(activity, v).show();
