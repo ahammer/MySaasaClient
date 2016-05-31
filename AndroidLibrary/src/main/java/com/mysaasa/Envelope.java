@@ -2,6 +2,8 @@ package com.mysaasa;
 
 import com.google.gson.Gson;
 
+import java.util.Map;
+
 /**
  * An envelope for a push message
  *
@@ -18,10 +20,12 @@ import com.google.gson.Gson;
  */
 public class Envelope<T> {
     final T contents;
+    private final Map<String, String> data;
     boolean opened;
 
-    public Envelope(T contents) {
+    public Envelope(T contents, Map<String, String> data) {
         this.contents = contents;
+        this.data = data;
     }
 
     public T open() {
@@ -29,7 +33,9 @@ public class Envelope<T> {
         return contents;
     }
 
-
+    public Map<String, String> getData() {
+        return data;
+    }
 
     public boolean isOpened() {
         return opened;

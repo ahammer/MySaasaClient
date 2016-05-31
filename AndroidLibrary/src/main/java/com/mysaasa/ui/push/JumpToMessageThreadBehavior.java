@@ -10,10 +10,15 @@ import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ReceiveGCMPush;
 import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.PushMessageModel;
+import com.mysaasa.api.responses.GetMessageByIdResponse;
 import com.mysaasa.ui.ActivityChat;
 import com.mysassa.R;
 
+import java.io.IOException;
+import java.util.Map;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import retrofit2.Call;
 
 /**
  * Created by Adam on 5/22/2016.
@@ -27,21 +32,41 @@ public class JumpToMessageThreadBehavior {
 
     @Subscribe
     public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage> message) {
-        ReceiveGCMPush.PushMessage msg = message.open();
-        ViewGroup v = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.crouton_new_message,null);
+        new Thread(()->{
+            ReceiveGCMPush.PushMessage msg = message.open();
+            final Map<String, String> data = message.getData();
+            Call<GetMessageByIdResponse> call = MySaasaApplication
+                    .getService()
+                    .getGateway()
+                    .getMessageById(Long.valueOf(data.get("id")));
+
+            Message m = null;
+            try {
+                m = call.execute().body().getData();
+            } catch (IOException e) {
+                return;
+            }
+            final Message finalM = m;
+
+            activity.runOnUiThread(()->{
+                ViewGroup v = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.crouton_new_message,null);
+                TextView title = (TextView) v.findViewById(R.id.title);
+                TextView body = (TextView) v.findViewById(R.id.body);
+
+                title.setText(data.get("title"));
+                body.setText(data.get("sender"));
 
 
-        TextView title = (TextView) v.findViewById(R.id.title);
-        TextView body = (TextView) v.findViewById(R.id.body);
 
-        title.setText("New Message");
-        body.setText("Need to retrieve");
+                v.setOnClickListener(v1 -> {
+                    ActivityChat.StartChat(activity, finalM);
+                });
 
-        v.setOnClickListener(v1 -> {
-            //ActivityChat.StartChat(activity, data);
-        });
+                Crouton.make(activity, v).show();
 
-        Crouton.make(activity, v).show();
+            });
+
+        }).start();
 
     }
 
