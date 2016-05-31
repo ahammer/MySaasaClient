@@ -59,7 +59,7 @@ public class JumpToMessageThreadBehavior {
 
 
                 v.setOnClickListener(v1 -> {
-                    ActivityChat.StartChat(activity, finalM);
+                    ActivityChat.StartChat(activity, finalM.messageThreadRoot != null?finalM.messageThreadRoot:finalM);
                 });
 
                 Crouton.make(activity, v).show();

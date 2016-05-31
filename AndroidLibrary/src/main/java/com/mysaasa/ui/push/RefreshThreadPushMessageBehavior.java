@@ -29,7 +29,6 @@ public class RefreshThreadPushMessageBehavior {
     @Subscribe
     public void onNewMessageEvent(Envelope<ReceiveGCMPush.PushMessage> message) {
         activity.runOnUiThread(()->{
-            Toast.makeText(activity, "Should I refresh thread", Toast.LENGTH_SHORT).show();
             ReceiveGCMPush.PushMessage msg = message.open();
             activity.refreshMessageThread();
         });
