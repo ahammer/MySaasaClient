@@ -51,6 +51,7 @@ public class AdamsSplash extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.adam_splash,null);
         ButterKnife.bind(this, vg);
+
         backgroundImage.setCurrentTransition(0);
         myList.setDivider(null);
         myList.setDividerHeight(0);

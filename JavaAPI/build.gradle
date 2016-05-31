@@ -11,7 +11,6 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
     testCompile 'com.jayway.awaitility:awaitility:1.6.0'
-    //compile('com.google.http-client:google-http-client:1.19.0')
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
     compile 'com.google.guava:guava:18.+'
     compile 'io.reactivex:rxjava:+'

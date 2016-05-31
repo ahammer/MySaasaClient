@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
 
 repositories {
     mavenCentral()
@@ -48,6 +50,8 @@ android {
 dependencies {
     // App's dependencies, including test
     compile rootProject.supportAnnotations
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
 
     // Testing-only dependencies
     androidTestCompile rootProject.testRunner
