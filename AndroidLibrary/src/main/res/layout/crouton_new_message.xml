@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    style="@style/crouton_new_message">
+    style="@style/mysaasa_crouton_new_message">
     <LinearLayout
         android:layout_margin="10dp"
         android:layout_width="match_parent"

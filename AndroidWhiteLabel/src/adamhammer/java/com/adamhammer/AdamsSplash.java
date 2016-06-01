@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
  */
 public class AdamsSplash extends Fragment {
     @BindView(R.id.background_image)
-    ZoomingSpaceImageView backgroundImage;
+    ParallalaxImageView backgroundImage;
 
     @BindView(R.id.my_list)
     ScrollSyncListView myList;
@@ -51,10 +51,7 @@ public class AdamsSplash extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.adam_splash,null);
         ButterKnife.bind(this, vg);
-
         backgroundImage.setCurrentTransition(0);
-        myList.setDivider(null);
-        myList.setDividerHeight(0);
         updateList();
         return vg;
     }
@@ -123,7 +120,6 @@ public class AdamsSplash extends Fragment {
         myList.setAdapter(new JoiningAdapter(new MyPhotosAdapter(), new MyBlogPostsAdapter(blogPosts)));
         if (headerView != null) myList.removeHeaderView(headerView);
         myList.addHeaderView(headerView = new HeaderView(getActivity()));
-
         if (contactView != null) myList.removeFooterView(contactView);
         myList.addFooterView(contactView = new ContactView(getActivity()));
         contactView.setBackgroundResource(R.drawable.dark_panel);

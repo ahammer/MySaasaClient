@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="15dp"
         android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
         android:src="@drawable/headshot"/>
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/business_card"
+        style="@style/CardView.Light"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_alignParentRight="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:layout_marginRight="10dp"
+        >
+
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             style="@style/headerText"
+            android:textColor="#333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Adam Hammer"
-            android:id="@+id/textView2"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"/>
+            android:id="@+id/textView2" />
 
         <TextView
             style="@style/headerText"
+            android:textColor="#777"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Web/Server/Mobile Developer"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true"/>
+            android:text="Software Architect"
+            android:id="@+id/textView3"/>
 
         <TextView
             style="@style/headerText"
+            android:textColor="#777"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Vancouver, BC, Canada"
-            android:id="@+id/textView4"
-            android:layout_below="@+id/textView3"
-            android:layout_alignStart="@+id/textView2"/>
+            android:id="@+id/textView4" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView4"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            >
-            <TextView
-                style="@style/headerText"
-                android:gravity="center"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="(604) 339-2620"
-                android:id="@+id/phone"
-                android:autoLink="phone"
+        <TextView
+            android:layout_marginTop="5dp"
+            style="@style/headerText"
+            android:textColorLink="#E52"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(604) 339-2620"
+            android:id="@+id/phone"
+            android:autoLink="phone"
+            />
 
-                android:layout_gravity="center_vertical"/>
+        <TextView
+            style="@style/headerText"
+            android:layout_marginTop="5dp"
+            android:textColorLink="#E52"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="adam@metalrain.ca"
+            android:id="@+id/email"
+            android:autoLink="email"
+            android:layout_marginBottom="10dp"
+            />
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <TextView
 
-            <TextView
-                style="@style/headerText"
-                android:gravity="center"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="adam@metalrain.ca"
-                android:id="@+id/email"
-                android:autoLink="email"
-                android:layout_gravity="center_vertical"/>
+        android:id="@+id/resume_title"
+        android:layout_below="@id/business_card"
+        android:text="Resume"
 
-        </LinearLayout>
 
-    </RelativeLayout>
-</LinearLayout>
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:textColor="#FFF"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_gravity="center_horizontal"/>
+</RelativeLayout>

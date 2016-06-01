@@ -1,13 +1,17 @@
 package com.adamhammer;
 
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mysaasa.api.model.BlogPost;
+import com.mysaasa.ui.views.BlogPostListItem;
+import com.mysaasa.ui.views.BlogPostView;
 import com.mysassa.whitelabel.R;
 
 import java.util.HashMap;
@@ -42,18 +46,15 @@ class MyBlogPostsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        TextView tv = null;
-        if (view != null && view instanceof TextView)
-            tv = (TextView)view;
-        else
-            tv = new TextView(viewGroup.getContext());
-        if (!mCachedText.containsKey(blogPosts.get(i))) {
-            mCachedText.put(blogPosts.get(i), Html.fromHtml(blogPosts.get(i).body));
+        BlogPostView bpli = null;
+        if (view instanceof BlogPostListItem) {
+            bpli = (BlogPostView) view;
         }
-        tv.setText(mCachedText.get(blogPosts.get(i)));
 
-        tv.setBackgroundResource(R.drawable.dark_panel);
-        tv.setPadding(50, 50, 50, 50);
-        return tv;
+        if (bpli == null) {
+            bpli = new BlogPostView(viewGroup.getContext());
+        }
+        bpli.setModel((BlogPost) getItem(i));
+        return bpli;
     }
 }

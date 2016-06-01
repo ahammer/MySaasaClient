@@ -20,7 +20,6 @@ public class ScrollSyncListView extends ListView {
 
     public float getScrollYPercentage() {
         int extent = computeHorizontalScrollExtent();
-
         return (float)computeVerticalScrollOffset()/(computeVerticalScrollRange()-computeVerticalScrollExtent());
     }
 

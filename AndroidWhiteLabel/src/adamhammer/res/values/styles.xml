@@ -92,8 +92,7 @@
         <item name="android:background">@drawable/comment_box</item>
     </style>
     <style name="headerText">
-        <item name="android:background">@drawable/dark_panel</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">5dp</item>
     </style>
 
     <style name="MySaasa_ListItem_Message"></style>
@@ -113,6 +112,34 @@
     <style name="MySaasa_ListItem_Message_Date">
         <item name="android:textColor">#AFFF</item>
         <item name="android:textSize">9sp</item>
+    </style>
+
+
+    <style name="mysaasa_view_blog_post" parent="@style/CardView.Light">
+        <item name="cardMaxElevation">5dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="android:layout_margin">5dp</item>
+
+
+    </style>
+
+    <style name="mysaasa_view_blog_post_content">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="mysaasa_view_blog_post_title" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="mysaasa_view_blog_post_author">
+        <item name="android:textColor">#000</item>
+        <item name="android:visibility">gone</item>
+
+    </style>
+
+    <style name="mysaasa_view_blog_post_body">
+        <item name="android:textColor">#000</item>
     </style>
 
 

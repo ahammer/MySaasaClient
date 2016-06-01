@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -26,7 +27,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
- * This is the base activity, it just will do some basic stuff like grab a reference to the service, etc. Bind ContactViewCallbacks for over-riding
+ * This is the base activity, it just will do some basic stuff like grab a refere  nce to the service, etc. Bind ContactViewCallbacks for over-riding
  * <p/>
  * Created by administrator on 2014-06-30.
  */
@@ -122,8 +123,11 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
             mDrawerLayout.setDrawerListener(mDrawerToggle);
             mDrawerLayout.setFocusableInTouchMode(false);
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+            }
         }
     }
 

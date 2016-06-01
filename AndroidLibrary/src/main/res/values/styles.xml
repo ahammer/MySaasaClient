@@ -57,7 +57,6 @@ of the system without affecting code.
     </style>
 
     <style name="MySaasaCardViewDark" parent="@style/CardView">
-
         <item name="cardBackgroundColor">@color/cardview_dark_background</item>
         <item name="cardCornerRadius">@dimen/cardview_default_radius</item>
         <item name="cardElevation">@dimen/cardview_default_elevation</item>
@@ -72,9 +71,21 @@ of the system without affecting code.
 
     <style name="MySaasa_ListItem_Message_Title"></style>
 
-    <style name="MySaasa_ListItem_Message_Author"></style>
+    <style name="MySaasa_ListItem_Message_Author">
+    </style>
 
     <style name="MySaasa_ListItem_Message_Date"></style>
 
-    <style name="crouton_new_message"></style>
+    <style name="mysaasa_crouton_new_message"></style>
+
+
+    <!-- For ViewBlogPost styling -->
+    <style name="mysaasa_view_blog_post"></style>
+    <style name="mysaasa_view_blog_post_title"></style>
+    <style name="mysaasa_view_blog_post_author"></style>
+    <style name="mysaasa_view_blog_post_body"></style>
+    <style name="mysaasa_view_blog_post_content"></style>
+
+    <style name="mysaasa_model_card_view"></style>
+
 </resources>

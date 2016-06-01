@@ -2,22 +2,28 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
- <com.adamhammer.ZoomingSpaceImageView
+ <com.adamhammer.ParallalaxImageView
      android:id="@+id/background_image"
      android:scaleType="centerCrop"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
-     android:src="@drawable/background"/>
+     android:src="@drawable/repeating_background"
+     />
+
  <com.adamhammer.ScrollSyncListView
      android:id="@+id/my_list"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
+     android:dividerHeight="20dp"
+     android:divider="#0000"
      />
+
 <com.adamhammer.IntroView
      android:id="@+id/loading_progressbar"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:layout_gravity="center"
-    android:scaleType="centerCrop"
-    android:src="@drawable/loading"/>
+     android:scaleType="centerCrop"
+     android:src="@drawable/loading"
+    android:visibility="gone"/>
 </FrameLayout>

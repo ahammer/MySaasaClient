@@ -1,35 +1,28 @@
 package com.adamhammer;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import java.util.List;
-
 /**
- * Created by Adam on 2/27/2016.
+ * Created by Adam on 5/31/2016.
  */
-public class ZoomingSpaceImageView extends ImageView {
-    public ZoomingSpaceImageView(Context context) {
+public class ParallalaxImageView extends ImageView {
+    public ParallalaxImageView(Context context) {
         super(context);
     }
 
-    public ZoomingSpaceImageView(Context context, AttributeSet attrs) {
+    public ParallalaxImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
     }
 
     public Matrix getInitialMatrix() {
         Matrix m = new Matrix();
         int drawableWidth = getDrawable().getIntrinsicWidth();
         int drawableHeight = getDrawable().getIntrinsicHeight();
-        int viewWidth = getWidth();
-        int viewHeight = getHeight();
+        int viewWidth = getWidth()*2;
+        int viewHeight = getHeight()*2;
         float scaleW = (float) viewWidth / drawableWidth;
         float scaleH = (float) viewHeight / drawableHeight;
         float scale = scaleH>scaleW?scaleH:scaleW;
@@ -38,14 +31,10 @@ public class ZoomingSpaceImageView extends ImageView {
     }
 
     public void setCurrentTransition(float currentTransition) {
-        Matrix m = getInitialMatrix();
-        currentTransition = (float) Math.exp(currentTransition*3);
-        //m.postRotate(currentTransition, getWidth()/2, getHeight()/2);
-        m.postScale(1+currentTransition*0.12f, 1+currentTransition*0.12f, getWidth()/2,getHeight()/2);
         setScaleType(ScaleType.MATRIX);
+        Matrix m = getInitialMatrix();
+        m.postTranslate(-currentTransition*getWidth()/10, -currentTransition*getHeight());
+
         setImageMatrix(m);
     }
-
-
-
 }
