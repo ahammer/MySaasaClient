@@ -52,22 +52,26 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         return MySaasaApplication.getService();
     }
 
-    public final boolean isConnected() {
-        NetworkInfo activeNetwork = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        return isConnected;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isConnected()) {
+            ActivityNoNetwork.start(this);
+            finish();
+            return;
+        }
+
         if (savedInstanceState == null) {
             selectedCategory  = new Category(getString(R.string.defaultSection));
         }
     }
 
+
+    boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -41,6 +41,10 @@
                   android:theme="@style/SimpleThemeDialog"
                   android:label="Chat"/>
 
+        <activity android:name="com.mysaasa.ui.ActivityNoNetwork"
+            android:theme="@style/SimpleThemeDialog"
+            android:label="No Network"/>
+
 
 
         <activity android:name="com.mysaasa.ui.ActivityAddress"

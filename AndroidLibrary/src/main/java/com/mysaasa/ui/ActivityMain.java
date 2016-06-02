@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -52,7 +54,12 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!isConnected()) {
+            return;
+        }
         setContentView(R.layout.activity_main);
+
         initializeSideNav();
 
         if (getIntent().getSerializableExtra("category") != null) {
@@ -179,6 +186,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
 
 
     protected void updateBlogList() {
+        if (!isConnected()) return;
         ApplicationSectionsManager.CategoryDef def = MySaasaApplication.getInstance().getAndroidCategoryManager().getCategoryDef(selectedCategory);
 
         setTitle(def.title);
