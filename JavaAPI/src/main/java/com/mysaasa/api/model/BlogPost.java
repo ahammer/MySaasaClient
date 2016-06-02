@@ -23,29 +23,24 @@ public class BlogPost implements Serializable {
     public final String body;
     public final String summary;
     public final String subtitle;
+    public final int priority;
 
 
     public User author;
     private Date dateCreated;
     private Date datePublished;
     private Boolean published;
-    public List<com.mysaasa.api.model.Category> categories = new ArrayList<com.mysaasa.api.model.Category>();
+    public List<Category> categories = new ArrayList<com.mysaasa.api.model.Category>();
 
 
 
-    public BlogPost(JsonObject post) {
-        id = post.get("id").getAsLong();
-        title = post.get("title").getAsString();
-        body = post.has("body")?post.get("body").getAsString():null;
-        subtitle = post.has("subtitle")?post.get("subtitle").getAsString():null;
-        summary = post.has("summary")?post.get("summary").getAsString():null;
-        author = new User(post.get("author").getAsJsonObject());
-        JsonArray cats = post.getAsJsonArray("categories");
-        for (int i=0;i<cats.size();i++) {
-            categories.add(new com.mysaasa.api.model.Category(cats.get(i).getAsJsonObject()));
-        }
-
-
+    public BlogPost() {
+        id = 0;
+        title = null;
+        body = null;
+        subtitle = null;
+        summary = null;
+        priority = 0;
     }
 
     public BlogPost(BlogPost post, String title, String subtitle, String summary, String body) {
@@ -58,6 +53,7 @@ public class BlogPost implements Serializable {
         this.body = body;
         this.summary = summary;
         this.subtitle = subtitle;
+        priority=1;
     }
 
 

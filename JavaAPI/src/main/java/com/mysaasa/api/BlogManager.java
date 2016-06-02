@@ -4,6 +4,7 @@ import com.mysaasa.api.model.BlogComment;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.model.Category;
 import com.mysaasa.api.observables.GetBlogPostsObservable;
+import com.mysaasa.api.observables.StandardMySaasaObservable;
 import com.mysaasa.api.responses.PostToBlogResponse;
 
 import java.util.HashMap;
@@ -35,7 +36,6 @@ public class BlogManager {
      */
     public Observable<BlogPost> getBlogPostsObservable(final Category c) {
         Observable<BlogPost> observable = Observable.create(new GetBlogPostsObservable(c, mySaasa));
-
         return observable.subscribeOn(Schedulers.io()).onBackpressureBuffer();
     }
 
@@ -45,7 +45,7 @@ public class BlogManager {
                 .subscribeOn(Schedulers.io());
     }
 
-    private static class PostToBlogObservableBase extends com.mysaasa.api.observables.StandardMySaasaObservable<PostToBlogResponse> {
+    private static class PostToBlogObservableBase extends StandardMySaasaObservable<PostToBlogResponse> {
         private final String title;
         private final String subtitle;
         private final String summary;

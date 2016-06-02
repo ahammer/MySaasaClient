@@ -2,6 +2,7 @@ package com.mysaasa.ui.views;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class BlogPostView extends ModelFrameLayout<BlogPost>{
         title.setText(getModel().title);
         author.setText(getModel().author.identifier);
         body.setText(Html.fromHtml(getModel().body));
+        body.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }

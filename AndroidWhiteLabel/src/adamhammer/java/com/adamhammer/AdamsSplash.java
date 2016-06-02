@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -99,12 +100,14 @@ public class AdamsSplash extends Fragment {
         subscription = MySaasaApplication.getService().getBlogManager().getBlogPostsObservable(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .toList()
-                .subscribe(new Action1<List<BlogPost>>() {
+                .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
                     @Override
-                    public void call(List<BlogPost> blogPosts) {
-                        AdamsSplash.this.setBlogPosts(blogPosts);
+                    public Integer call(BlogPost blogPost, BlogPost blogPost2) {
+                        return blogPost.priority - blogPost2.priority;
                     }
+                })
+                .subscribe(blogPosts1 -> {
+                    AdamsSplash.this.setBlogPosts(blogPosts1);
                 });
     }
 
