@@ -1,7 +1,9 @@
 package com.mysaasa;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -50,9 +52,45 @@ public class MySaasaApplication extends Application {
             return null;
 
         });
+
         mMessageNotificationManager = new MessageNotificationManager(this, mySaasaClient);
         mMessageNotificationManager.start();
-        autoLogin();
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                autoLogin();
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+
     }
 
     @Override
@@ -66,8 +104,10 @@ public class MySaasaApplication extends Application {
     }
 
     private void autoLogin() {
+
         SharedPreferences sp = getSharedPreferences("autologin", 0);
         if (sp.contains("identifier") && sp.contains("password"))
+            Toast.makeText(this, "Auto-login: "+sp.getString("identifier",null),Toast.LENGTH_SHORT).show();
             mySaasaClient.getAuthenticationManager().login(sp.getString("identifier", null), sp.getString("password", null))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

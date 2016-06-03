@@ -15,7 +15,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:hint="Your Name"
         android:ems="10"
         android:id="@+id/name"
@@ -24,7 +23,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:ems="10"
         android:hint="your@email.com"
         android:id="@+id/email" />
@@ -32,7 +30,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
         android:ems="10"
         android:id="@+id/phone"
         android:hint="555-342-1234"/>

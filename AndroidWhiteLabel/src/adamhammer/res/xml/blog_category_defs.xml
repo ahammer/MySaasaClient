@@ -13,15 +13,6 @@
         <category>Messages</category>
         <fragment>com.mysaasa.ui.fragments.MessagesFragment</fragment>
     </item>
-    <item>
-        <title>Resume</title>
-        <category>Resume</category>
-        <sortColumn>priority</sortColumn>
-        <sortOrder>ASC</sortOrder>
-        <pagesize>100</pagesize>
-        <commentsAllowed>false</commentsAllowed>
-        <postsAllowed>false</postsAllowed>
-    </item>
 
     <item>
         <title>Blog</title>
@@ -32,9 +23,5 @@
         <commentsAllowed>true</commentsAllowed>
         <postsAllowed>false</postsAllowed>
     </item>
-    <item>
-        <title>Messages</title>
-        <category>Messages</category>
-        <fragment>com.mysaasa.ui.fragments.MessagesFragment</fragment>
-    </item>
+
 </whitelist>

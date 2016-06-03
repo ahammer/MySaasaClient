@@ -75,6 +75,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(connectivityChangedReceiver = new BroadcastReceiver() {
