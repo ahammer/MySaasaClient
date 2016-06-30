@@ -41,7 +41,6 @@ import rx.schedulers.Schedulers;
  * Created by adam on 2014-10-31.
  */
 public class ActivityMain extends SideNavigationCompatibleActivity {
-    //ListView navList;
     private ListView newsList;
 
     private MenuItem post;
@@ -89,18 +88,10 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //updateBlogPostSubscription();
-    }
-
-
-    @Override
     protected void onPause() {
         if (subscription != null) subscription.unsubscribe();
         super.onPause();
     }
-
 
     @Override
     protected void categoryChanged(Category c) {
@@ -108,12 +99,10 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
         updateBlogList();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.standard,menu);
         post = menu.findItem(R.id.action_post);
-
 
         if (post != null) {
             post.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -216,12 +205,7 @@ public class ActivityMain extends SideNavigationCompatibleActivity {
                 Fragment f = (Fragment) Class.forName(def.fragment).newInstance();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_frame, f).commit();
             } catch (Exception e) {}
-
-
         }
-
-
-
     }
 
     public static void startFreshTop(Context ctx, Category c) {

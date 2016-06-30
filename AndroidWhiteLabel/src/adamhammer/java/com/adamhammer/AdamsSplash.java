@@ -23,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
@@ -31,9 +30,6 @@ import rx.schedulers.Schedulers;
  * Created by Adam on 1/12/2015.
  */
 public class AdamsSplash extends Fragment {
-    @BindView(R.id.background_image)
-    ParallalaxImageView backgroundImage;
-
     @BindView(R.id.my_list)
     ScrollSyncListView myList;
 
@@ -52,7 +48,6 @@ public class AdamsSplash extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.adam_splash,null);
         ButterKnife.bind(this, vg);
-        backgroundImage.setCurrentTransition(0);
         updateList();
         return vg;
     }
@@ -71,11 +66,12 @@ public class AdamsSplash extends Fragment {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
     }
 
+    /**
+     * The animation of the Images in the scroll list
+     */
     private void startAnimationThread() {
         executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate((Runnable) () -> getActivity().runOnUiThread(() -> {
-
-            backgroundImage.setCurrentTransition(myList.getScrollYPercentage());
             updateListImages();
         }), 0, (int) (1 / 60f * 1000), TimeUnit.MILLISECONDS);
     }
@@ -100,12 +96,7 @@ public class AdamsSplash extends Fragment {
         subscription = MySaasaApplication.getService().getBlogManager().getBlogPostsObservable(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .toSortedList(new Func2<BlogPost, BlogPost, Integer>() {
-                    @Override
-                    public Integer call(BlogPost blogPost, BlogPost blogPost2) {
-                        return blogPost.priority - blogPost2.priority;
-                    }
-                })
+                .toSortedList((blogPost, blogPost2) -> blogPost.priority - blogPost2.priority)
                 .subscribe(blogPosts1 -> {
                     AdamsSplash.this.setBlogPosts(blogPosts1);
                 });
@@ -118,6 +109,7 @@ public class AdamsSplash extends Fragment {
 
 
     private void updateList() {
+        myList.setDividerHeight(0);
         loadingProgressbar.setVisibility(blogPosts==null?View.VISIBLE:View.GONE);
         if (blogPosts == null || blogPosts.size() == 0) return;
         myList.setAdapter(new JoiningAdapter(new MyPhotosAdapter(), new MyBlogPostsAdapter(blogPosts)));
@@ -125,7 +117,6 @@ public class AdamsSplash extends Fragment {
         myList.addHeaderView(headerView = new HeaderView(getActivity()));
         if (contactView != null) myList.removeFooterView(contactView);
         myList.addFooterView(contactView = new ContactView(getActivity()));
-        contactView.setBackgroundResource(R.drawable.dark_panel);
         contactView.setToUser("admin");
 
     }

@@ -23,10 +23,8 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public NavigationDrawerAdapter() {
         if (MySaasaApplication.getInstance()!= null) {
             defs = MySaasaApplication.getInstance().getAndroidCategoryManager().getItems();
-            //cats = MySaasaApplication.getService().getBlogCategories();
         } else {
             defs = Collections.EMPTY_LIST;
-            //cats = Collections.EMPTY_LIST;
         }
     }
 

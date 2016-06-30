@@ -17,7 +17,7 @@
 
     <application
             android:name="com.mysaasa.MySaasaApplication"
-        android:theme="@style/SimpleTheme"
+        android:theme="@style/mysaasa_theme"
         >
         <activity
             android:name="com.mysaasa.ui.ActivityMain"

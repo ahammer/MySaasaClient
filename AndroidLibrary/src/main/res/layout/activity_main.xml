@@ -36,7 +36,7 @@
     </LinearLayout>
     <!-- The navigation drawer -->
     <com.mysaasa.ui.sidenav.LeftNavigationFrameLayout
-
+        style="@style/mysaasa_navigation_menu"
         android:id="@+id/left_drawer"
         android:layout_width="@dimen/sidenav_width"
         android:layout_height="match_parent"
@@ -47,7 +47,6 @@
         />
 </android.support.v4.widget.DrawerLayout>
     <com.mysaasa.ui.views.NetworkProgressBar
-
         android:id="@+id/progress_indicator"
         android:layout_gravity="right"
         android:layout_width="40dp"

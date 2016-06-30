@@ -1,103 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardView.Light"
+    android:id="@+id/business_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="15dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center"
-        android:foregroundGravity="center"
-        android:src="@drawable/headshot"/>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/business_card"
-        style="@style/CardView.Light"
-        android:layout_toRightOf="@id/imageView"
-        android:layout_alignParentRight="true"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:foregroundGravity="center"
-        android:layout_marginRight="10dp"
-        >
-
-
-    <LinearLayout
-        android:padding="5dp"
-        android:layout_margin="5dp"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="5dp">
 
         <TextView
-            style="@style/headerText"
-            android:textColor="#333"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Adam Hammer"
-            android:id="@+id/textView2" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#333" />
 
         <TextView
-            style="@style/headerText"
-            android:textColor="#777"
+            android:id="@+id/title"
+            android:layout_below="@id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Software Architect"
-            android:id="@+id/textView3"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#777" />
 
         <TextView
-            style="@style/headerText"
-            android:textColor="#777"
+            android:id="@+id/location"
+            android:layout_below="@id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Vancouver, BC, Canada"
-            android:id="@+id/textView4" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#777" />
 
         <TextView
-            android:layout_marginTop="5dp"
-            style="@style/headerText"
-            android:textColorLink="#E52"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(604) 339-2620"
             android:id="@+id/phone"
-            android:autoLink="phone"
-            />
-
-        <TextView
-            style="@style/headerText"
-            android:layout_marginTop="5dp"
-            android:textColorLink="#E52"
+            android:layout_below="@id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="adam@metalrain.ca"
+            android:autoLink="phone"
+            android:text="(604) 339-2620"
+            android:textColorLink="#E52" />
+
+        <TextView
             android:id="@+id/email"
+            android:layout_below="@id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:autoLink="email"
-            android:layout_marginBottom="10dp"
-            />
-    </LinearLayout>
-    </android.support.v7.widget.CardView>
-    <TextView
+            android:text="adam@metalrain.ca"
+            android:textColorLink="#E52" />
+        <ImageView
 
-        android:id="@+id/resume_title"
-        android:layout_below="@id/business_card"
-        android:text="Resume"
-
-
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:textSize="32sp"
-        android:textColor="#FFF"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_gravity="center_horizontal"/>
-</RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/headshot"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

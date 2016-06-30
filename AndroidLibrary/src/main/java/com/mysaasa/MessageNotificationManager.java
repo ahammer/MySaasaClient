@@ -59,8 +59,6 @@ public class MessageNotificationManager  {
     int index = 0;
     public void handleMessage(NewMessageEvent event) {
         handler.post(()->{
-
-            Toast.makeText(ctx, "New Message Received "+(index++), Toast.LENGTH_SHORT).show();
             showNotification(ctx, event.getMessage());
         });
     }

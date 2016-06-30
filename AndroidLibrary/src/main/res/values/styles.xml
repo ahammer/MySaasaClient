@@ -88,4 +88,7 @@ of the system without affecting code.
 
     <style name="mysaasa_model_card_view"></style>
 
+    <style name="mysaasa_navigation_menu"></style>
+
+    <style name="mysaasa_authentication_button"/>
 </resources>

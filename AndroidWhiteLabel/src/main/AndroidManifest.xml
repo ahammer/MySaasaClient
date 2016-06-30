@@ -23,26 +23,26 @@
         </activity>
         -->
         <activity android:name="com.mysaasa.ui.ActivitySignin"
-            android:theme="@style/SimpleThemeDialog"
+            android:theme="@style/mysaasa_dialog_theme"
             android:label="Sign In"/>
 
         <activity android:name="com.mysaasa.ui.ActivityBlogPost"
             android:label="Post"/>
 
         <activity android:name="com.mysaasa.ui.ActivityPostComment"
-            android:theme="@style/SimpleThemeDialog"
+            android:theme="@style/mysaasa_dialog_theme"
             android:label="Post Comment"/>
 
         <activity android:name="com.mysaasa.ui.ActivityPostToBlog"
-                  android:theme="@style/SimpleThemeDialog"
+                  android:theme="@style/mysaasa_dialog_theme"
                   android:label="Post to Blog"/>
 
         <activity android:name="com.mysaasa.ui.ActivityChat"
-                  android:theme="@style/SimpleThemeDialog"
+                  android:theme="@style/mysaasa_dialog_theme"
                   android:label="Chat"/>
 
         <activity android:name="com.mysaasa.ui.ActivityNoNetwork"
-            android:theme="@style/SimpleThemeDialog"
+            android:theme="@style/mysaasa_dialog_theme"
             android:label="No Network"/>
 
 

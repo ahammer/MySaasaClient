@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SimpleTheme" parent ="@style/Theme.AppCompat"/>
+    <style name="mysaasa_theme" parent ="@style/Theme.AppCompat.Light"/>
 
     <style name="simple_news_list"/>
     <style name="simple_news_list_item"/>
@@ -8,8 +8,11 @@
         <item name="android:background">#333</item>
     </style>
 
-    <style name="SimpleThemeDialog" parent="@style/Theme.AppCompat.Dialog"></style>
+    <style name="mysaasa_dialog_theme" parent="@style/Theme.AppCompat.Dialog"></style>
 
+    <style name="mysaasa_navigation_menu">
+    </style>
 
-
+    <!-- We don't want to show this button in my portfolio app -->
+    <style name="mysaasa_authentication_button"/>
 </resources>

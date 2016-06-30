@@ -17,7 +17,7 @@
 
     <application
             android:name="com.mysaasa.MySaasaApplication"
-        android:theme="@style/SimpleTheme"
+        android:theme="@style/mysaasa_theme"
         android:icon="@drawable/ic_app">
 
         <receiver android:name="com.mysaasa.ReceiveGCMPush">
