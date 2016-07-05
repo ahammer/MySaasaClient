@@ -7,7 +7,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.widget.Toast;
 
-import com.google.common.eventbus.Subscribe;
 import com.jayway.awaitility.Awaitility;
 import com.mysaasa.Envelope;
 import com.mysaasa.MySaasaApplication;
@@ -15,8 +14,9 @@ import com.mysaasa.ui.ActivityMain;
 import com.mysaasa.ui.views.ContactView;
 import com.mysaasa.api.MySaasaClient;
 import com.mysaasa.api.model.BlogPost;
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

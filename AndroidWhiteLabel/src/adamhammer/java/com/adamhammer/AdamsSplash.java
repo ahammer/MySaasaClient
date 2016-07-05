@@ -13,7 +13,7 @@ import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.views.ContactView;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.model.Category;
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
 import java.util.List;
 import java.util.concurrent.Executors;

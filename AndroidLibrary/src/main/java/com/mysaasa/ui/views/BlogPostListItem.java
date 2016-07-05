@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.utility.StringUtility;
 

@@ -9,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mysassa.ui.AbstractActivityProducts">
+        tools:context="com.mysaasa.ui.AbstractActivityProducts">
 
         <ListView
             android:id="@+id/product_list"

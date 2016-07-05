@@ -219,7 +219,7 @@
     </LinearLayout>
 </RelativeLayout>
 </ScrollView>
-    <com.mysassa.ui.views.OrderTotalView
+    <com.mysaasa.ui.views.OrderTotalView
         style="@style/mysaasa_order_total_view"
         android:layout_below="@id/billing_shipping"
         android:layout_width="match_parent"

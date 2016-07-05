@@ -1,7 +1,8 @@
 package com.mysaasa.api;
 
-import com.google.common.eventbus.EventBus;
 import com.mysaasa.api.messages.NetworkStateChange;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -12,9 +13,6 @@ import retrofit2.Retrofit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by administrator on 2014-06-29.

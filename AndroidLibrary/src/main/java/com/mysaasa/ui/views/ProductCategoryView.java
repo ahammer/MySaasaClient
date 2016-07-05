@@ -4,10 +4,10 @@ import android.content.Context;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.Category;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
 
 /**
  * Created by adam on 15-02-22.

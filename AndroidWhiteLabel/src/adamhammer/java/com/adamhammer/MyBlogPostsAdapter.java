@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.ui.views.BlogPostListItem;
 import com.mysaasa.ui.views.BlogPostView;
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
 import java.util.HashMap;
 import java.util.List;

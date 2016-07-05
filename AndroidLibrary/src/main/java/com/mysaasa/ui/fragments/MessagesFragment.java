@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityChat;
 import com.mysaasa.ui.views.StandardMessageView;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.Message;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;

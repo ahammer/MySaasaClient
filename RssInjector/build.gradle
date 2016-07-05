@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'me.tatarka.retrolambda'
 
-mainClassName='com.mysassa.rss.Injector'
+mainClassName='com.mysaasa.rss.Injector'
 
 sourceCompatibility = 1.7
 repositories {

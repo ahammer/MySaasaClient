@@ -2,24 +2,21 @@ apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
 sourceCompatibility = 1.8
+
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
-    testCompile 'com.jayway.awaitility:awaitility:1.6.0'
-    compile 'org.bouncycastle:bcprov-jdk16:1.46'
-    compile 'com.google.guava:guava:18.+'
     compile 'io.reactivex:rxjava:+'
-    compile 'org.apache.commons:commons-collections4:4.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.0.1"
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
 }
 
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 
 /**
  * Created by adam on 2014-11-01.

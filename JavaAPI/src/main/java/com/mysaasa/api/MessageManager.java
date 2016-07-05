@@ -1,6 +1,5 @@
 package com.mysaasa.api;
 
-import com.google.common.eventbus.Subscribe;
 import com.mysaasa.api.messages.NewMessageEvent;
 import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.User;
@@ -10,6 +9,8 @@ import com.mysaasa.api.responses.GetMessagesResponse;
 import com.mysaasa.api.responses.GetThreadResponse;
 import com.mysaasa.api.responses.ReplyMessageResponse;
 import com.mysaasa.api.responses.SendMessageResponse;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;

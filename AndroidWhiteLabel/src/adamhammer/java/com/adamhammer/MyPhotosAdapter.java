@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
 /**
  * Created by Adam on 2/28/2016.

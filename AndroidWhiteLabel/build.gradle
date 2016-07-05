@@ -36,14 +36,22 @@ android {
     }
 
     productFlavors {
-        blank { applicationId "com.mysassa.whitelabel" }
-        gettingstarted { applicationId "com.mysassa.gettingstarted" }
-        adamhammer { applicationId "com.mysassa.adamhammer"}
+        blank { applicationId "com.mysaasa.whitelabel" }
+        gettingstarted { applicationId "com.mysaasa.gettingstarted" }
+        adamhammer { applicationId "com.mysaasa.adamhammer"}
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    buildTypes {
+        release {
+//        	minifyEnabled true
+            	shrinkResources true
+//	     	proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+	}
     }
 }
 

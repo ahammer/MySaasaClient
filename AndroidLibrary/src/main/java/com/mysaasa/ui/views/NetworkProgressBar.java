@@ -5,9 +5,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
-import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.api.messages.NetworkStateChange;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by Adam on 3/9/2016.

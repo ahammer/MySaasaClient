@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.Message;
 
 import java.text.DateFormat;

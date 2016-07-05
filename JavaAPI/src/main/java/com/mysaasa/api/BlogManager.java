@@ -14,8 +14,6 @@ import retrofit2.Call;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by Adam on 3/3/2016.
  */

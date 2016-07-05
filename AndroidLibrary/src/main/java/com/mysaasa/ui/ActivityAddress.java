@@ -9,10 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.ContactInfo;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
+
 
 /**
  * Created by Adam on 4/1/2015.

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.mysaasa.api.model.BlogPost;
-import com.mysassa.R;
+import com.mysaasa.R;
 
 /**
  * Created by Adam on 5/31/2016.

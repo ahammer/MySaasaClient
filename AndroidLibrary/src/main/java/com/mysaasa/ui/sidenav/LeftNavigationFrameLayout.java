@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysaasa.api.model.Category;

@@ -1,4 +1,4 @@
-package com.mysassa.rss;
+package com.mysaasa.rss;
 
 import com.mysaasa.api.responses.LoginUserResponse;
 import com.mysaasa.api.MySaasaClient;

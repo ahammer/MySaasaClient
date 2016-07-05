@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 
 /**
  * Created by Adam on 1/13/2015.

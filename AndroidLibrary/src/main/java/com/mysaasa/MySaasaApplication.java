@@ -10,7 +10,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.mysaasa.api.MessageManager;
 import com.mysaasa.ui.ActivityMain;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.MySaasaClient;
 
 import java.io.IOException;

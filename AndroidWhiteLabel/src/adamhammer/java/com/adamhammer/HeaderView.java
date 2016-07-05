@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
 public class HeaderView extends FrameLayout {
     public HeaderView(Context context) {

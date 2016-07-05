@@ -5,25 +5,21 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.mysaasa.api.MySaasaClient;
 import com.mysaasa.api.messages.NewMessageEvent;
 import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.User;
 import com.mysaasa.ui.ActivityChat;
-import com.mysaasa.ui.SideNavigationCompatibleActivity;
-import com.mysassa.R;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.app.Notification.*;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
 
 /**
  * Observes the new message notifications and handles when to give notifications to the user

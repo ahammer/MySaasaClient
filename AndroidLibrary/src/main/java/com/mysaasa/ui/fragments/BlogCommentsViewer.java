@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivityPostComment;
 import com.mysaasa.ui.adapters.BlogCommentsAdapter;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogComment;
 import com.mysaasa.api.model.BlogPost;
 

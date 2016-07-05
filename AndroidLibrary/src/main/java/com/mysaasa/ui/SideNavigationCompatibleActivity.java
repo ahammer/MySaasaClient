@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.push.JumpToMessageThreadBehavior;
 import com.mysaasa.ui.sidenav.LeftNavigationFrameLayout;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysaasa.api.MySaasaClient;
@@ -72,6 +72,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -84,7 +85,7 @@ public abstract class SideNavigationCompatibleActivity extends AppCompatActivity
                 checkNetworkState();
             }
         },filter);
-        MySaasaApplication.getService().bus.register(this);
+//        MySaasaApplication.getService().bus.register(this);
         setProgressBarIndeterminate(MySaasaApplication.getService().isNetworkBusy());
         pushBehavior.start();
     }

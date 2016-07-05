@@ -35,10 +35,7 @@ import com.mysaasa.api.responses.WebsiteTestResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * MySaasaGateway, Retrofit

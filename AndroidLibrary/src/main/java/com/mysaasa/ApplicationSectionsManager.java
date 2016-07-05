@@ -3,7 +3,6 @@ package com.mysaasa;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 
-import com.mysassa.R;
 import com.mysaasa.api.model.Category;
 
 import org.xmlpull.v1.XmlPullParser;

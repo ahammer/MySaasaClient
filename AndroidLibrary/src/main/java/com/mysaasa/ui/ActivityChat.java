@@ -12,11 +12,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.push.RefreshThreadPushMessageBehavior;
-import com.mysassa.R;
-import com.mysaasa.api.messages.NewMessageEvent;
+import com.mysaasa.R;
 import com.mysaasa.api.model.Message;
 
 import java.util.List;
@@ -27,7 +25,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
 
 /**
  * Created by Adam on 4/5/2016.

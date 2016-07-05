@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mysassa.whitelabel.R;
+import com.mysaasa.whitelabel.R;
 
 /**
  * Created by Adam on 1/12/2015.
@@ -19,7 +19,7 @@ public class AdamWelcome extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup vg = (ViewGroup) inflater.inflate(com.mysassa.R.layout.fragment_welcome, container, false);
+        ViewGroup vg = (ViewGroup) inflater.inflate(com.mysaasa.R.layout.fragment_welcome, container, false);
         vg.findViewById(R.id.link_adamhammer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

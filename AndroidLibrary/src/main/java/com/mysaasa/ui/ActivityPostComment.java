@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogComment;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.responses.PostCommentResponse;

@@ -9,12 +9,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.google.common.eventbus.Subscribe;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ui.ActivitySignin;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.messages.LoginStateChanged;
 import com.mysaasa.api.model.User;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by Adam on 1/4/2015.

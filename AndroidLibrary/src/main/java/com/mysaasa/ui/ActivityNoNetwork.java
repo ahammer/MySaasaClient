@@ -8,7 +8,7 @@ import android.text.Html;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 
 /**
  * Created by Adam on 6/1/2016.

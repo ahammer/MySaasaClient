@@ -5,8 +5,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,7 +16,7 @@ import android.widget.ListView;
 
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.model.Category;
 import com.mysaasa.ui.adapters.BlogAdapter;

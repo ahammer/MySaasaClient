@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.common.eventbus.Subscribe;
 import com.mysaasa.Envelope;
 import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ReceiveGCMPush;
 import com.mysaasa.api.model.Message;
-import com.mysaasa.api.model.PushMessageModel;
 import com.mysaasa.api.responses.GetMessageByIdResponse;
 import com.mysaasa.ui.ActivityChat;
-import com.mysassa.R;
+import com.mysaasa.R;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.Map;

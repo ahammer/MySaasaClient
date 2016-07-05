@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mysaasa.MySaasaApplication;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogComment;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.model.User;
@@ -19,7 +19,7 @@ import com.mysaasa.ui.ActivityPostComment;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
 
 /**
  * Created by Adam on 1/6/2015.

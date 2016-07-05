@@ -7,7 +7,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.mysaasa.MySaasaApplication;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.Category;
 import com.mysaasa.api.responses.LoginUserResponse;
 

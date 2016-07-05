@@ -17,7 +17,7 @@ import com.mysaasa.api.model.Message;
 import com.mysaasa.api.model.PushMessageModel;
 import com.mysaasa.api.responses.GetMessageByIdResponse;
 import com.mysaasa.ui.ActivityChat;
-import com.mysassa.R;
+import com.mysaasa.R;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

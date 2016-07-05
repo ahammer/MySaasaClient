@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mysassa.R;
+import com.mysaasa.R;
 
 /**
  * Created by Adam on 1/12/2015.

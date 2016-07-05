@@ -19,7 +19,7 @@ import com.mysaasa.MySaasaApplication;
 import com.mysaasa.ApplicationSectionsManager;
 
 import com.mysaasa.ui.fragments.BlogCommentsViewer;
-import com.mysassa.R;
+import com.mysaasa.R;
 import com.mysaasa.api.model.BlogPost;
 import com.mysaasa.api.model.Category;
 import com.mysaasa.api.model.User;

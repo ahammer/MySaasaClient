@@ -46,7 +46,7 @@ MERGED from AndroidManifest.xml:14:5
 MERGED from QuickWebApi:AndroidLibrary:unspecified:12:5
 	android:name
 		ADDED from AndroidManifest.xml:15:13
-activity#com.mysassa.ui.ActivityMain
+activity#com.mysaasa.ui.ActivityMain
 ADDED from AndroidManifest.xml:16:9
 	android:label
 		ADDED from AndroidManifest.xml:18:17
@@ -62,49 +62,49 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:21:17
 	android:name
 		ADDED from AndroidManifest.xml:21:27
-activity#com.mysassa.ui.ActivitySignin
+activity#com.mysaasa.ui.ActivitySignin
 ADDED from AndroidManifest.xml:25:9
 	android:label
 		ADDED from AndroidManifest.xml:26:13
 	android:name
 		ADDED from AndroidManifest.xml:25:19
-activity#com.mysassa.ui.ActivityBlogPost
+activity#com.mysaasa.ui.ActivityBlogPost
 ADDED from AndroidManifest.xml:27:9
 	android:label
 		ADDED from AndroidManifest.xml:28:13
 	android:name
 		ADDED from AndroidManifest.xml:27:19
-activity#com.mysassa.ui.ActivityPostComment
+activity#com.mysaasa.ui.ActivityPostComment
 ADDED from AndroidManifest.xml:29:9
 	android:label
 		ADDED from AndroidManifest.xml:30:13
 	android:name
 		ADDED from AndroidManifest.xml:29:19
-activity#com.mysassa.ui.ActivityPostToBlog
+activity#com.mysaasa.ui.ActivityPostToBlog
 ADDED from AndroidManifest.xml:31:9
 	android:label
 		ADDED from AndroidManifest.xml:32:13
 	android:name
 		ADDED from AndroidManifest.xml:31:19
-activity#com.mysassa.ui.ActivityMessages
+activity#com.mysaasa.ui.ActivityMessages
 ADDED from AndroidManifest.xml:33:9
 	android:label
 		ADDED from AndroidManifest.xml:34:13
 	android:name
 		ADDED from AndroidManifest.xml:33:19
-activity#com.mysassa.ui.ActivityMessage
+activity#com.mysaasa.ui.ActivityMessage
 ADDED from AndroidManifest.xml:35:9
 	android:label
 		ADDED from AndroidManifest.xml:36:13
 	android:name
 		ADDED from AndroidManifest.xml:35:19
-activity#com.mysassa.ui.ActivityProducts
+activity#com.mysaasa.ui.ActivityProducts
 ADDED from AndroidManifest.xml:37:9
 	android:label
 		ADDED from AndroidManifest.xml:38:13
 	android:name
 		ADDED from AndroidManifest.xml:37:19
-activity#com.mysassa.ui.ActivityCart
+activity#com.mysaasa.ui.ActivityCart
 ADDED from AndroidManifest.xml:39:9
 	android:label
 		ADDED from AndroidManifest.xml:40:13

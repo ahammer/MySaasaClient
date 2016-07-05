@@ -1,5 +1,6 @@
 package com.mysaasa.api.observables;
 
+import com.mysaasa.api.MySaasaGateway;
 import com.mysaasa.api.responses.GetBlogCategoriesResponse;
 import com.mysaasa.api.model.Category;
 
@@ -10,7 +11,8 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.mysaasa.api.Preconditions.checkNotNull;
+
 
 /**
  * Get's the Categories from the server.
