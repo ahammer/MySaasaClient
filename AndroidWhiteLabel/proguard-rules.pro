@@ -147,3 +147,4 @@
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
 -dontwarn okio.**
+-dontwarn okhttp3.**
