@@ -30,7 +30,6 @@ buildscript {
         //Android APT, for annotation processing (butterknife)
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
-
     }
 }
 

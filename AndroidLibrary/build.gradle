@@ -46,5 +46,4 @@ dependencies {
     compile files('libs/crouton-1.8.1.jar')
     compile 'io.reactivex:rxandroid:+'
     compile 'com.squareup.picasso:picasso:2.3.4'
-
 }
