@@ -95,3 +95,54 @@
 -dontwarn java.nio.**
 -dontwarn javax.**
 -dontwarn sun.misc.unsafe.**
+
+
+# Retrofit 2.X
+## https://square.github.io/retrofit/ ##
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+# rxjava
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    long producerNode;
+    long consumerNode;
+}
+
+## Retrolambda specific rules ##
+
+# as per official recommendation: https://github.com/evant/gradle-retrolambda#proguard
+-dontwarn java.lang.invoke.*
+-dontwarn sun.misc.Unsafe
+
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
+# OkHttp
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.**
