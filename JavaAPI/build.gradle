@@ -1,12 +1,17 @@
+plugins {
+	id "com.jfrog.bintray" version "1.7"
+}
+
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 
 repositories {
     jcenter()
 }
-
 
 
 dependencies {
