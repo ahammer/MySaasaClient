@@ -25,8 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * When authentication fails, it should automatically re-authenticate now
  *
- * Try Call -> Authentication Failure? Yes -> Try Login -> Success -> Retry Call
- *
  */
 public class MySaasaClient {
     final MySaasaGateway gateway;
