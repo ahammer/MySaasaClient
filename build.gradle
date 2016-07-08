@@ -9,11 +9,12 @@ ext {
     testRunner =  'com.android.support.test:runner:0.4.1'
     espresso = 'com.android.support.test.espresso:espresso-core:2.2.1'
     rules = 'com.android.support.test:rules:0.4'
+    mysaasaJava = 'com.mysaasa:MySaasa-Java:0.1.1'
     buildToolsVersion = "23.0.2"
     compileSdkVersion = 23
     minSdkVersion = 21
     targetSdkVersion = 21
-    mavenVersion = "0.1.0"
+    mavenVersion = "0.1.1"
 }
 
 

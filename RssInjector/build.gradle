@@ -19,7 +19,6 @@ sourceSets {
 
 
 dependencies {
-    compile project(':JavaAPI')
+    compile rootProject.mysaasaJava
     compile 'com.rometools:rome:1.5.0'
-
 }

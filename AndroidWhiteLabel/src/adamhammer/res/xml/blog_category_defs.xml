@@ -8,6 +8,7 @@
         <category>Welcome</category>
         <fragment>com.adamhammer.AdamsSplash</fragment>
     </item>
+
     <item>
         <title>Messages</title>
         <category>Messages</category>

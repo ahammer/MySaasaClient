@@ -4,7 +4,8 @@ apply plugin: 'me.tatarka.retrolambda'
 buildscript {
     repositories {
         mavenCentral()
-    }
+	jcenter() 
+   }
 
     dependencies {
     }
@@ -42,7 +43,8 @@ dependencies {
     compile rootProject.supportCardView
     compile rootProject.supportDesign
 
-    compile(project(':JavaAPI'))
+    compile rootProject.mysaasaJava
+    compile 'com.mysaasa:ModelViewLib:0.1.0'
     compile files('libs/crouton-1.8.1.jar')
     compile 'io.reactivex:rxandroid:+'
     compile 'com.squareup.picasso:picasso:2.3.4'
