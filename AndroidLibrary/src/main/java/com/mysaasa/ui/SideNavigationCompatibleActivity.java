@@ -28,7 +28,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * This is the base activity, it just will do some basic stuff like grab a refere  nce to the service, etc. Bind ContactViewCallbacks for over-riding
- * <p/>
  * Created by administrator on 2014-06-30.
  */
 public abstract class SideNavigationCompatibleActivity extends AppCompatActivity {
